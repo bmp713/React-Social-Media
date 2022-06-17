@@ -78,8 +78,12 @@ export default function Friends(){
             email: formData.email,
         })
 
-        //https://fakeface.rest/face/json, https://source.unsplash.com/random/800x800/?img=1
-
+        // Random images
+        // https://picsum.photos/200
+        // https://fakeface.rest/face/json
+        // https://source.unsplash.com/random/800x800/?img=1
+        // https://100k-faces.glitch.me/random-image
+        // https://i.pravatar.cc/300
 
         readFriends();
     };
@@ -92,7 +96,7 @@ export default function Friends(){
                 </div>
                 {friends.map( (user) => (
                     <div className="col-lg-5" id={user.id} key={user.id}>
-                        <img className="my-2" height="150" src="https://source.unsplash.com/random/800x800/?img=1" alt="new"/>
+                        <img className="my-2" height="150" src="https://100k-faces.glitch.me/random-image" alt="new"/>
                         <p>
                             {user.id}<br></br>
                             {/* {user.first} {user.last}<br></br> */}
