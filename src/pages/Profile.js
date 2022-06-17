@@ -102,7 +102,7 @@ export default function Profile(){
         <div className='profile page'>
             <div className="header row justify-content-lg-left align-items-start">
                 <div className="col-lg-6 text-left">
-                    <h1>Profile</h1>
+                    <h1>ProfileXXX</h1>
                     <p className="profile-details">
                     {currentUser.first} {currentUser.last}<br></br>
                     {currentUser.name}<br></br>
