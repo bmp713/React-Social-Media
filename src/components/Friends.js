@@ -70,7 +70,6 @@ export default function Friends(){
         }
         else setError(false);
 
-        let id = Math.floor(Math.random() * 10000000)
         //console.log('createFriend() => ' + id + ' ' + formData.first + ' ' + formData.last + ', ' + formData.email);
 
         // Create new user
@@ -85,28 +84,37 @@ export default function Friends(){
 
 
         // Generate random headshot image with fetch API
-        await fetch('https://source.unsplash.com/1600x900/?portrait', {
-            headers: {
-                'Content-Type':'application/json'
-            },
-            crossDomain: true,
-            mode: 'no-cors',
-            method: 'GET'
-        })
-            .then( data => {
-                console.log("Fetch image =>", data );
-            } )
-            .catch( error => {
-                console.log("Fetch error => ", error);
-            });
+        // await fetch('https://source.unsplash.com/collection/928423/480x480', {
+        //     headers: {'Content-Type':'application/json'},
+        //     crossDomain: true,
+        //     mode: 'no-cors',
+        //     method: 'GET'
+        // })
+        //     .then( data => {
+        //         console.log("Fetch image =>", data );
+        //     } )
+        //     .catch( error => {
+        //         console.log("Fetch error => ", error);
+        //     });
 
+        
+        
+        // Unsplash collection IDs
+        // https://unsplash.com/collections/
+        // https://source.unsplash.com/1600x900/?portrait
+        // https://source.unsplash.com/collection/collectionID/imageWidth%7DximageHeight/?sig=randomNumber`
+        //
+        // let url = 'https://source.unsplash.com/collection/928423/400/400/?sig=100';
+
+        let random = Math.floor(Math.random() * 100000);
+        let urlImg = `https://source.unsplash.com/collection/895539/400x400/?sig=` + random;
 
         // Update friend document
         await setDoc( doc(db, 'friends', docRef.id.toString()), {
             id: docRef.id,
             name: formData.name,
             email: formData.email,
-            imageURL: 'https://source.unsplash.com/1600x900/?portrait'
+            imageURL: urlImg
         })
 
 
@@ -122,7 +130,7 @@ export default function Friends(){
                 </div>
                 {friends.map( (user) => (
                     <div className="col-lg-5" id={user.id} key={user.id}>
-                        <img className="my-2" height="150" src={user.imageURL} alt="new"/>
+                        <img className="my-2" height="200" src={user.imageURL} alt="new"/>
                         <p>
                             {/* {user.id}<br></br> */}
                             {user.name} <br></br>
