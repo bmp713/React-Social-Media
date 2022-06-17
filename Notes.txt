@@ -12,6 +12,9 @@ git commit -m "intial"
 git remote add origin https://github.com/bmp713/[respository].git
 git push -u origin <branch>
 
+// force push
+git push -f origin <branch>
+
 // push one branch to another
 git push origin app7:master
 
