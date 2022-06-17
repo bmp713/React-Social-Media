@@ -108,7 +108,7 @@ export default function Profile(){
                     {currentUser.name}<br></br>
                     </p>
                 </div>
-                <div className="col-lg-6 py-2 text-lg-end">
+                <div className="profile-settings col-lg-6 py-2 text-lg-end">
                     <p>
                         <span style={{color:'#07ff'}}>{currentUser.name}</span> is signed in
                         <span><img width="20px" className="mx-3" src="./assets/Icon-gear-white.png" alt='new'/></span>
@@ -147,7 +147,7 @@ export default function Profile(){
                     <h2>Messages</h2>  
                     {messages.map( (user) => (
                         <div className="p-3" id={user.id} key={user.id}>
-                            <img className="my-2" height="300" src="https://source.unsplash.com/random/?productivity,city" alt="new"/>
+                            {/* <img className="my-2" height="250" src="https://source.unsplash.com/random/?productivity,city" alt="new"/> */}
                             <p className="my-4">
                                 {user.message}<br></br>
                                 <strong>{user.email}</strong><br></br>
