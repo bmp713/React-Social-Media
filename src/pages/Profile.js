@@ -147,7 +147,7 @@ export default function Profile(){
                     <h2>Messages</h2>  
                     {messages.map( (user) => (
                         <div className="p-3" id={user.id} key={user.id}>
-                            <img className="my-2" height="150" src="https://picsum.photos/200" alt="new"/>
+                            <img className="my-2" height="300" src="https://source.unsplash.com/random/?productivity,city" alt="new"/>
                             <p className="my-4">
                                 {user.message}<br></br>
                                 <strong>{user.email}</strong><br></br>
