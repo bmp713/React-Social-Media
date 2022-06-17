@@ -81,30 +81,26 @@ export default function Friends(){
             console.log(error);
         }
 
-
-
         // Generate random headshot image with fetch API
-        // await fetch('https://source.unsplash.com/collection/928423/480x480', {
-        //     headers: {'Content-Type':'application/json'},
-        //     crossDomain: true,
-        //     mode: 'no-cors',
-        //     method: 'GET'
-        // })
-        //     .then( data => {
-        //         console.log("Fetch image =>", data );
-        //     } )
-        //     .catch( error => {
-        //         console.log("Fetch error => ", error);
-        //     });
-
-        
+        await fetch('https://source.unsplash.com/collection/928423/480x480', {
+            headers: {'Content-Type':'application/json'},
+            crossDomain: true,
+            mode: 'no-cors',
+            method: 'GET'
+        })
+            .then( data => {
+                console.log("Fetch image =>", data );
+            } )
+            .catch( error => {
+                console.log("Fetch error => ", error);
+            });
         
         // Unsplash collection IDs
         // https://unsplash.com/collections/
-        // https://source.unsplash.com/1600x900/?portrait
+        // https://unsplash.com/collections/895539/faces
         // https://source.unsplash.com/collection/collectionID/imageWidth%7DximageHeight/?sig=randomNumber`
         //
-        // let url = 'https://source.unsplash.com/collection/928423/400/400/?sig=100';
+        // let url = 'https://source.unsplash.com/collection/collectionID/400x400/?sig=100';
 
         let random = Math.floor(Math.random() * 100000);
         let urlImg = `https://source.unsplash.com/collection/895539/400x400/?sig=` + random;
