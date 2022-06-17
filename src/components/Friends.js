@@ -19,6 +19,7 @@ export default function Friends(){
     // User authentication
     const auth = getAuth();
     const [user] = useAuthState(auth);
+    const [error, setError] = useState(false);
 
     const navigate = useNavigate();
     const [friends, setFriends] = useState([]);
@@ -26,6 +27,7 @@ export default function Friends(){
 
     const [formData, setFormData] = useState({
         id:"",
+        name: "",
         email: "",
         // password: ""
     });
@@ -62,6 +64,12 @@ export default function Friends(){
     const createFriend = async (e) => {
         e.preventDefault();
 
+        if( !formData.name || !formData.email ){
+            setError(true);
+            return;
+        }
+        else setError(false);
+
         let id = Math.floor(Math.random() * 10000000)
         //console.log('createFriend() => ' + id + ' ' + formData.first + ' ' + formData.last + ', ' + formData.email);
 
@@ -73,21 +81,35 @@ export default function Friends(){
         }catch(error){
             console.log(error);
         }
+
+
+
+        // Generate random headshot image with fetch API
+        await fetch('https://source.unsplash.com/1600x900/?portrait', {
+            headers: {
+                'Content-Type':'application/json'
+            },
+            crossDomain: true,
+            mode: 'no-cors',
+            method: 'GET'
+        })
+            .then( data => {
+                console.log("Fetch image =>", data );
+            } )
+            .catch( error => {
+                console.log("Fetch error => ", error);
+            });
+
+
+        // Update friend document
         await setDoc( doc(db, 'friends', docRef.id.toString()), {
             id: docRef.id,
+            name: formData.name,
             email: formData.email,
+            imageURL: 'https://source.unsplash.com/1600x900/?portrait'
         })
 
-        // Random images
-        // https://picsum.photos/200
-        // https://picsum.photos/200/300
-        // https://fakeface.rest/face/json
-        // https://source.unsplash.com/random/800x800/?img=1
-        // https://100k-faces.glitch.me/random-image
-        // https://github.com/ozgrozer/100k-faces
-        // https://i.pravatar.cc/300
-        // https://source.unsplash.com/random
-        // https://source.unsplash.com/random/?productivity,city
+
 
         readFriends();
     };
@@ -100,11 +122,11 @@ export default function Friends(){
                 </div>
                 {friends.map( (user) => (
                     <div className="col-lg-5" id={user.id} key={user.id}>
-                        <img className="my-2" height="150" src="https://100k-faces.glitch.me/random-image" alt="new"/>
+                        <img className="my-2" height="150" src={user.imageURL} alt="new"/>
                         <p>
-                            {user.id}<br></br>
-                            {/* {user.first} {user.last}<br></br> */}
-                            {user.email}<br></br><br></br>
+                            {/* {user.id}<br></br> */}
+                            {user.name} <br></br>
+                            {user.email}<br></br>
                         </p>
                         <span><button 
                             onClick={ () => { deleteFriend(user.id) } } 
@@ -114,14 +136,24 @@ export default function Friends(){
                     </div>
                 ))}                
                 <div className="col-lg-10 text-left">
-                    <div className="create text-left">        
+                    <div className="create text-left">   
+   
                         <form id='form' onSubmit={createFriend}>
+                            <div className="row text-left m-2">
+                                <h4>Add Friend</h4>  
+                            </div>  
+                            <input 
+                                value={formData.name} 
+                                onChange={ function(e){ setFormData({...formData, name: e.target.value}) } }    
+                                type="text" placeholder="Full Name"
+                            /><br></br>
                             <input 
                                 value={formData.email} 
                                 onChange={ function(e){ setFormData({...formData, email: e.target.value}) } }    
                                 type="text" placeholder="Email"
                             /><br></br>
                             <input className="submit-btn" type="submit" value="Add"/><br></br>
+                            { error ? <p className="text-danger mx-2"> Please fill in all fields</p> : '' }
                         </form>
                         <br></br>
                     </div>

@@ -137,7 +137,7 @@ export default function Profile(){
                             <input 
                                 onClick={createMessage}
                                 className="submit-btn" type="submit" value="Send"/><br></br>
-                            { error ? <p className="text-danger mx-2"> Please enter a message</p> : '' }
+                                { error ? <p className="text-danger mx-2"> Please enter a message</p> : '' }
                         </form>
                         <br></br>
                     </div>
