@@ -1,21 +1,12 @@
 _________________________________
-NPM
-npm i react react-dom react-router-dom firebase sass
-copy all except node_modules
-
-
-_________________________________
-DOS 
-rmdir /s Firebase-auth-article-master
-
-
-
-_________________________________
 GitHub
 
 Login github in browser
 cd root 
+git clone https://github.com/bmp713/[respository].git
+add node_modules => .gitignore
 git init
+
 git add *
 git commit -m "intial"
 git remote add origin https://github.com/bmp713/[respository].git
@@ -61,6 +52,19 @@ https://app.netlify.com/sites/app7-react/deploys
 Options -> Deploy Settings -> Link repository
 
 Delete .netlify after deleting before new deploy
+
+
+
+_________________________________
+NPM
+npm i react react-dom react-router-dom firebase sass
+copy all except node_modules
+
+
+
+_________________________________
+DOS 
+rmdir /s Firebase-auth-article-master
 
 
 
