@@ -14,6 +14,7 @@ import {UserContext} from '../contexts/UserContext';
 export default function Profile(){
 
     const { currentUser, login, logout } = useContext(UserContext);
+    const [file, setFile] = useState("");
 
     const [formData, setFormData] = useState({
         message: "",
@@ -59,6 +60,10 @@ export default function Profile(){
 
         // Create new user
         let docRef;
+
+        //setFile(e.target.files[0]);
+        //console.log("form inputs => ", e.target.files[0]);
+
         try{
             docRef = await addDoc( collection(db, 'messages'), {});
             console.log('id => '+ docRef.id);
@@ -104,6 +109,7 @@ export default function Profile(){
                 <div className="col-lg-6 text-left">
                     <h1>Profile</h1>
                     <p className="profile-details">
+                    {/* <img className="my-2" height="250" src={currentUser.imgURL} alt="new"/> */}
                     {currentUser.first} {currentUser.last}<br></br>
                     {currentUser.name}<br></br>
                     </p>
@@ -131,7 +137,7 @@ export default function Profile(){
                             /><br></br>
                             <input 
                                 value={formData.file} 
-                                onChange={ function(e){ setFormData({...formData, message: e.target.value}) } }    
+                                onChange={ function(e){ setFormData({...formData, file: e.target.value}) } }    
                                 type="file" placeholder=""
                             /><br></br>
                             <input 
@@ -144,7 +150,7 @@ export default function Profile(){
                     <Friends/>
                 </div>
                 <div className="messages col-lg-5 text-left">
-                    <h2>Messages</h2>  
+                    <h2 className="mx-2">Messages</h2>  
                     {messages.map( (user) => (
                         <div className="p-3" id={user.id} key={user.id}>
                             {/* <img className="my-2" height="250" src="https://source.unsplash.com/random/?productivity,city" alt="new"/> */}

@@ -70,8 +70,6 @@ export default function Friends(){
         }
         else setError(false);
 
-        //console.log('createFriend() => ' + id + ' ' + formData.first + ' ' + formData.last + ', ' + formData.email);
-
         // Create new user
         let docRef;
         try{
@@ -98,22 +96,21 @@ export default function Friends(){
         // Unsplash collection IDs
         // https://unsplash.com/collections/
         // https://unsplash.com/collections/895539/faces
+        // https://unsplash.com/collections/302501/people-%26-portraits
         // https://source.unsplash.com/collection/collectionID/imageWidth%7DximageHeight/?sig=randomNumber`
         //
-        // let url = 'https://source.unsplash.com/collection/collectionID/400x400/?sig=100';
+        // let url = 'https://source.unsplash.com/collection/collectionID/400x400/?sig=imageID';
 
         let random = Math.floor(Math.random() * 100000);
-        let urlImg = `https://source.unsplash.com/collection/895539/400x400/?sig=` + random;
+        let urlImg = `https://source.unsplash.com/collection/895539/400x400/?sig=`+ random;
 
         // Update friend document
         await setDoc( doc(db, 'friends', docRef.id.toString()), {
             id: docRef.id,
             name: formData.name,
             email: formData.email,
-            imageURL: urlImg
+            imageURL: formData.image? formData.image : urlImg
         })
-
-
 
         readFriends();
     };
@@ -131,6 +128,7 @@ export default function Friends(){
                             {/* {user.id}<br></br> */}
                             {user.name} <br></br>
                             {user.email}<br></br>
+                            {/* <div style={{fontSize:'8px'}}>{user.imageURL}</div><br></br> */}
                         </p>
                         <span><button 
                             onClick={ () => { deleteFriend(user.id) } } 
@@ -154,8 +152,15 @@ export default function Friends(){
                             <input 
                                 value={formData.email} 
                                 onChange={ function(e){ setFormData({...formData, email: e.target.value}) } }    
-                                type="text" placeholder="Email"
+                                type="text" placeholder="Email Address"
                             /><br></br>
+                            <input 
+                                value={formData.image} 
+                                onChange={ function(e){ setFormData({...formData, image: e.target.value}) } }    
+                                type="text" placeholder="Image URL"
+                            />
+                            <p className="mx-2" style={{fontSize:"10px"}}>(Random image will be generated otherwise)</p>
+                            <br></br>
                             <input className="submit-btn" type="submit" value="Add"/><br></br>
                             { error ? <p className="text-danger mx-2"> Please fill in all fields</p> : '' }
                         </form>
