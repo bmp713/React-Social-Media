@@ -1,45 +1,32 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import '../App.scss';
-import { useState, useEffect } from 'react';
-import { Link, useNavigate} from 'react-router-dom';
-
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
-import { useAuthState } from 'react-firebase-hooks/auth';
+import React, { useState, useEffect, useContext } from 'react';
 import { doc, addDoc, setDoc, getDocs, deleteDoc, collection } from 'firebase/firestore';
-import { signOut } from 'firebase/auth';
 import { db } from '../Firebase';
 
-//import CreateFriend from './CreateFriend';
-//import Create from './Create';
-//import Delete from './Delete';
+import {UserContext} from '../contexts/UserContext';
 
 export default function Gallery(){
 
     // User authentication
-    const auth = getAuth();
-    const [user] = useAuthState(auth);
-    const [error, setError] = useState(false);
+    const { currentUser, login, logout } = useContext(UserContext);
 
-    const navigate = useNavigate();
     const [images, setImages] = useState([]);
-    let data = '';
-    let image_bg;
+    const [error, setError] = useState(false);
 
     const [formData, setFormData] = useState({
         id:"",
         name: "",
-        email: "",
-        // password: ""
+        search: "",
     });
 
     useEffect(() => {
-        //console.log(`user => ${auth.currentUser.email} `);
         readGallery();
     },[]);
 
     const readGallery = async () => {
-        data = await getDocs( collection(db, 'gallery') );
+        let data = await getDocs( collection(db, 'gallery') );
 
         // Copy all data to messages state array
         setImages( data.docs.map( (doc) => ({
@@ -64,11 +51,11 @@ export default function Gallery(){
     const createImage = async (e) => {
         e.preventDefault();
 
-        if( !formData.name ){
-            setError(true);
-            return;
-        }
-        else setError(false);
+        // if( !formData.name ){
+        //     setError(true);
+        //     return;
+        // }
+        // else setError(false);
 
         // Create new user
         let docRef;
@@ -93,31 +80,31 @@ export default function Gallery(){
                 console.log("Fetch error => ", error);
             });
         
-        // Unsplash collection IDs
-        // https://unsplash.com/collections/
-        // https://unsplash.com/collections/895539/faces,277630, 1041983
-        // https://unsplash.com/collections/302501/people-%26-portraits
-        // https://source.unsplash.com/collection/collectionID/imageWidth%7DximageHeight/?sig=randomNumber`
-        //
-        // let url = 'https://source.unsplash.com/collection/collectionID/400x600/?sig=imageID';
+        // https://unsplash.com/collections/302501,895539,277630,1041983
+        // https://source.unsplash.com/collection/{collectionID}/{imageWidth}x{imageHeight}/?sig=randomNumber
+        // https://source.unsplash.com/collection/collectionID/400x600/?sig=imageID
 
         let random = Math.floor(Math.random() * 100000);
-        let urlImg = 'https://source.unsplash.com/random/?california';
-        image_bg = urlImg;
+        let urlImg;
+
+        formData.search ? 
+            urlImg = 'https://source.unsplash.com/random/?' + formData.search : 
+            urlImg = 'https://source.unsplash.com/random/'
+        ;
 
         // Update friend document
-        await setDoc( doc(db, 'gallery', docRef.id.toString()), {
+        await setDoc( doc(db, 'gallery', docRef.id.toString() ), {
             id: docRef.id,
+            user: currentUser.id,
             name: formData.name,
-            email: formData.email,
+            search: formData.search,
             imageURL: formData.image? formData.image : urlImg
         })
-
         readGallery();
     };
 
     return(
-        <div className='gallery'>
+        <div className='gallery my-2'>
             <div className="row justify-content-lg-center align-items-start p-5">
                 <div className="col-lg-12 text-left">
                     <h2>Gallery</h2>  
@@ -142,17 +129,23 @@ export default function Gallery(){
                             <div className="row text-left m-2">
                                 <h4>Add Image</h4>  
                             </div>  
-                            <input 
+                            {/* <input 
                                 value={formData.name} 
                                 onChange={ function(e){ setFormData({...formData, name: e.target.value}) } }    
                                 type="text" placeholder="Label"
-                            /><br></br>
+                            /><br></br> */}
+                            <input 
+                                value={formData.search} 
+                                onChange={ function(e){ setFormData({...formData, search: e.target.value}) } }    
+                                type="text" placeholder="Search"
+                            />
+                            {/* <p className="mx-2" style={{fontSize:"12px"}}>Search example "nature, sunsets"</p> */}
                             <input 
                                 value={formData.image} 
                                 onChange={ function(e){ setFormData({...formData, image: e.target.value}) } }    
                                 type="text" placeholder="Image URL"
                             />
-                            <p className="mx-2" style={{fontSize:"10px"}}>(Random image will be generated otherwise)</p>
+                            <p className="mx-2" style={{fontSize:"12px"}}>(Random image will be generated if all fields left blank)</p>
                             <br></br>
                             <input className="submit-btn" type="submit" value="Add"/><br></br>
                             { error ? <p className="text-danger mx-2"> Please fill in all fields</p> : '' }

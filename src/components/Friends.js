@@ -1,43 +1,33 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import '../App.scss';
-import { useState, useEffect } from 'react';
-import { Link, useNavigate} from 'react-router-dom';
-
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
-import { useAuthState } from 'react-firebase-hooks/auth';
+import React, { useState, useEffect, useContext } from 'react';
 import { doc, addDoc, setDoc, getDocs, deleteDoc, collection } from 'firebase/firestore';
-import { signOut } from 'firebase/auth';
 import { db } from '../Firebase';
+
+import {UserContext} from '../contexts/UserContext';
 
 export default function Friends(){
 
     // User authentication
-    const auth = getAuth();
-    const [user] = useAuthState(auth);
-    const [error, setError] = useState(false);
+    const { currentUser, login, logout } = useContext(UserContext);
 
-    const navigate = useNavigate();
     const [friendsCount, setFriendsCount] = useState(0);
     const [friends, setFriends] = useState([]);
-
-    let data = '';
-    let image_bg;
-
+    const [error, setError] = useState(false);
+    
     const [formData, setFormData] = useState({
         id:"",
         name: "",
         email: "",
-        // password: ""
     });
 
     useEffect(() => {
-        //console.log(`user => ${auth.currentUser.email} `);
         readFriends();
     },[]);
 
     const readFriends = async () => {
-        data = await getDocs( collection(db, 'friends') );
+        let data = await getDocs( collection(db, 'friends') );
 
         // Copy all data to messages state array
         setFriends( data.docs.map( (doc) => ({
@@ -46,8 +36,6 @@ export default function Friends(){
         
         friends.forEach( (friend) => {
             setFriendsCount( friendsCount => friendsCount + 1 );
-
-            console.log(friend);
             console.log('friend.id => ' + friend.id );
         });
     };
@@ -56,8 +44,6 @@ export default function Friends(){
         console.log('deleteDoc(id) => ' + id);
         try{
             await deleteDoc( doc(db, 'friends', id) );
-            // setFriendsCount(friendsCount++);
-
             readFriends();
         }catch(error){
             console.log(error);
@@ -72,9 +58,8 @@ export default function Friends(){
             return;
         }
         else setError(false);
-        // setFriendsCount(friendsCount++);
 
-        // Create new user
+        // Create new friend
         let docRef;
         try{
             docRef = await addDoc( collection(db, 'friends'), {});
@@ -97,21 +82,18 @@ export default function Friends(){
                 console.log("Fetch error => ", error);
             });
         
-        // Unsplash collection IDs
-        // https://unsplash.com/collections/
-        // https://unsplash.com/collections/895539/faces
-        // https://unsplash.com/collections/302501/people-%26-portraits
-        // https://source.unsplash.com/collection/collectionID/imageWidth%7DximageHeight/?sig=randomNumber`
-        //
-        // let url = 'https://source.unsplash.com/collection/collectionID/400x400/?sig=imageID';
+        // https://unsplash.com/collections/302501,895539,277630,1041983
+        // https://source.unsplash.com/collection/{collectionID}/{imageWidth}x{imageHeight}/?sig=randomNumber
+        // https://source.unsplash.com/collection/collectionID/400x600/?sig=imageID
 
+        // Generate random headshot image
         let random = Math.floor(Math.random() * 100000);
         let urlImg = `https://source.unsplash.com/collection/895539/400x400/?sig=`+ random;
-        image_bg = urlImg;
 
         // Update friend document
         await setDoc( doc(db, 'friends', docRef.id.toString()), {
             id: docRef.id,
+            user: currentUser.id,
             name: formData.name,
             email: formData.email,
             imageURL: formData.image? formData.image : urlImg
@@ -120,8 +102,8 @@ export default function Friends(){
     };
 
     return(
-        <div className='friends'>
-            <div className="row justify-content-lg-center align-items-start">
+        <div className='friends my-2'>
+            <div className="row justify-content-lg-center align-items-start py-5">
                 <div className="col-lg-10 text-left">
                     <h2>Friends ({friendsCount})</h2>  
                 </div>
