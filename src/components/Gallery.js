@@ -102,7 +102,7 @@ export default function Gallery(){
         // let url = 'https://source.unsplash.com/collection/collectionID/400x600/?sig=imageID';
 
         let random = Math.floor(Math.random() * 100000);
-        let urlImg = `https://source.unsplash.com/collection/1041983/600x400/?sig=`+ random;
+        let urlImg = 'https://source.unsplash.com/random/?california';
         image_bg = urlImg;
 
         // Update friend document
@@ -119,11 +119,11 @@ export default function Gallery(){
     return(
         <div className='gallery'>
             <div className="row justify-content-lg-center align-items-start p-5">
-                <div className="col-lg-10 text-left">
+                <div className="col-lg-12 text-left">
                     <h2>Gallery</h2>  
                 </div>
                 {images.map( (user) => (
-                    <div className="col-lg-4" id={user.id} key={user.id}>
+                    <div className="col-lg-6" id={user.id} key={user.id}>
                         <img className="my-2" width="100%" src={user.imageURL} alt="new"/>
                         <p>
                             {user.name} <br></br>

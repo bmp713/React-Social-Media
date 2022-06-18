@@ -136,7 +136,7 @@ export default function Profile(){
                         backgroundSize:'cover'
                     }}
                 >
-                    <h4 className="mx-2">Messages</h4>  
+                    <h2 className="mx-2">Messages</h2>  
                     {messages.map( (user) => (
                         <div className="p-3" id={user.id} key={user.id}>
                             {/* <img className="my-2" height="250" src="https://source.unsplash.com/random/?productivity,city" alt="new"/> */}
@@ -163,9 +163,9 @@ export default function Profile(){
                             <hr></hr>
                         </div>
                     ))} 
-                    <div className="App-modal create text-left">        
+                    <div className="create text-left">        
                         <form id='form' >
-                            <h2>Post</h2>
+                            <h3 className="mx-3">Post</h3>
                             <input 
                                 value={formData.message} 
                                 onChange={ function(event){ 
@@ -181,6 +181,7 @@ export default function Profile(){
                             /><br></br>
                             <input 
                                 onClick={createMessage}
+                                style={{border:'2px solid #ffff'}}
                                 className="submit-btn" type="submit" value="Send"/><br></br>
                                 { error ? <p className="text-danger mx-2"> Please enter a message</p> : '' }
                         </form>

@@ -10,10 +10,6 @@ import { doc, addDoc, setDoc, getDocs, deleteDoc, collection } from 'firebase/fi
 import { signOut } from 'firebase/auth';
 import { db } from '../Firebase';
 
-//import CreateFriend from './CreateFriend';
-//import Create from './Create';
-//import Delete from './Delete';
-
 export default function Friends(){
 
     // User authentication
