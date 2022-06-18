@@ -8,6 +8,7 @@ import {Link, Route, Routes, useNavigate, BrowserRouter as Router, Navigate} fro
 import { doc, addDoc, setDoc, getDocs, deleteDoc, collection } from 'firebase/firestore';
 import { db } from '../Firebase';
 import Friends from '../components/Friends';
+import Gallery from '../components/Gallery';
 
 import {UserContext} from '../contexts/UserContext';
 
@@ -104,7 +105,8 @@ export default function Profile(){
     };
 
     return(
-        <div className='profile page'>
+        <div className='profile page' 
+            >
             <div className="header row justify-content-lg-left align-items-start">
                 <div className="col-lg-6 text-left">
                     <h1>Profile</h1>
@@ -124,33 +126,17 @@ export default function Profile(){
             </div>
             <div className="row justify-content-lg-center align-items-start">
                 <div className="col-lg-5 text-left">
-                    <div className="App-modal create text-left">        
-                        <form id='form' >
-                            <h2>Post</h2>
-                            <input 
-                                value={formData.message} 
-                                onChange={ function(event){ 
-                                    setFormData({...formData, message: event.target.value}) 
-                                    event.target.value ? setError(false) : setError(true)
-                                } }    
-                                type="textarea" placeholder="Type your message here"
-                            /><br></br>
-                            <input 
-                                value={formData.file} 
-                                onChange={ function(e){ setFormData({...formData, file: e.target.value}) } }    
-                                type="file" placeholder=""
-                            /><br></br>
-                            <input 
-                                onClick={createMessage}
-                                className="submit-btn" type="submit" value="Send"/><br></br>
-                                { error ? <p className="text-danger mx-2"> Please enter a message</p> : '' }
-                        </form>
-                        <br></br>
-                    </div>
-                    <Friends/>
+                <Friends/>
+                <Gallery/>
                 </div>
-                <div className="messages col-lg-5 text-left">
-                    <h2 className="mx-2">Messages</h2>  
+                <div 
+                    className="messages col-lg-5 text-left" 
+                    style={{
+                        background:'linear-gradient(#3579,#000f), url("https://source.unsplash.com/random/?abstract") no-repeat fixed', 
+                        backgroundSize:'cover'
+                    }}
+                >
+                    <h4 className="mx-2">Messages</h4>  
                     {messages.map( (user) => (
                         <div className="p-3" id={user.id} key={user.id}>
                             {/* <img className="my-2" height="250" src="https://source.unsplash.com/random/?productivity,city" alt="new"/> */}
@@ -177,8 +163,30 @@ export default function Profile(){
                             <hr></hr>
                         </div>
                     ))} 
+                    <div className="App-modal create text-left">        
+                        <form id='form' >
+                            <h2>Post</h2>
+                            <input 
+                                value={formData.message} 
+                                onChange={ function(event){ 
+                                    setFormData({...formData, message: event.target.value}) 
+                                    event.target.value ? setError(false) : setError(true)
+                                } }    
+                                type="textarea" placeholder="Type your message here"
+                            /><br></br>
+                            <input 
+                                value={formData.file} 
+                                onChange={ function(e){ setFormData({...formData, file: e.target.value}) } }    
+                                type="file" placeholder=""
+                            /><br></br>
+                            <input 
+                                onClick={createMessage}
+                                className="submit-btn" type="submit" value="Send"/><br></br>
+                                { error ? <p className="text-danger mx-2"> Please enter a message</p> : '' }
+                        </form>
+                        <br></br>
+                    </div>
                 </div>
-
             </div>
         </div>  
 

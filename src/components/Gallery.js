@@ -14,7 +14,7 @@ import { db } from '../Firebase';
 //import Create from './Create';
 //import Delete from './Delete';
 
-export default function Friends(){
+export default function Gallery(){
 
     // User authentication
     const auth = getAuth();
@@ -22,9 +22,7 @@ export default function Friends(){
     const [error, setError] = useState(false);
 
     const navigate = useNavigate();
-    const [friendsCount, setFriendsCount] = useState(0);
-    const [friends, setFriends] = useState([]);
-
+    const [images, setImages] = useState([]);
     let data = '';
     let image_bg;
 
@@ -37,58 +35,52 @@ export default function Friends(){
 
     useEffect(() => {
         //console.log(`user => ${auth.currentUser.email} `);
-        readFriends();
+        readGallery();
     },[]);
 
-    const readFriends = async () => {
-        data = await getDocs( collection(db, 'friends') );
+    const readGallery = async () => {
+        data = await getDocs( collection(db, 'gallery') );
 
         // Copy all data to messages state array
-        setFriends( data.docs.map( (doc) => ({
+        setImages( data.docs.map( (doc) => ({
             ...doc.data()
         }) ) );
         
-        friends.forEach( (friend) => {
-            setFriendsCount( friendsCount => friendsCount + 1 );
-
-            console.log(friend);
-            console.log('friend.id => ' + friend.id );
+        images.forEach( (image) => {
+            console.log(image);
         });
     };
     
-    const deleteFriend = async (id) => {
+    const deleteImage = async (id) => {
         console.log('deleteDoc(id) => ' + id);
         try{
-            await deleteDoc( doc(db, 'friends', id) );
-            // setFriendsCount(friendsCount++);
-
-            readFriends();
+            await deleteDoc( doc(db, 'gallery', id) );
+            readGallery();
         }catch(error){
             console.log(error);
         }
     };
 
-    const createFriend = async (e) => {
+    const createImage = async (e) => {
         e.preventDefault();
 
-        if( !formData.name || !formData.email ){
+        if( !formData.name ){
             setError(true);
             return;
         }
         else setError(false);
-        // setFriendsCount(friendsCount++);
 
         // Create new user
         let docRef;
         try{
-            docRef = await addDoc( collection(db, 'friends'), {});
+            docRef = await addDoc( collection(db, 'gallery'), {});
             console.log('id => '+ docRef.id);
         }catch(error){
             console.log(error);
         }
 
         // Generate random headshot image with fetch API
-        await fetch('https://source.unsplash.com/collection/928423/480x480', {
+        await fetch('https://source.unsplash.com/collection/928423/480x640', {
             headers: {'Content-Type':'application/json'},
             crossDomain: true,
             mode: 'no-cors',
@@ -103,64 +95,57 @@ export default function Friends(){
         
         // Unsplash collection IDs
         // https://unsplash.com/collections/
-        // https://unsplash.com/collections/895539/faces
+        // https://unsplash.com/collections/895539/faces,277630, 1041983
         // https://unsplash.com/collections/302501/people-%26-portraits
         // https://source.unsplash.com/collection/collectionID/imageWidth%7DximageHeight/?sig=randomNumber`
         //
-        // let url = 'https://source.unsplash.com/collection/collectionID/400x400/?sig=imageID';
+        // let url = 'https://source.unsplash.com/collection/collectionID/400x600/?sig=imageID';
 
         let random = Math.floor(Math.random() * 100000);
-        let urlImg = `https://source.unsplash.com/collection/895539/400x400/?sig=`+ random;
+        let urlImg = `https://source.unsplash.com/collection/1041983/600x400/?sig=`+ random;
         image_bg = urlImg;
 
         // Update friend document
-        await setDoc( doc(db, 'friends', docRef.id.toString()), {
+        await setDoc( doc(db, 'gallery', docRef.id.toString()), {
             id: docRef.id,
             name: formData.name,
             email: formData.email,
             imageURL: formData.image? formData.image : urlImg
         })
-        readFriends();
+
+        readGallery();
     };
 
     return(
-        <div className='friends'>
-            <div className="row justify-content-lg-center align-items-start">
+        <div className='gallery'>
+            <div className="row justify-content-lg-center align-items-start p-5">
                 <div className="col-lg-10 text-left">
-                    <h2>Friends ({friendsCount})</h2>  
+                    <h2>Gallery</h2>  
                 </div>
-                {friends.map( (user) => (
-                    <div className="col-lg-5" id={user.id} key={user.id}>
-                        <img className="my-2" height="200" src={user.imageURL} alt="new"/>
+                {images.map( (user) => (
+                    <div className="col-lg-4" id={user.id} key={user.id}>
+                        <img className="my-2" width="100%" src={user.imageURL} alt="new"/>
                         <p>
-                            {/* {user.id}<br></br> */}
                             {user.name} <br></br>
-                            {user.email}<br></br>
-                            {/* <div style={{fontSize:'8px'}}>{user.imageURL}</div><br></br> */}
                         </p>
                         <span><button 
-                            onClick={ () => { deleteFriend(user.id) } } 
+                            onClick={ () => { deleteImage(user.id) } } 
                             className="App-btn">Delete
                         </button></span>
                         <hr></hr>
                     </div>
                 ))}                
-                <div className="col-lg-10 text-left">
+                <div className="col-lg-12 text-left">
                     <div className="create text-left">   
    
-                        <form id='form' onSubmit={createFriend}>
+                        <form id='form' onSubmit={createImage}>
                             <div className="row text-left m-2">
-                                <h4>Add Friend</h4>  
+                                <h4>Add Image</h4>  
                             </div>  
                             <input 
                                 value={formData.name} 
                                 onChange={ function(e){ setFormData({...formData, name: e.target.value}) } }    
-                                type="text" placeholder="Full Name"
-                            /><br></br>
-                            <input 
-                                value={formData.email} 
-                                onChange={ function(e){ setFormData({...formData, email: e.target.value}) } }    
-                                type="text" placeholder="Email Address"
+                                type="text" placeholder="Label"
                             /><br></br>
                             <input 
                                 value={formData.image} 

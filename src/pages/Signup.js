@@ -51,7 +51,6 @@ export default function Signup(){
             })
             .catch( (error) => {
                 console.log("Signup.js => signup() =>", error);
-
                 setMsgSubmit({
                     message: error.toString(),
                     color: 'red'
@@ -109,7 +108,7 @@ export default function Signup(){
                             <p style={{marginLeft:"10px", color:msgSubmit.color, fontSize:"14px"}}>{msgSubmit.message}</p>
 
                             <div className="row justify-content-lg-center align-items-stretch">
-                                <div className="col-lg-12 text-right px-2">
+                                <div className="col-lg-11 text-right px-2">
                                     <span style={{fontSize: "10px"}}>* By clicking "Sign Up",  you are agreeing to the Terms of Service and Privacy policy.</span>
                                     <br></br><br></br>
                                     <p>Already have an account? <Link to='/' className=".App-btn"><strong>Sign In</strong></Link><br></br></p>

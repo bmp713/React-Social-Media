@@ -13,33 +13,14 @@ export const UserProvider = ( {children} ) => {
 
     const [currentUser, setCurrentUser] = useState('');
     const [currentUserID, setCurrentUserID] = useState('id');
+    
+    console.log("UserContext localStorage => ", window.localStorage.getItem('currentUserID' ) );
 
     useEffect( () => {
-        let id = window.localStorage.getItem('currentUserID' );
-        console.log("UserContext mounted currentUser =>", currentUser);
-        console.log("UserContext mounted localStorage => ", window.localStorage.getItem('currentUserID' ) );
-
-        if( id ){
-            //window.localStorage.setItem('currentUserID', JSON.stringify(currentUser));
-            setCurrentUserID(id);
-            //readprofile(id);
-        }
+        readprofile( JSON.parse(window.localStorage.getItem('currentUserID')) );
+        setCurrentUserID( JSON.parse(window.localStorage.getItem('currentUserID')) );
+        console.log("UserContext => currentUserID =>", currentUserID );
     },[]);
-
-    useEffect( () => {
-        let id = window.localStorage.getItem('currentUserID' );
-        console.log("UserContext changed localStorage => ", id );
-        console.log("UserContext changed currentUser =>", currentUser);
-
-        window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID));
-    });
-
-    useEffect(() => {
-        return () => {
-          console.log("UserContext dismount currentUser =>", currentUser);
-          //window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID));
-        };
-    }, []); 
 
     // Login updates the user data with a name parameter    
     const login = (name, password) => {
@@ -50,12 +31,13 @@ export const UserProvider = ( {children} ) => {
                 readprofile( auth.currentUser.uid );
                 setCurrentUserID(auth.currentUser.uid);
 
+                window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID))
+                console.log("UserContext localStorage => ", window.localStorage.getItem('currentUserID' ) );
             })
     };
 
     // Read additional profile data from users db by id
     const readprofile = async (id) => {
-
         let data;
         try{
             let docs = query( collection(db, "users"), where("id", "==", id) );
@@ -78,7 +60,6 @@ export const UserProvider = ( {children} ) => {
     // Sign up new user in firebase, send email, and login 
     const signup = (first, last, email, password ) => {
         return createUserWithEmailAndPassword(auth, email, password).then(() =>{
-
             createUserFirebase(auth.currentUser.uid, first, last, email);
             sendEmailVerification(auth.currentUser);
             login(email, password);
