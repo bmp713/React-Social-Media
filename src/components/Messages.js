@@ -94,16 +94,16 @@ export default function Messages(){
 
     return(
         <div 
-            className="messages col-lg-12 text-left p-5 my-3" 
+            className="messages col-lg-12 text-left p-5 my-2" 
             style={{
-                background:'linear-gradient(#357a,#000f), url("https://source.unsplash.com/random/?abstract") no-repeat', 
+                background:'linear-gradient(#000a,#000a), url("https://source.unsplash.com/random/?macro") no-repeat', 
                 backgroundSize:'cover'
             }}
         >
             <h2 className="mx-2">Messages</h2>  
             {messages.map( (user) => (
                 <div className="p-3" id={user.id} key={user.id}>
-                    {/* <img className="my-2" height="250" src="https://source.unsplash.com/random/?productivity,city" alt="new"/> */}
+                    {/* <img className="my-2" height="250" src="https://source.unsplash.com/random/?city" alt="new"/> */}
                     <p className="my-4">
                         {user.message}<br></br>
                         <strong>{user.email}</strong><br></br>

@@ -11,6 +11,8 @@ import { db } from '../Firebase';
 import Friends from '../components/Friends';
 import Gallery from '../components/Gallery';
 import Messages from '../components/Messages';
+import Users from '../components/Users';
+
 
 import {UserContext} from '../contexts/UserContext';
 
@@ -47,10 +49,13 @@ export default function Profile(){
                     <Friends/>
                 </div>
                 <div className="col-lg-5 text-left m-1">
-                    <Gallery/>
                     <Messages/>
                 </div>
-                <div className="col-lg-5 text-left m-1">
+                <div className="col-lg-10 text-left m-1">
+                    <Gallery/>
+                </div>
+                <div className="col-lg-10 text-left m-1">
+                    <Users/>
                 </div>
             </div>
         </div>  

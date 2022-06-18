@@ -17,9 +17,6 @@ export default function Friends(){
     const [error, setError] = useState(false);
     
     const [formData, setFormData] = useState({
-        id:"",
-        name: "",
-        email: "",
     });
 
     useEffect(() => {
@@ -93,7 +90,7 @@ export default function Friends(){
         // Update friend document
         await setDoc( doc(db, 'friends', docRef.id.toString()), {
             id: docRef.id,
-            user: currentUser.id,
+            userId: currentUser.id,
             name: formData.name,
             email: formData.email,
             imageURL: formData.image? formData.image : urlImg
@@ -105,29 +102,29 @@ export default function Friends(){
         <div className='friends my-2'>
             <div className="row justify-content-lg-center align-items-start py-5">
                 <div className="col-lg-10 text-left">
-                    <h2>Friends ({friendsCount})</h2>  
+                    {/* <h2>Friends ({friendsCount})</h2>   */}
+                    <h2>Friends</h2> 
                 </div>
                 {friends.map( (user) => (
-                    <div className="col-lg-5" id={user.id} key={user.id}>
-                        <img className="my-2" height="200" src={user.imageURL} alt="new"/>
-                        <p>
-                            {/* {user.id}<br></br> */}
-                            {user.name} <br></br>
-                            {user.email}<br></br>
-                            {/* <div style={{fontSize:'8px'}}>{user.imageURL}</div><br></br> */}
-                        </p>
-                        <span><button 
-                            onClick={ () => { deleteFriend(user.id) } } 
-                            className="App-btn">Delete
-                        </button></span>
-                        <hr></hr>
-                    </div>
+                     (currentUser.id !== user.userId) ? '' : (
+                        <div className="col-lg-5" id={user.id} key={user.id}>
+                            <img className="my-2" height="200" src={user.imageURL} alt="new"/>
+                            <p>
+                                {user.name} <br></br>
+                                {user.email}<br></br>
+                            </p>
+                            <span><button 
+                                onClick={ () => { deleteFriend(user.id) } } 
+                                className="App-btn">Delete
+                            </button></span>
+                            <hr></hr>
+                        </div>
+                    )
                 ))}                
                 <div className="col-lg-10 text-left">
                     <div className="create text-left">   
-   
                         <form id='form' onSubmit={createFriend}>
-                            <div className="row text-left m-2">
+                            <div className="row text-left my-2 mx-0">
                                 <h4>Add Friend</h4>  
                             </div>  
                             <input 

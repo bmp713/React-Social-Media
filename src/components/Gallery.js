@@ -80,7 +80,7 @@ export default function Gallery(){
                 console.log("Fetch error => ", error);
             });
         
-        // https://unsplash.com/collections/302501,895539,277630,1041983
+        // https://unsplash.com/collections/302501,895539,277630,1041983,546927
         // https://source.unsplash.com/collection/{collectionID}/{imageWidth}x{imageHeight}/?sig=randomNumber
         // https://source.unsplash.com/collection/collectionID/400x600/?sig=imageID
 
@@ -89,13 +89,13 @@ export default function Gallery(){
 
         formData.search ? 
             urlImg = 'https://source.unsplash.com/random/?' + formData.search : 
-            urlImg = 'https://source.unsplash.com/random/'
+            urlImg = 'https://source.unsplash.com/random/546927'
         ;
 
         // Update friend document
         await setDoc( doc(db, 'gallery', docRef.id.toString() ), {
             id: docRef.id,
-            user: currentUser.id,
+            userId: currentUser.id,
             name: formData.name,
             search: formData.search,
             imageURL: formData.image? formData.image : urlImg
@@ -109,20 +109,23 @@ export default function Gallery(){
                 <div className="col-lg-12 text-left">
                     <h2>Gallery</h2>  
                 </div>
-                {images.map( (user) => (
-                    <div className="col-lg-6" id={user.id} key={user.id}>
-                        <img className="my-2" width="100%" src={user.imageURL} alt="new"/>
-                        <p>
-                            {user.name} <br></br>
-                        </p>
-                        <span><button 
-                            onClick={ () => { deleteImage(user.id) } } 
-                            className="App-btn">Delete
-                        </button></span>
-                        <hr></hr>
-                    </div>
+                {images.map( (image) => (
+                    (currentUser.id !== image.userId) ? '' : (
+                        <div className="col-lg-6" id={image.id} key={image.id}>
+                            <img className="my-2" height="400" src={image.imageURL} alt="new"/>
+                            <p style={{wordWrap:'break-word', fontSize:'10px'}}>
+                                {image.search} <br></br>
+                                {/* {image.imageURL} <br></br> */}
+                            </p>
+                            <span><button 
+                                onClick={ () => { deleteImage(image.id) } } 
+                                className="App-btn">Delete
+                            </button></span>
+                            <hr></hr>
+                        </div>
+                    )
                 ))}                
-                <div className="col-lg-12 text-left">
+                <div className="col-lg-5 text-left">
                     <div className="create text-left">   
    
                         <form id='form' onSubmit={createImage}>
