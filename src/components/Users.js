@@ -20,10 +20,10 @@ export default function Users(){
     });
 
     useEffect(() => {
-        readprofiless();
+        readprofiles();
     },[]);
 
-    const readprofiless = async () => {
+    const readprofiles = async () => {
         let data = await getDocs( collection(db, 'users') );
 
         // Copy all data to messages state array

@@ -37,16 +37,28 @@ export default function Profile(){
             <div className="header row justify-content-lg-left align-items-start">
                 <div className="col-lg-6 text-left">
                     <h1>Profile</h1>
-                    <p className="profile-details" style={{fontSize:'15px', fontWeight:'300'}}>
-                    {currentUser.first} {currentUser.last}<br></br>
-                    {currentUser.name}<br></br>
-                    </p>
+                    <div className="row justify-content-lg-left align-items-center">
+                        <div className="col-lg-10 text-left m-1">
+                            <div style={{fontSize:'15px',lineHeight:'1'}}>
+                                {currentUser.first} {currentUser.last}<br></br>
+                                {currentUser.name}<br></br>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div className="profile-settings col-lg-6 py-2 text-lg-end">
-                    <p>
+                <div className="col-lg-6 py-2 text-lg-end">
+                    <p className="profile-settings">
                         <span style={{color:'#07ff'}}>{currentUser.name}</span> is signed in
-                        <span><img width="20px" className="mx-3" src="./assets/Icon-gear-white.png" alt='new'/></span>
-                        <button onClick={logoutProfile} className="app-btn">Sign Out</button> 
+                        <img 
+                                width="40"
+                                height="40" 
+                                className="mx-3" 
+                                src={currentUser.imgURL} 
+                                style={{borderRadius:'50%'}}
+                                alt="new"
+                        />
+                        <button onClick={logoutProfile} className="app-btn">Sign Out</button><br></br>
+                        <span>Settings<img width="20px" className="m-3" src="./assets/Icon-gear-white.png" alt='new'/></span>
                     </p>
                 </div>
             </div>

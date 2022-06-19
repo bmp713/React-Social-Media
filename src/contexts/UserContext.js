@@ -50,7 +50,7 @@ export const UserProvider = ( {children} ) => {
                     name: doc.data().email,
                     first: doc.data().first,
                     last: doc.data().last,
-                    imgURL: 'https://source.unsplash.com/collection/895539/400x400',
+                    imgURL: doc.data().imgURL,
                     friends: doc.data().friends
                 }));
                 console.log("readProfile =>", currentUser);
@@ -79,6 +79,7 @@ export const UserProvider = ( {children} ) => {
                 first: first,
                 last: last,
                 email: email,
+                // imgURL: './assets/Icon-headshot.png',
                 imgURL: 'https://source.unsplash.com/collection/895539/400x400',
                 friends: ''
             });
@@ -120,6 +121,9 @@ export const UserProvider = ( {children} ) => {
             imgURL: '',
             friends: ''
         }));
+
+        window.localStorage.setItem('currentUserID', '')
+        console.log("UserContext localStorage => ", window.localStorage.getItem('currentUserID' ) );
 
         console.log( "logout currentUser => ",currentUser );
         signOut( auth )

@@ -111,7 +111,7 @@ export default function Gallery(){
                 </div>
                 {images.map( (image) => (
                     (currentUser.id !== image.userId) ? '' : (
-                        <div className="col-lg-5 my-1" id={image.id} key={image.id}>
+                        <div className="col-lg-6 my-1" id={image.id} key={image.id}>
                             <img 
                                 height="200"
                                 className="my-2 img-responsive" 

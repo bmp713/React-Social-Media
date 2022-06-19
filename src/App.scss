@@ -12,7 +12,6 @@
 }
 h1{
     color: #4267d9;
-    //color: #ffff;
     font-size: 66px; 
     font-weight: 700; 
     font-family: "Titillium Web";
@@ -80,7 +79,7 @@ header{
         font-weight: 500;
     }
     .profile-settings{
-        p, span{
+        p, div, span{
             font-size: 14px;
         }
     }
@@ -174,9 +173,6 @@ input{
     padding: 10px 0px;
     color: #2227;
 }
-
-
-
 
 
 .eye-container{
@@ -293,7 +289,7 @@ a, p, span{
             }
         }
     
-        .App-btn, 
+        .app-btn, 
         .submit-btn,
         .btn-black,
         .btn-blue,
