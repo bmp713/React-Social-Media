@@ -104,39 +104,37 @@ export default function Gallery(){
     };
 
     return(
-        <div className='gallery my-2'>
+        <div className='gallery my-5'>
             <div className="row justify-content-lg-center align-items-start p-5">
                 <div className="col-lg-12 text-left">
                     <h2>Gallery</h2>  
                 </div>
                 {images.map( (image) => (
                     (currentUser.id !== image.userId) ? '' : (
-                        <div className="col-lg-6" id={image.id} key={image.id}>
-                            <img className="my-2" height="400" src={image.imageURL} alt="new"/>
+                        <div className="col-lg-5 my-1" id={image.id} key={image.id}>
+                            <img 
+                                height="200"
+                                className="my-2 img-responsive" 
+                                src={image.imageURL} alt="new"
+                            />
                             <p style={{wordWrap:'break-word', fontSize:'10px'}}>
                                 {image.search} <br></br>
                                 {/* {image.imageURL} <br></br> */}
                             </p>
                             <span><button 
                                 onClick={ () => { deleteImage(image.id) } } 
-                                className="App-btn">Delete
+                                className="app-btn">Delete
                             </button></span>
                             <hr></hr>
                         </div>
                     )
                 ))}                
-                <div className="col-lg-5 text-left">
+                <div className="col-lg-12 text-left">
                     <div className="create text-left">   
-   
                         <form id='form' onSubmit={createImage}>
-                            <div className="row text-left m-2">
+                            <div className="row text-left my-2">
                                 <h4>Add Image</h4>  
-                            </div>  
-                            {/* <input 
-                                value={formData.name} 
-                                onChange={ function(e){ setFormData({...formData, name: e.target.value}) } }    
-                                type="text" placeholder="Label"
-                            /><br></br> */}
+                            </div>
                             <input 
                                 value={formData.search} 
                                 onChange={ function(e){ setFormData({...formData, search: e.target.value}) } }    

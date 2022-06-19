@@ -22,14 +22,15 @@ export default function Footer(){
         <footer className="">
             <div className="row justify-content-center align-items-center">
                 <div className="col-lg-12 justify-content-center align-items-center text-center p-2">
+                    { console.log("currentUser => ", currentUser ) }
                     { currentUser.name ? ( 
                         <div>
                             <span style={{margin:'10px', fontSize:'16px'}}>{currentUser.name} is signed in</span>
-                            <button className='App-btn' onClick={logoutProfile}>Sign Out</button>
+                            <button className='app-btn' onClick={logoutProfile}>Sign Out</button>
                         </div>
                     ) : (
                         <div>
-                            <Link to='/' type="button" className="App-btn">Sign In</Link>
+                            <Link to='/' type="button" className="app-btn">Sign In</Link>
                             <Link to='/signup' type="button" className="text-white mx-5"><span>Register Free</span></Link>
                         </div>   
                     )}

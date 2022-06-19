@@ -108,10 +108,10 @@ export default function Login(){
                         </form>
                         <div className="row justify-content-lg-center align-items-stretch">
                             <div className="col-lg-6 text-center">
-                                <span><button className=".App-btn">
+                                <span><button className=".app-btn">
                                     <img width='75' src="./assets/Icon-facebook.png" alt="new"/>
                                 </button></span>
-                                <span><button className=".App-btn">
+                                <span><button className=".app-btn">
                                     <img width='75' src="./assets/Icon-google.png" alt="new"/>
                                 </button></span>
                             </div>
@@ -122,7 +122,7 @@ export default function Login(){
             <div className="row signin-row justify-content-lg-center align-items-center text-black">
                 <div className="col-lg-5 text-left">
                     <div className="col-lg-10 text-left px-4">
-                        <h1>Social Media</h1>
+                        <h1 style={{color:'#4267d9'}}>Social Media</h1>
                         <h2>Its Impact Changed The World</h2>
                         <br></br><br></br>
                         <p>

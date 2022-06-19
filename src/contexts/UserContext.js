@@ -49,8 +49,11 @@ export const UserProvider = ( {children} ) => {
                     id: doc.data().id,
                     name: doc.data().email,
                     first: doc.data().first,
-                    last: doc.data().last
+                    last: doc.data().last,
+                    imgURL: 'https://source.unsplash.com/collection/895539/400x400',
+                    friends: doc.data().friends
                 }));
+                console.log("readProfile =>", currentUser);
             });
         }catch(error){
             console.log("readProfile(error) => " + error );
@@ -75,11 +78,30 @@ export const UserProvider = ( {children} ) => {
                 id: id,
                 first: first,
                 last: last,
-                email: email
+                email: email,
+                imgURL: 'https://source.unsplash.com/collection/895539/400x400',
+                friends: ''
             });
             console.log('addDoc id => '+ id);
         }catch(error){
             console.log('createUserFirebase() => ', error);
+        }
+    };  
+
+       // Create user additional profile data in users db
+    const updateUserFirebase = async ( currentUser ) => {
+        try{
+            await setDoc( doc( db, "users", currentUser.id), {
+                id: currentUser.id,
+                name: currentUser.name,
+                first: currentUser.first,
+                last: currentUser.last,
+                imgURL: currentUser.imgURL,
+                friends: currentUser.friends
+            });
+            console.log("updateUserFirebase => " + currentUser );
+        }catch(error){
+            console.log("updateUserFirebase => " + error );
         }
     };  
 
@@ -94,8 +116,12 @@ export const UserProvider = ( {children} ) => {
             id: '',
             name: '',
             first: '',
-            last: ''
+            last: '',
+            imgURL: '',
+            friends: ''
         }));
+
+        console.log( "logout currentUser => ",currentUser );
         signOut( auth )
             .then( () => {
                 console.log( currentUser.name, 'signed out' );
@@ -106,7 +132,7 @@ export const UserProvider = ( {children} ) => {
 
     // Wrapper for Context Provider
     return (
-        <UserContext.Provider value={ {currentUser, login, logout, signup, reset} }>
+        <UserContext.Provider value={ {currentUser, login, logout, signup, reset, setCurrentUser, updateUserFirebase} }>
             {children}
         </UserContext.Provider>
     );

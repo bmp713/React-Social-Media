@@ -115,7 +115,16 @@ export default function Signup(){
                                 </div>
                             </div>
                         </form>
-                        <br></br>
+                        <div className="row justify-content-lg-center align-items-stretch">
+                            <div className="col-lg-6 text-center">
+                                <span><button className=".app-btn">
+                                    <img width='75' src="./assets/Icon-facebook.png" alt="new"/>
+                                </button></span>
+                                <span><button className=".app-btn">
+                                    <img width='75' src="./assets/Icon-google.png" alt="new"/>
+                                </button></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className="col-lg-5 text-right px-5">

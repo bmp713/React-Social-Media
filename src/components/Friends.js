@@ -24,7 +24,7 @@ export default function Friends(){
     },[]);
 
     const readFriends = async () => {
-        let data = await getDocs( collection(db, 'friends') );
+        let data = await getDocs( collection(db, 'users') );
 
         // Copy all data to messages state array
         setFriends( data.docs.map( (doc) => ({
@@ -35,6 +35,7 @@ export default function Friends(){
             setFriendsCount( friendsCount => friendsCount + 1 );
             console.log('friend.id => ' + friend.id );
         });
+        //console.log("currentUser.friends =>", currentUser.friends);
     };
     
     const deleteFriend = async (id) => {
@@ -47,81 +48,76 @@ export default function Friends(){
         }
     };
 
-    const createFriend = async (e) => {
-        e.preventDefault();
-
-        if( !formData.name || !formData.email ){
-            setError(true);
-            return;
-        }
-        else setError(false);
-
-        // Create new friend
-        let docRef;
-        try{
-            docRef = await addDoc( collection(db, 'friends'), {});
-            console.log('id => '+ docRef.id);
-        }catch(error){
-            console.log(error);
-        }
-
-        // Generate random headshot image with fetch API
-        await fetch('https://source.unsplash.com/collection/928423/480x480', {
-            headers: {'Content-Type':'application/json'},
-            crossDomain: true,
-            mode: 'no-cors',
-            method: 'GET'
-        })
-            .then( data => {
-                console.log("Fetch image =>", data );
-            } )
-            .catch( error => {
-                console.log("Fetch error => ", error);
-            });
-        
-        // https://unsplash.com/collections/302501,895539,277630,1041983
-        // https://source.unsplash.com/collection/{collectionID}/{imageWidth}x{imageHeight}/?sig=randomNumber
-        // https://source.unsplash.com/collection/collectionID/400x600/?sig=imageID
-
-        // Generate random headshot image
-        let random = Math.floor(Math.random() * 100000);
-        let urlImg = `https://source.unsplash.com/collection/895539/400x400/?sig=`+ random;
-
-        // Update friend document
-        await setDoc( doc(db, 'friends', docRef.id.toString()), {
-            id: docRef.id,
-            userId: currentUser.id,
-            name: formData.name,
-            email: formData.email,
-            imageURL: formData.image? formData.image : urlImg
-        })
-        readFriends();
-    };
+    // const createFriend = async (e) => {
+    //     e.preventDefault();
+    //     if( !formData.name || !formData.email ){
+    //         setError(true);
+    //         return;
+    //     }
+    //     else setError(false);
+    //     // Create new friend
+    //     let docRef;
+    //     try{
+    //         docRef = await addDoc( collection(db, 'friends'), {});
+    //         console.log('id => '+ docRef.id);
+    //     }catch(error){
+    //         console.log(error);
+    //     }
+    //     // Generate random headshot image with fetch API
+    //     await fetch('https://source.unsplash.com/collection/928423/480x480', {
+    //         headers: {'Content-Type':'application/json'},
+    //         crossDomain: true,
+    //         mode: 'no-cors',
+    //         method: 'GET'
+    //     })
+    //         .then( data => {
+    //             console.log("Fetch image =>", data );
+    //         } )
+    //         .catch( error => {
+    //             console.log("Fetch error => ", error);
+    //         });
+    //     // https://unsplash.com/collections/302501,895539,277630,1041983
+    //     // https://source.unsplash.com/collection/{collectionID}/{imageWidth}x{imageHeight}/?sig=randomNumber
+    //     // https://source.unsplash.com/collection/collectionID/400x600/?sig=imageID
+    //     // Generate random headshot image
+    //     let random = Math.floor(Math.random() * 100000);
+    //     let urlImg = `https://source.unsplash.com/collection/895539/400x400/?sig=`+ random;
+    //     // Update friend document
+    //     await setDoc( doc(db, 'friends', docRef.id.toString()), {
+    //         id: docRef.id,
+    //         userId: currentUser.id,
+    //         name: formData.name,
+    //         email: formData.email,
+    //         imageURL: formData.image? formData.image : urlImg
+    //     })
+    //     readFriends();
+    // };
 
     return(
         <div className='friends my-2'>
-            <div className="row justify-content-lg-center align-items-start py-5">
-                <div className="col-lg-10 text-left">
+            <div className="row justify-content-lg-center align-items-start p-5">
+                <div className="col-lg-12 text-left">
                     {/* <h2>Friends ({friendsCount})</h2>   */}
                     <h2>Friends</h2> 
                 </div>
-                {friends.map( (user) => (
-                     (currentUser.id !== user.userId) ? '' : (
-                        <div className="col-lg-5" id={user.id} key={user.id}>
-                            <img className="my-2" height="200" src={user.imageURL} alt="new"/>
-                            <p>
-                                {user.name} <br></br>
-                                {user.email}<br></br>
+                {/* { console.log("Friends.js", currentUser.friends) } */}
+                {friends.map( (user) => 
+                    //  currentUser.friends.includes( user.id ) ?  
+                        <div className="col-lg-4" id={user.id} key={user.id}>
+                            <img className="my-2" height="150" src={user.imgURL} alt="new"/>
+                            <p style={{fontSize:'15px'}}>
+                                {user.first} {user.last}<br></br>
+                                {/* {user.email}<br></br> */}
                             </p>
-                            <span><button 
+                            {/* <span><button 
                                 onClick={ () => { deleteFriend(user.id) } } 
-                                className="App-btn">Delete
+                                className="Del-btn">Delete
                             </button></span>
-                            <hr></hr>
+                            <hr></hr> */}
                         </div>
-                    )
-                ))}                
-                <div className="col-lg-10 text-left">
+                        // : ''
+                )}                
+                {/* <div className="col-lg-10 text-left">
                     <div className="create text-left">   
                         <form id='form' onSubmit={createFriend}>
                             <div className="row text-left my-2 mx-0">
@@ -149,7 +145,7 @@ export default function Friends(){
                         </form>
                         <br></br>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>  
     )

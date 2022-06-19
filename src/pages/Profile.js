@@ -27,11 +27,17 @@ export default function Profile(){
     }
 
     return(
-        <div className='profile page' >
+        <div className='profile page'
+            style={{
+                // 302501,895539,277630,1041983,546927
+                // background:'linear-gradient(#000a,#000a), url("https://source.unsplash.com/random/?abstract") no-repeat', 
+                // backgroundSize:'cover'
+            }}
+        >
             <div className="header row justify-content-lg-left align-items-start">
                 <div className="col-lg-6 text-left">
                     <h1>Profile</h1>
-                    <p className="profile-details">
+                    <p className="profile-details" style={{fontSize:'15px', fontWeight:'300'}}>
                     {currentUser.first} {currentUser.last}<br></br>
                     {currentUser.name}<br></br>
                     </p>
@@ -40,22 +46,22 @@ export default function Profile(){
                     <p>
                         <span style={{color:'#07ff'}}>{currentUser.name}</span> is signed in
                         <span><img width="20px" className="mx-3" src="./assets/Icon-gear-white.png" alt='new'/></span>
-                        <button onClick={logoutProfile} className="App-btn">Sign Out</button> 
+                        <button onClick={logoutProfile} className="app-btn">Sign Out</button> 
                     </p>
                 </div>
             </div>
             <div className="row justify-content-lg-center align-items-start">
                 <div className="col-lg-5 text-left m-1">
                     <Friends/>
+                    <Gallery/>
                 </div>
                 <div className="col-lg-5 text-left m-1">
                     <Messages/>
                 </div>
                 <div className="col-lg-10 text-left m-1">
-                    <Gallery/>
+                    <Users/>
                 </div>
                 <div className="col-lg-10 text-left m-1">
-                    <Users/>
                 </div>
             </div>
         </div>  

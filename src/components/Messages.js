@@ -94,9 +94,12 @@ export default function Messages(){
 
     return(
         <div 
-            className="messages col-lg-12 text-left p-5 my-2" 
+            className="messages col-lg-12 text-left p-lg-5 p-4 my-2" 
             style={{
-                background:'linear-gradient(#000a,#000a), url("https://source.unsplash.com/random/?macro") no-repeat', 
+                // 302501,895539,277630,1041983,546927
+                // background:'linear-gradient(#000a,#000a), url("https://source.unsplash.com/random/?shadows") no-repeat', 
+                background:'linear-gradient(#0066ccaa,#000a), url("https://source.unsplash.com/random/?shadows") no-repeat', 
+                // background:'linear-gradient(#0077cc77,#000a), url("https://source.unsplash.com/random/167880") no-repeat', 
                 backgroundSize:'cover'
             }}
         >
@@ -114,7 +117,7 @@ export default function Messages(){
                         <div>
                             <button 
                                 onClick={ () => { editMessage(user.id) } } 
-                                className="App-btn">Edit
+                                className="app-btn">Edit
                             </button>
                             <button 
                                 onClick={ () => { deleteMessage(user.id) } } 
@@ -145,7 +148,7 @@ export default function Messages(){
                     /><br></br>
                     <input 
                         onClick={createMessage}
-                        style={{border:'2px solid #ffff'}}
+                        // style={{border:'2px solid #ffff'}}
                         className="submit-btn" type="submit" value="Send"/><br></br>
                         { error ? <p className="text-danger mx-2"> Please enter a message</p> : '' }
                 </form>

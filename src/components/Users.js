@@ -7,77 +7,70 @@ import { db } from '../Firebase';
 
 import {UserContext} from '../contexts/UserContext';
 
-export default function Friends(){
+export default function Users(){
 
     // User authentication
-    const { currentUser, login, logout } = useContext(UserContext);
+    const { currentUser, setCurrentUser, updateUserFirebase, login, logout } = useContext(UserContext);
 
-    const [friendsCount, setFriendsCount] = useState(0);
-    const [friends, setFriends] = useState([]);
+    const [profilessCount, setprofilessCount] = useState(0);
+    const [profiless, setprofiless] = useState([]);
     const [error, setError] = useState(false);
     
     const [formData, setFormData] = useState({
     });
 
     useEffect(() => {
-        readFriends();
+        readprofiless();
     },[]);
 
-    const readFriends = async () => {
-        let data = await getDocs( collection(db, 'friends') );
+    const readprofiless = async () => {
+        let data = await getDocs( collection(db, 'users') );
 
         // Copy all data to messages state array
-        setFriends( data.docs.map( (doc) => ({
+        setprofiless( data.docs.map( (doc) => ({
             ...doc.data()
         }) ) );
         
-        friends.forEach( (friend) => {
-            setFriendsCount( friendsCount => friendsCount + 1 );
+        profiless.forEach( (friend) => {
+            setprofilessCount( profilessCount => profilessCount + 1 );
             console.log('friend.id => ' + friend.id );
         });
     };
 
-    const addFriend = async (e) => {
-        e.preventDefault();
+    const addFriend = async (id) => {
+        console.log("addFriend =>", id);
+        // setCurrentUser({
+        //     id: currentUser.id,
+        //     name: currentUser.name,
+        //     first: currentUser.first,
+        //     last: currentUser.last,
+        //     imgURL: currentUser.imgURL,
+        //     profiless: currentUser.profiless.concat(",", id)        
+        // })   
+        //updateUserFirebase(currentUser);  
+        console.log("updateUserFirebase()1 currentUser.profiless =>", currentUser.profiles);
 
-        if( !formData.name || !formData.email ){
-            setError(true);
-            return;
-        }
-        else setError(false);
-
-        // Create new friend
-        let docRef;
-        try{
-            docRef = await addDoc( collection(db, 'friends'), {});
-            console.log('id => '+ docRef.id);
-        }catch(error){
-            console.log(error);
-        }
-
-        // Update friend document
-        await setDoc( doc(db, 'friends', docRef.id.toString()), {
-            id: docRef.id,
-            userId: currentUser.id,
-            name: formData.name,
-            email: formData.email,
-            // imageURL: formData.image? formData.image : urlImg
-        })
-        readFriends();
     };
 
     return(
         <div className='friends my-2'>
             <div className="row justify-content-lg-center align-items-center p-5">
-                <div className="col-lg-12 text-center">
-                    <h2>Profiles</h2> 
+                <div className="col-lg-12 text-leftr">
+                    <h2>Users</h2> 
                 </div>
-                {friends.map( (user) => (
-                    <div className="col-lg-1" id={user.id} key={user.id}>
-                        <img className="my-2" height="100" src={user.imageURL} alt="new"/>
-                        <p>
-                            {user.name} <br></br>
+                {profiless.map( (user) => (
+                    <div className="col-lg-2" id={user.id} key={user.id}>
+                        <img className="my-2" height="150" src={user.imgURL} alt="new"/>
+                        <p style={{fontSize:'15px'}}>
+                            {user.first} {user.last} 
+                            {/* {user.email} */}<br></br>
+                            <button 
+                                onClick={ () => { addFriend(user.id) } } 
+                                style={{
+                                    lineHeight:"0.5",color:"#ffff",fontSize:"15px", margin:'0px', padding:'0px'}}>Add
+                        </button>
                         </p>
+
                     </div>
                 ))}                
             </div>
