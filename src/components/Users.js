@@ -54,9 +54,12 @@ export default function Users(){
 
     return(
         <div className='friends my-2'>
-            <div className="row justify-content-lg-center align-items-center p-5">
-                <div className="col-lg-12 text-leftr">
+            <div className="row justify-content-lg-center align-items-center p-lg-5">
+            <div className="col-lg-6 text-lg-start">
                     <h2>Users</h2> 
+                </div>
+                <div className="col-lg-6 text-lg-end">
+                    <button className="text-decoration-underline text-white">See more users</button> 
                 </div>
                 {profiless.map( (user) => (
                     <div className="col-lg-2" id={user.id} key={user.id}>

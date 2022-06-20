@@ -105,7 +105,7 @@ export default function Gallery(){
 
     return(
         <div className='gallery my-5'>
-            <div className="row justify-content-lg-center align-items-start p-5">
+            <div className="row justify-content-lg-center align-items-start p-lg-5 p-4">
                 <div className="col-lg-12 text-left">
                     <h2>Gallery</h2>  
                 </div>
@@ -113,7 +113,7 @@ export default function Gallery(){
                     (currentUser.id !== image.userId) ? '' : (
                         <div className="col-lg-6 my-1" id={image.id} key={image.id}>
                             <img 
-                                height="200"
+                                width="100%"
                                 className="my-2 img-responsive" 
                                 src={image.imageURL} alt="new"
                             />

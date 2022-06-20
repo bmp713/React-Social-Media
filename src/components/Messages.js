@@ -124,6 +124,9 @@ export default function Messages(){
                                 className="btn-black">Delete
                             </button>
                             <p style={{fontSize:'12px'}}>Enter new message in form and click Edit</p>
+                            <i class="bi-globe"></i>
+                            <i class="bi bi-star"></i>
+
                         </div>
                     }
                     </span>

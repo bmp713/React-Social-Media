@@ -19,6 +19,7 @@ body, html{
     min-height: 100vh;
 }
 a{ 
+    display: inline-block;
     cursor: pointer; 
     font-size: 12px;
     text-decoration: none;
