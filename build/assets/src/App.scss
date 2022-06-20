@@ -1,0 +1,304 @@
+.App {
+    margin: auto;
+    position: relative;
+    padding: 0px 0px !important;
+    min-height: 100vh;
+    width: 100%;
+    color: #ffff;
+    background: linear-gradient( #0000,#0000), url("../public/assets/10-(183).jpg") no-repeat fixed;
+    background: linear-gradient( #0000,#0000), url("../public/assets/10-(56).png") no-repeat fixed;    
+    background: linear-gradient( #0000,#0000), url("../public/assets/10-(56).png") no-repeat; 
+    background-size: cover;
+}
+h1{
+    color: #4267d9;
+    font-size: 66px; 
+    font-weight: 700; 
+    font-family: "Titillium Web";
+}
+h2{
+    font-size: 30px; 
+    font-weight: 400; 
+    font-family: 'Montserrat';
+}
+
+
+
+header{
+    position: fixed;
+    margin: auto;
+    width: 100% !important;
+    z-index: 99;
+    background: #2397;
+    background: #000d;
+    border: 1px solid #fff7;
+
+    .header-btn{
+        padding: 10px;
+        min-width: 250px;
+        border: 1px solid #fff5;
+    }
+}
+
+
+.signin{
+    min-height: 100vh;
+}
+.signin-row{
+    min-height: 60vh;
+    padding: 100px 25px;
+    background: linear-gradient(to right, #0277, #027f);
+    background: linear-gradient( to right, #ffff,#fffd), url("../public/assets/10-(271).png") no-repeat;
+    background-position: 0% 50%;
+    background-size: cover;
+}
+
+
+.signup{
+    min-height: 100vh;
+}
+
+
+.reset{
+    min-height: 100vh;
+}
+
+
+.profile{
+    padding: 0px 25px 200px 25px;
+    position: relative;
+    margin: auto;
+    width: 100%;
+    min-height: 100vh;
+    .header{
+        margin: auto;
+        width: 85%;
+    }
+    h2{
+        font-size: 42px;
+        font-weight: 500;
+    }
+    .profile-settings{
+        p, div, span{
+            font-size: 14px;
+        }
+    }
+}
+
+
+.friends{
+    position: relative;
+    background: #066a;
+    background: #36de; 
+    background: #227d; 
+    border-radius: 2px;
+    box-shadow: 10px 10px 25px #0009;
+    h2{
+        font-size: 36px;
+        font-weight: 500;
+    }
+}
+
+
+.messages{
+    position: relative;
+    background: #04ca; 
+    background: linear-gradient(to right, #04cb,#04d6);
+    border-radius: 2px; 
+    box-shadow: 5px 5px 30px #0004;
+    h2{
+        font-size: 36px;
+        font-weight: 500;    
+    }
+
+}
+
+
+.gallery{
+    position: relative;
+    background: #227d; 
+    background: #066a;
+    // background: #227d; 
+    // background: #347e; 
+
+    border-radius: 2px;
+    box-shadow: 10px 10px 25px #0009;
+    h2{
+        font-size: 36px;
+        font-weight: 500;
+    }
+}
+
+.create{
+    width: 100%;
+}
+
+footer{
+    padding: 0px 0px;
+    background: #4267B2cc;
+    background: #000f;
+    a{
+        font-size: 13px;
+    }
+    .links{
+        padding: 10px 0px;
+        background: #111f;
+    }
+    .social{
+        background: #111f;
+    }
+    .copyright{
+        background: #111f;
+    }
+}
+
+.App-modal{
+    color: #000f;
+    margin: 50px auto;  
+    padding: 50px 50px;
+    width: 100%;
+    background: linear-gradient( #ffff,#ffff);
+    box-shadow: 15px 15px 25px #0005;
+    border-radius: 2px;
+}
+input{
+    margin: 5px;
+    padding: 10px 5px;
+    background: #ffff;
+    color: #222f;
+    width: 100%;  
+    font-size: 16px !important;
+}
+.App-modal ::placeholder{
+    padding: 10px 0px;
+    color: #2227;
+}
+
+
+.eye-container{
+    position: relative;
+    z-index: 0;
+
+    .eye{
+        position: absolute;
+        right: 15px;
+        top: 18px;
+        height: 21px;
+        cursor: pointer;
+        z-index: 2;
+    }
+}
+
+
+.text-danger{
+    font-weight: 400;
+    font-size: 14px;
+}
+a, p, span{
+    font-size: 16px;
+}
+
+
+@media( max-width: 992px ){
+        .App {
+            min-height: 100vh;
+            width: 100%;
+            border: 2px solid #000f;
+            background: linear-gradient( #0007,#0000), url("../public/assets/10-(56)-mobile.png");   
+            background-size: 100%;
+        }
+
+        .App-modal{
+            margin: 50px auto;  
+            padding: 50px 25px;
+            width: 100%;
+            border-radius: 1px;
+        }
+        .App-modal ::placeholder{
+            padding: 10px 0px;
+        }
+
+        .profile{
+            padding: 0px 25px 200px 25px;
+            width: 100%;
+            min-height: 100vh;
+            .header{
+                width: 100%;
+            }
+        }
+
+        .messages{
+            margin: 50px 0px 50px 0px !important; 
+            padding: 50px 0px;
+            border-radius: 2px; 
+        }
+        .friends{
+            width: 100%;
+            padding: 50px 25px;
+        }
+        .create{
+            width: 100%;
+        }
+        .signin{
+            padding: 0% 0 0 0;
+            h1{
+                color: white;
+            }
+        }
+        .signin-row{
+            margin: 100px 0px;
+            min-height: 60vh;
+            padding: 100px 0px;
+            font-size: 12px;
+            background: linear-gradient(to right, #0277, #027f);
+            background: linear-gradient( to right, #ffff,#fffd), url("../public/assets/10-(271).png") no-repeat;
+            background-position: 0% 50%;
+            background-size: cover;
+            h1{
+                font-size: 42px;
+            }
+            p{
+                font-size: 13px;
+            }
+        }
+
+        input{
+            margin: 5px;
+            padding: 10px 5px;
+            background: #ffff;
+            color: #222f;
+            width: 100%;  
+            font-size: 18px !important;
+        }
+
+        footer{
+            padding: 10px 25px !important;
+            background: #000f;
+
+            a{
+                font-size: 13px;
+            }
+            .links{
+                background: #000f;
+            }
+            .social{
+                background: #000f;
+            }
+            .copyright{
+                background: #000f;
+            }
+        }
+    
+        .app-btn, 
+        .submit-btn,
+        .btn-black,
+        .btn-blue,
+        .btn-white,
+        .btn-red{
+            width: 100% !important;
+            font-size: 14px;
+        }
+}
+
+
+

@@ -16,7 +16,7 @@ export const UserProvider = ( {children} ) => {
     
     //console.log("UserContext localStorage => ", window.localStorage.getItem('currentUserID' ) );
     // If Freezes
-    //window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID))
+    window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID))
 
     useEffect( () => {
         readprofile( JSON.parse(window.localStorage.getItem('currentUserID')) );
