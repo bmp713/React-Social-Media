@@ -39,7 +39,7 @@ export default function Profile(){
                     <h1>Profile</h1>
                     <div className="row justify-content-lg-left align-items-center">
                         <div className="col-lg-10 text-left m-1">
-                            <div style={{fontSize:'15px',lineHeight:'1'}}>
+                            <div style={{fontSize:'15px',lineHeight:'1.2'}}>
                                 {currentUser.first} {currentUser.last}<br></br>
                                 {currentUser.name}<br></br>
                             </div>
@@ -48,7 +48,7 @@ export default function Profile(){
                 </div>
                 <div className="col-lg-6 py-2 text-lg-end">
                     <p className="profile-settings">
-                        <span style={{color:'#07ff'}}>{currentUser.name}</span> is signed in
+                        <span style={{color:'#4267d9'}}>{currentUser.name}</span> is signed in
                         <img 
                                 width="40"
                                 height="40" 

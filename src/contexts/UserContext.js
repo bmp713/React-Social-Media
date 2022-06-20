@@ -14,7 +14,9 @@ export const UserProvider = ( {children} ) => {
     const [currentUser, setCurrentUser] = useState('');
     const [currentUserID, setCurrentUserID] = useState('id');
     
-    console.log("UserContext localStorage => ", window.localStorage.getItem('currentUserID' ) );
+    //console.log("UserContext localStorage => ", window.localStorage.getItem('currentUserID' ) );
+    // If Freezes
+    //window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID))
 
     useEffect( () => {
         readprofile( JSON.parse(window.localStorage.getItem('currentUserID')) );
@@ -26,13 +28,12 @@ export const UserProvider = ( {children} ) => {
     const login = (name, password) => {
         return signInWithEmailAndPassword(auth, name, password)
             .then((userCredential) => {
-                const user = userCredential.user;
                 console.log( name, 'signed in' );
                 readprofile( auth.currentUser.uid );
                 setCurrentUserID(auth.currentUser.uid);
 
-                window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID))
-                console.log("UserContext localStorage => ", window.localStorage.getItem('currentUserID' ) );
+                window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID));
+                console.log("login localStorage => ", window.localStorage.getItem('currentUserID' ) );
             })
     };
 
@@ -74,13 +75,16 @@ export const UserProvider = ( {children} ) => {
 
         // Create new user in Firebase db
         try{
+            let random = Math.floor(Math.random() * 14);
+            let imgURL ="./assets/Headshot-" + random + ".jpg";
+            console.log("imgUrl", imgURL);
             let doc = await addDoc( collection(db, 'users'), {
                 id: id,
                 first: first,
                 last: last,
                 email: email,
-                // imgURL: './assets/Icon-headshot.png',
-                imgURL: 'https://source.unsplash.com/collection/895539/400x400',
+                imgURL: imgURL,
+                // imgURL: 'https://source.unsplash.com/collection/895539/400x400',
                 friends: ''
             });
             console.log('addDoc id => '+ id);
@@ -122,8 +126,9 @@ export const UserProvider = ( {children} ) => {
             friends: ''
         }));
 
-        window.localStorage.setItem('currentUserID', '')
-        console.log("UserContext localStorage => ", window.localStorage.getItem('currentUserID' ) );
+        //window.localStorage.setItem('currentUserID', '');
+        window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID));
+        console.log("UserContext localStorage => ", window.localStorage.getItem('currentUserID' ));
 
         console.log( "logout currentUser => ",currentUser );
         signOut( auth )

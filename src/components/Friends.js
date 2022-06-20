@@ -76,7 +76,7 @@ export default function Friends(){
     //         .catch( error => {
     //             console.log("Fetch error => ", error);
     //         });
-    //     // https://unsplash.com/collections/302501,895539,277630,1041983
+    //     // https://unsplash.com/collections/895539,302501,277630,1041983
     //     // https://source.unsplash.com/collection/{collectionID}/{imageWidth}x{imageHeight}/?sig=randomNumber
     //     // https://source.unsplash.com/collection/collectionID/400x600/?sig=imageID
     //     // Generate random headshot image
@@ -103,7 +103,7 @@ export default function Friends(){
                 {/* { console.log("Friends.js", currentUser.friends) } */}
                 {friends.map( (user) => 
                     //  currentUser.friends.includes( user.id ) ?  
-                        <div className="col-lg-4 col-12" id={user.id} key={user.id}>
+                        <div className="col-lg-3 col-12" id={user.id} key={user.id}>
                             <img className="my-2" height="150" src={user.imgURL} alt="new"/>
                             <p style={{fontSize:'15px'}}>
                                 {user.first} {user.last}<br></br>
@@ -117,35 +117,6 @@ export default function Friends(){
                         </div>
                         // : ''
                 )}                
-                {/* <div className="col-lg-10 text-left">
-                    <div className="create text-left">   
-                        <form id='form' onSubmit={createFriend}>
-                            <div className="row text-left my-2 mx-0">
-                                <h4>Add Friend</h4>  
-                            </div>  
-                            <input 
-                                value={formData.name} 
-                                onChange={ function(e){ setFormData({...formData, name: e.target.value}) } }    
-                                type="text" placeholder="Full Name"
-                            /><br></br>
-                            <input 
-                                value={formData.email} 
-                                onChange={ function(e){ setFormData({...formData, email: e.target.value}) } }    
-                                type="text" placeholder="Email Address"
-                            /><br></br>
-                            <input 
-                                value={formData.image} 
-                                onChange={ function(e){ setFormData({...formData, image: e.target.value}) } }    
-                                type="text" placeholder="Image URL"
-                            />
-                            <p className="mx-2" style={{fontSize:"10px"}}>(Random image will be generated otherwise)</p>
-                            <br></br>
-                            <input className="submit-btn" type="submit" value="Add"/><br></br>
-                            { error ? <p className="text-danger mx-2"> Please fill in all fields</p> : '' }
-                        </form>
-                        <br></br>
-                    </div>
-                </div> */}
             </div>
         </div>  
     )

@@ -48,7 +48,7 @@ export default function Users(){
         //     profiless: currentUser.profiless.concat(",", id)        
         // })   
         //updateUserFirebase(currentUser);  
-        console.log("updateUserFirebase()1 currentUser.profiless =>", currentUser.profiles);
+        //console.log("addFriend() =>", currentUser.friends);
 
     };
 
@@ -67,7 +67,12 @@ export default function Users(){
                             <button 
                                 onClick={ () => { addFriend(user.id) } } 
                                 style={{
-                                    lineHeight:"0.5",color:"#ffff",fontSize:"15px", margin:'0px', padding:'0px'}}>Add
+                                    textDecoration:"underline", 
+                                    lineHeight:"0.5",
+                                    color:"#ffff",
+                                    fontSize:"15px", 
+                                    padding:'0px'
+                                }}>+ Add
                         </button>
                         </p>
 

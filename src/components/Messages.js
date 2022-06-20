@@ -28,7 +28,7 @@ export default function Messages(){
 
     //Read messages from Firebase
     const readMessages = async () => {
-        console.log("readMessages");
+        // console.log("readMessages");
         let data = await getDocs( collection(db, 'messages') );
         setMessages( 
             data.docs.map( (doc) => 
