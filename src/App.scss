@@ -116,16 +116,18 @@ header{
     .icons img{
         height: 30px;
     }
-
+    .app-btn{
+        color: #222f !important;
+    }
 }
 
 
 .gallery{
     position: relative;
+    color: #222f !important;
     background: #227d; 
     background: #066a;
-
-
+    background: #ffff;
     border-radius: 2px;
     box-shadow: 10px 10px 25px #0009;
     h2{
@@ -172,7 +174,8 @@ input{
     background: #ffff;
     color: #222f;
     width: 100%;  
-    font-size: 16px !important;
+    font-size: 15px !important;
+    border: 1px solid #2229;
 }
 .App-modal ::placeholder{
     padding: 10px 0px;

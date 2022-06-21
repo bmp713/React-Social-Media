@@ -13,7 +13,6 @@ import Gallery from '../components/Gallery';
 import Messages from '../components/Messages';
 import Users from '../components/Users';
 
-
 import {UserContext} from '../contexts/UserContext';
 
 export default function Profile(){
@@ -34,10 +33,7 @@ export default function Profile(){
                 // backgroundSize:'cover'
             }}
         >
-            <div 
-            
-                className="header row justify-content-lg-left align-items-start"
-            >
+            <div className="header row justify-content-lg-left align-items-start">
                 <div className="col-lg-6 text-left">
                     {/* <h1>Profile</h1> */}
                     <div className="row justify-content-lg-left align-items-center">
@@ -63,11 +59,9 @@ export default function Profile(){
                     <p className="profile-settings">
                         <span style={{color:'#4267d9'}}>{currentUser.name}</span> is signed in
                         <img 
-                                width="40"
-                                height="40" 
-                                className="mx-3" 
-                                src={currentUser.imgURL} 
+                                width="40" height="40" className="mx-3" 
                                 style={{borderRadius:'50%'}}
+                                src={currentUser.imgURL} 
                                 alt="new"
                         />
                         <button onClick={logoutProfile} className="app-btn">Sign Out</button><br></br>
@@ -79,12 +73,13 @@ export default function Profile(){
                 <div className="col-lg-5 text-left m-lg-1">
                     <Friends/>
                     <Gallery/>
+                    <Users/>
+
                 </div>
-                <div className="col-lg-5 text-left m-lg-1-">
+                <div className="col-lg-5 text-left m-lg-1">
                     <Messages/>
                 </div>
                 <div className="col-lg-10 text-left m-lg-1">
-                    <Users/>
                 </div>
                 <div className="col-lg-10 text-left m-lg-1">
                 </div>

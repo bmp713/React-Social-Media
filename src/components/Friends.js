@@ -98,7 +98,8 @@ export default function Friends(){
             <div className="row justify-content-lg-left justify-content-center align-items-center p-lg-5 p-0">
                 <div className="col-lg-6 text-lg-start">
                     {/* <h2>Friends ({friendsCount})</h2>   */}
-                    <h2>Friends</h2> 
+                    <h2>Friends (8)</h2>  
+                    {/* <h2>Friends</h2>  */}
                 </div>
                 <div className="col-lg-6 text-lg-end text-decoration-underline">
                     <button className="text-decoration-underline text-white">See all friends</button> 
@@ -108,7 +109,7 @@ export default function Friends(){
                     //  currentUser.friends.includes( user.id ) ?  
                         <div className="col-lg-3 col-12" id={user.id} key={user.id}>
                             <a href>
-                                <img className="my-2" height="150" src={user.imgURL} alt="new"/>
+                                <img className="my-2" width="75%" src={user.imgURL} alt="new"/>
                                 <p style={{fontSize:'15px'}}>
                                     {user.first} {user.last}<br></br>
                                     {/* {user.email}<br></br> */}

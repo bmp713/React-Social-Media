@@ -12,8 +12,8 @@ export default function Users(){
     // User authentication
     const { currentUser, setCurrentUser, updateUserFirebase, login, logout } = useContext(UserContext);
 
-    const [profilessCount, setprofilessCount] = useState(0);
-    const [profiless, setprofiless] = useState([]);
+    const [profilesCount, setProfilesCount] = useState(0);
+    const [profiles, setProfiles] = useState([]);
     const [error, setError] = useState(false);
     
     const [formData, setFormData] = useState({
@@ -27,12 +27,12 @@ export default function Users(){
         let data = await getDocs( collection(db, 'users') );
 
         // Copy all data to messages state array
-        setprofiless( data.docs.map( (doc) => ({
+        setProfiles( data.docs.map( (doc) => ({
             ...doc.data()
         }) ) );
         
-        profiless.forEach( (friend) => {
-            setprofilessCount( profilessCount => profilessCount + 1 );
+        profiles.forEach( (friend) => {
+            setProfilesCount( profilessCount => profilessCount + 1 );
             console.log('friend.id => ' + friend.id );
         });
     };
@@ -61,9 +61,9 @@ export default function Users(){
                 <div className="col-lg-6 text-lg-end">
                     <button className="text-decoration-underline text-white">See more users</button> 
                 </div>
-                {profiless.map( (user) => (
-                    <div className="col-lg-2" id={user.id} key={user.id}>
-                        <img className="my-2" height="150" src={user.imgURL} alt="new"/>
+                {profiles.map( (user) => (
+                    <div className="col-lg-3 col-12" id={user.id} key={user.id}>
+                        <img className="my-2" width="75%" src={user.imgURL} alt="new"/>
                         <p style={{fontSize:'15px'}}>
                             {user.first} {user.last} 
                             {/* {user.email} */}<br></br>

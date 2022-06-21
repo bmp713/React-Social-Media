@@ -105,15 +105,15 @@ export default function Gallery(){
 
     return(
         <div className='gallery my-5 p-5'>
-            <div className="row justify-content-lg-between align-items-start p-2">
+            <div className="row justify-content-lg-between align-items-start">
                 <div className="col-lg-12 text-left">
                     <h2>Gallery</h2>  
                 </div>
                 {images.map( (image) => (
                     (currentUser.id !== image.userId) ? '' : (
                         <div
-                            style={{background:'#0009', borderRadius:'4px'}} 
-                            className="col-lg-5 m-lg-2 py-2 my-3" id={image.id} key={image.id}
+                            style={{color:'#ffff', background:'#000d', borderRadius:'4px'}} 
+                            className="col-lg-5 my-lg-2 py-2 my-3" id={image.id} key={image.id}
                         >
                             <img 
                                 width="30"
@@ -124,26 +124,27 @@ export default function Gallery(){
                                 alt="new"
                             />
                             {currentUser.first} 
-                            <a className="float-end" href><img height="20" className="mx-2 float-end" src="./assets/Icon-dots-white.png" alt='new'/></a>
+                            <a 
+                                className="float-end" href><img height="20" className="mx-2 float-end" 
+                                src="./assets/Icon-dots-white.png" alt='new'/></a>
                             <img 
                                 width="100%"
                                 className="my-2 img-responsive" 
                                 src={image.imageURL} alt="new"
                             />
                             <div className="icons row justify-content-lg-left align-items-start">
- 
                                 <div className="col-3 text-left">    
-                                    <a href><img height="20" className="mx-2" src="./assets/Icon-star-white.png" alt='new'/></a>
+                                    <a href><img height="20" className="mx-2" 
+                                        src="./assets/Icon-star-white.png" alt='new'/></a>
                                 </div>
                                 <div className="col-3 text-left">
-                                    <a href><img height="20" className="mx-2" src="./assets/Icon-share-white.png" alt='new'/></a>
+                                    <a href><img height="20" className="mx-2" 
+                                        src="./assets/Icon-share-white.png" alt='new'/></a>
                                 </div>
                                 <div className="col-3 text-left">
-                                    <a href><img height="20" className="mx-2" src="./assets/Icon-download-white.png" alt='new'/></a>
+                                    <a href><img height="20" className="mx-2" 
+                                        src="./assets/Icon-download-white.png" alt='new'/></a>
                                 </div>
-                                {/* <div className="col-3 text-left">
-                                    <a href><img height="20" className="mx-2" src="./assets/Icon-comment-white.png" alt='new'/></a>
-                                </div> */}
                                 <div className="col-3 text-left">
                                     <button 
                                         onClick={ () => { deleteImage(image.id) } } 
@@ -170,13 +171,14 @@ export default function Gallery(){
                                 onChange={ function(e){ setFormData({...formData, search: e.target.value}) } }    
                                 type="text" placeholder="Search"
                             />
-                            {/* <p className="mx-2" style={{fontSize:"12px"}}>Search example "nature, sunsets"</p> */}
                             <input 
                                 value={formData.image} 
                                 onChange={ function(e){ setFormData({...formData, image: e.target.value}) } }    
                                 type="text" placeholder="Image URL"
                             />
-                            <p className="mx-2" style={{fontSize:"12px"}}>(Random image will be generated if all fields left blank)</p>
+                            <p className="mx-2" style={{fontSize:"12px"}}>
+                                (Random image will be generated if all fields left blank)
+                            </p>
                             <br></br>
                             <input className="submit-btn" type="submit" value="Add"/><br></br>
                             { error ? <p className="text-danger mx-2"> Please fill in all fields</p> : '' }

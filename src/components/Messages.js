@@ -63,9 +63,11 @@ export default function Messages(){
         await setDoc( doc(db, 'messages', docRef.id.toString()), {
             id: docRef.id,
             email: currentUser.name,
-            message: formData.message
+            first: currentUser.first,
+            last: currentUser.last,
+            message: formData.message,
+            userImg: currentUser.imgURL
         })
-        console.log('createMessage() => ' + docRef.id + ' ' + currentUser.name + ', ' + formData.message);
     };  
 
     const deleteMessage = async (id) => {
@@ -84,7 +86,10 @@ export default function Messages(){
             await setDoc( doc(db, 'messages', id ), {
                 id: id,
                 email: currentUser.name,
-                message: formData.message
+                first: currentUser.first,
+                last: currentUser.last,
+                message: formData.message,
+                userImg: currentUser.imgURL
             })
             readMessages();
         }catch(error){
@@ -97,7 +102,6 @@ export default function Messages(){
             className="messages col-lg-12 text-left p-lg-5 p-4 my-2" 
             style={{
                 // 302501,895539,277630,1041983,546927
-                // background:'linear-gradient(#000a,#000a), url("https://source.unsplash.com/random/?shadows") no-repeat', 
                 background:'linear-gradient(#0066ccaa,#000a), url("https://source.unsplash.com/random/?shadows") no-repeat', 
                 // background:'linear-gradient(#0077cc77,#000a), url("https://source.unsplash.com/random/167880") no-repeat', 
                 backgroundSize:'cover'
@@ -105,22 +109,33 @@ export default function Messages(){
         >
             <h2 className="mx-2">Messages</h2>  
             {messages.map( (user) => (
-                <div className="p-3" id={user.id} key={user.id}>
-                    {/* <img className="my-2" height="250" src="https://source.unsplash.com/random/?city" alt="new"/> */}
+                <div className="p-lg-3" id={user.id} key={user.id}>
+      
                     <p 
-                        className="p-5 my-4" 
-                        // style={{color:'#222f', background:'#ffff', borderRadius:'5px', boxShadow:'20px 20px 20px #0007'}}
-                        style={{background:'#0079c299', borderRadius:'5px', boxShadow:'20px 20px 20px #0007'}}
-                    >
-                        
+                        className="p-lg-5 p-3 my-lg-3" 
+                        style={{color:'#222f', background:'#ffff', borderRadius:'5px', boxShadow:'20px 20px 20px #0007'}}
+                        // style={{background:'#0079c299', borderRadius:'5px', boxShadow:'20px 20px 20px #0007'}}
+                    >              
+                        <img 
+                            width="50" height="50" className="m-2" 
+                            style={{borderRadius:'50%'}}
+                            src={user.userImg} 
+                            alt="new"
+                        />
+                        {user.first} {user.last}
+                        <a 
+                            className="float-end" href><img height="20" className="mx-2 float-end" 
+                            src="./assets/Icon-dots-black.png" alt='new'/>
+                        </a>
+                            <hr></hr>
                         {user.message}<br></br><br></br>
                         <strong>{user.email}</strong><br></br>
-                        {/* <span style={{fontSize:'10px'}}>{user.id}</span><br></br> */}
                         <span>
                         { (currentUser.name !== user.email) ? '' :
                             <div>
                                 <button 
                                     onClick={ () => { editMessage(user.id) } } 
+                                    style={{color:'#222f !important'}}
                                     className="app-btn">Edit
                                 </button>
                                 <button 
@@ -135,13 +150,13 @@ export default function Messages(){
                         <hr></hr>
                         <div className="icons row justify-content-lg-left align-items-start">
                             <div className="col-4 text-left">
-                                <a href ><img height="25px" className="mx-2" src="./assets/Icon-thumb-white.png" alt='new'/>Like</a>
+                                <a href ><img height="20px" className="mx-1" src="./assets/Icon-thumb-black.png" alt='new'/>Like</a>
                             </div>
                             <div className="col-4 text-left">
-                                <a href><img height="25px" className="mx-2" src="./assets/Icon-share-white.png" alt='new'/>Share</a>
+                                <a href><img height="20px" className="mx-1" src="./assets/Icon-share-black.png" alt='new'/>Share</a>
                             </div>
                             <div className="col-4 text-left">
-                                <a href><img height="25px" className="mx-2" src="./assets/Icon-comment-white.png" alt='new'/>Comment</a>
+                                <a href><img height="20px" className="mx-1" src="./assets/Icon-comment-black.png" alt='new'/>Comment</a>
                             </div>
                         </div>
                     </p>
