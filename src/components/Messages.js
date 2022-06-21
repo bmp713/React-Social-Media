@@ -108,8 +108,9 @@ export default function Messages(){
                 <div className="p-3" id={user.id} key={user.id}>
                     {/* <img className="my-2" height="250" src="https://source.unsplash.com/random/?city" alt="new"/> */}
                     <p 
-                        className="p-0 my-4" 
-                        // style={{background:'#0079c299', borderRadius:'5px', boxShadow:'20px 20px 20px #0007'}}
+                        className="p-5 my-4" 
+                        // style={{color:'#222f', background:'#ffff', borderRadius:'5px', boxShadow:'20px 20px 20px #0007'}}
+                        style={{background:'#0079c299', borderRadius:'5px', boxShadow:'20px 20px 20px #0007'}}
                     >
                         
                         {user.message}<br></br><br></br>

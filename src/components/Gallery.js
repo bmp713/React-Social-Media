@@ -105,15 +105,16 @@ export default function Gallery(){
 
     return(
         <div className='gallery my-5 p-5'>
-            <div className="row justify-content-lg-between align-items-center p-2">
+            <div className="row justify-content-lg-between align-items-start p-2">
                 <div className="col-lg-12 text-left">
                     <h2>Gallery</h2>  
                 </div>
                 {images.map( (image) => (
                     (currentUser.id !== image.userId) ? '' : (
                         <div
-                            style={{background:'#0009'}} 
-                            className="col-lg-5 m-2 py-1" id={image.id} key={image.id}>
+                            style={{background:'#0009', borderRadius:'4px'}} 
+                            className="col-lg-5 m-lg-2 py-0" id={image.id} key={image.id}
+                        >
                             <img 
                                 width="30"
                                 height="30" 
