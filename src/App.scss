@@ -121,11 +121,12 @@ header{
             top: 25px;
             right: 20px;
             color: #ffff;
-            background: #ffff;
+            background: #fff0;
             .show{
-                padding: 5px;
-                border: 1px solid #0002;
+                color: #000f !important;
+                //border: 1px solid #000f;
             }
+
         }
 
     }

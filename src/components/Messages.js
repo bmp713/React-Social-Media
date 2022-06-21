@@ -17,7 +17,7 @@ export default function Messages(){
     const [error, setError] = useState(false);
 
     const [showMenu, setShowMenu] = useState(true);
-    const [msgBox, setMsgBox] = useState(false);
+    const [msgEdit, setMsgEdit] = useState(false);
 
     const [formData, setFormData] = useState({
         id:"",
@@ -100,9 +100,10 @@ export default function Messages(){
         }
     };
 
-    const msgMenuClicked = () => {
+    const msgMenuClicked = (id) => {
         setShowMenu( !showMenu );
     }
+
 
     return(
         <div 
@@ -133,23 +134,34 @@ export default function Messages(){
                                     src="./assets/Icon-dots-black.png" alt='new'
                                     onClick={msgMenuClicked}
                                 />
-                                <div className={ showMenu ? 'hide': 'show'}>
-                                    <button onClick={ () => { editMessage(user.id) } }>Edit</button>
-                                    <button onClick={ () => { deleteMessage(user.id) } }>Delete</button>
+                                <div 
+                                    id={user.id}
+                                    className={ showMenu ? 'hide': 'show'}>
+                                    <button 
+                                        style={{color:'#000f', background:'#ffff', padding:'4px 35px', border:'1px solid #000f'}}
+                                        onClick={ () => { 
+                                            setMsgEdit(true);
+                                            editMessage(user.id);
+                                        } }>Edit
+                                    </button>
+                                    <button 
+                                        style={{color:'#ffff', background:'#000f', padding:'5px 30px'}}
+                                        onClick={ () => { 
+                                            deleteMessage(user.id) 
+                                        } }>Delete
+                                    </button>
                                 </div>
                             </a>
                         }
                         <br></br>
                         {user.message}<br></br>
                         { (currentUser.name !== user.email) ? '' :
-
                          !showMenu ? 
                             <input 
-                                style={{margin:'0px 0px 20px 0px'}}
+                                style={{margin:'15px 0px 20px 0px'}}
                                 value={formData.message} 
                                 onChange={ function(event){ 
                                     setFormData({...formData, message: event.target.value}) 
-                                    event.target.value ? setError(false) : setError(true)
                                 } }    
                                 type="textarea" placeholder="Edit your message"
                             />
@@ -157,7 +169,7 @@ export default function Messages(){
                         }
                         <br></br>
                         <strong>{user.email}</strong><br></br>
-                        <span>
+                        {/* <span>
                         { (currentUser.name !== user.email) ? '' :
                             <div>
                                 <button 
@@ -172,7 +184,7 @@ export default function Messages(){
                                 </button>
                             </div>
                         }
-                        </span>
+                        </span> */}
                         <hr></hr>
                         <div className="icons row justify-content-lg-left align-items-start">
                             <div className="col-4 text-left">
@@ -206,7 +218,7 @@ export default function Messages(){
             ))} 
             <div className="create text-left my-5">        
                 <form id='form'>
-                    <h3 className="mx-1">Post</h3>
+                    <h3 className="mx-1">Message</h3>
                     <input 
                         value={formData.message} 
                         onChange={ function(event){ 
@@ -223,7 +235,7 @@ export default function Messages(){
                     <input 
                         onClick={createMessage}
                         // style={{border:'2px solid #ffff'}}
-                        className="submit-btn" type="submit" value="Send"/><br></br>
+                        className="btn-blue" type="submit" value="Send"/><br></br>
                         { error ? <p className="text-danger mx-2"> Please enter a message</p> : '' }
                 </form>
                 <br></br>

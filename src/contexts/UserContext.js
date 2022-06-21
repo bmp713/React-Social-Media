@@ -75,7 +75,9 @@ export const UserProvider = ( {children} ) => {
 
         // Create new user in Firebase db
         try{
-            let random = Math.floor(Math.random() * 14);
+            let random;
+            while (!random) random = Math.floor(Math.random() * 14);
+            
             let imgURL ="./assets/Headshot-" + random + ".jpg";
             console.log("imgUrl", imgURL);
             let doc = await addDoc( collection(db, 'users'), {
