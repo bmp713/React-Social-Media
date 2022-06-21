@@ -16,7 +16,7 @@ export default function Messages(){
     const [messages, setMessages] = useState([]);
     const [error, setError] = useState(false);
 
-    const [showMenu, setShowMenu] = useState(false);
+    const [showMenu, setShowMenu] = useState(true);
     const [msgBox, setMsgBox] = useState(false);
 
     const [formData, setFormData] = useState({
@@ -102,7 +102,6 @@ export default function Messages(){
 
     const msgMenuClicked = () => {
         setShowMenu( !showMenu );
-        console.log("msgMenuClicked() => ", showMenu);
     }
 
     return(
@@ -110,8 +109,8 @@ export default function Messages(){
             className="messages row text-left align-items-center p-lg-5 p-4 my-2" 
             style={{
                 // 302501,895539,277630,1041983,546927
-                background:'linear-gradient(#0066ccaa,#000a), url("https://source.unsplash.com/random/?shadows") no-repeat', 
                 // background:'linear-gradient(#0077cc77,#000a), url("https://source.unsplash.com/random/167880") no-repeat', 
+                background:'linear-gradient(#0066ccaa,#000a), url("https://source.unsplash.com/random/?shadows") no-repeat', 
                 backgroundSize:'cover'
             }}
         >
@@ -127,7 +126,6 @@ export default function Messages(){
                         {user.first} {user.last}
 
                         { (currentUser.name !== user.email) ? '' :
-                            (
                             <a className="msgMenu float-end" href>
                                 <img 
                                     height="20" 
@@ -140,11 +138,25 @@ export default function Messages(){
                                     <button onClick={ () => { deleteMessage(user.id) } }>Delete</button>
                                 </div>
                             </a>
-                            )
                         }
                         <br></br>
-                        {user.message}<br></br><br></br>
-                        <strong>{user.email}</strong><br></br><br></br>
+                        {user.message}<br></br>
+                        { (currentUser.name !== user.email) ? '' :
+
+                         !showMenu ? 
+                            <input 
+                                style={{margin:'0px 0px 20px 0px'}}
+                                value={formData.message} 
+                                onChange={ function(event){ 
+                                    setFormData({...formData, message: event.target.value}) 
+                                    event.target.value ? setError(false) : setError(true)
+                                } }    
+                                type="textarea" placeholder="Edit your message"
+                            />
+                            : ''
+                        }
+                        <br></br>
+                        <strong>{user.email}</strong><br></br>
                         <span>
                         { (currentUser.name !== user.email) ? '' :
                             <div>
@@ -154,6 +166,7 @@ export default function Messages(){
                                     className="app-btn">Edit
                                 </button>
                                 <button 
+                                    style={{color:'#ffff', background:'#f00f'}}
                                     onClick={ () => { deleteMessage(user.id) } } 
                                     className="btn-black">Delete
                                 </button>

@@ -169,7 +169,7 @@ export default function Gallery(){
                             <input 
                                 value={formData.search} 
                                 onChange={ function(e){ setFormData({...formData, search: e.target.value}) } }    
-                                type="text" placeholder="Search"
+                                type="text" placeholder="Search by category"
                             />
                             <input 
                                 value={formData.image} 
