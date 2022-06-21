@@ -104,27 +104,56 @@ export default function Gallery(){
     };
 
     return(
-        <div className='gallery my-5'>
-            <div className="row justify-content-lg-center align-items-start p-lg-5 p-4">
+        <div className='gallery my-5 p-5'>
+            <div className="row justify-content-lg-between align-items-center p-2">
                 <div className="col-lg-12 text-left">
                     <h2>Gallery</h2>  
                 </div>
                 {images.map( (image) => (
                     (currentUser.id !== image.userId) ? '' : (
-                        <div className="col-lg-6 my-1" id={image.id} key={image.id}>
+                        <div
+                            style={{background:'#0009'}} 
+                            className="col-lg-5 m-2 py-1" id={image.id} key={image.id}>
+                            <img 
+                                width="30"
+                                height="30" 
+                                className="m-2" 
+                                src={currentUser.imgURL} 
+                                style={{borderRadius:'50%'}}
+                                alt="new"
+                            />
+                            {currentUser.first} 
+                            <a className="float-end" href><img height="20" className="mx-2 float-end" src="./assets/Icon-dots-white.png" alt='new'/></a>
                             <img 
                                 width="100%"
                                 className="my-2 img-responsive" 
                                 src={image.imageURL} alt="new"
                             />
-                            <p style={{wordWrap:'break-word', fontSize:'10px'}}>
-                                {image.search} <br></br>
-                                {/* {image.imageURL} <br></br> */}
+                            <div className="icons row justify-content-lg-left align-items-start">
+ 
+                                <div className="col-3 text-left">    
+                                    <a href><img height="20" className="mx-2" src="./assets/Icon-star-white.png" alt='new'/></a>
+                                </div>
+                                <div className="col-3 text-left">
+                                    <a href><img height="20" className="mx-2" src="./assets/Icon-share-white.png" alt='new'/></a>
+                                </div>
+                                <div className="col-3 text-left">
+                                    <a href><img height="20" className="mx-2" src="./assets/Icon-download-white.png" alt='new'/></a>
+                                </div>
+                                {/* <div className="col-3 text-left">
+                                    <a href><img height="20" className="mx-2" src="./assets/Icon-comment-white.png" alt='new'/></a>
+                                </div> */}
+                                <div className="col-3 text-left">
+                                    <button 
+                                        onClick={ () => { deleteImage(image.id) } } 
+                                        className="">
+                                            <a href><img height="20" className="mx-2" src="./assets/Icon-trash-white.png" alt='new'/></a>
+                                    </button>
+                                </div>
+                            </div> 
+                            <p style={{wordWrap:'break-word', fontSize:'12px'}}>
+                                {/* {image.search}<br></br> */}
                             </p>
-                            <span><button 
-                                onClick={ () => { deleteImage(image.id) } } 
-                                className="app-btn">Delete
-                            </button></span>
                             <hr></hr>
                         </div>
                     )

@@ -107,35 +107,49 @@ export default function Messages(){
             {messages.map( (user) => (
                 <div className="p-3" id={user.id} key={user.id}>
                     {/* <img className="my-2" height="250" src="https://source.unsplash.com/random/?city" alt="new"/> */}
-                    <p className="my-4">
-                        {user.message}<br></br>
+                    <p 
+                        className="p-0 my-4" 
+                        // style={{background:'#0079c299', borderRadius:'5px', boxShadow:'20px 20px 20px #0007'}}
+                    >
+                        
+                        {user.message}<br></br><br></br>
                         <strong>{user.email}</strong><br></br>
-                        <span style={{fontSize:'10px'}}>{user.id}</span><br></br>
-                    </p>
-                    <span>
-                    { (currentUser.name !== user.email) ? '' :
-                        <div>
-                            <button 
-                                onClick={ () => { editMessage(user.id) } } 
-                                className="app-btn">Edit
-                            </button>
-                            <button 
-                                onClick={ () => { deleteMessage(user.id) } } 
-                                className="btn-black">Delete
-                            </button>
-                            <p style={{fontSize:'12px'}}>Enter new message in form and click Edit</p>
-                            <i class="bi-globe"></i>
-                            <i class="bi bi-star"></i>
+                        {/* <span style={{fontSize:'10px'}}>{user.id}</span><br></br> */}
+                        <span>
+                        { (currentUser.name !== user.email) ? '' :
+                            <div>
+                                <button 
+                                    onClick={ () => { editMessage(user.id) } } 
+                                    className="app-btn">Edit
+                                </button>
+                                <button 
+                                    onClick={ () => { deleteMessage(user.id) } } 
+                                    className="btn-black">Delete
+                                </button>
+                                {/* <p style={{fontSize:'12px'}}>Enter new message in form and click Edit</p> */}
 
+                            </div>
+                        }
+                        </span>
+                        <hr></hr>
+                        <div className="icons row justify-content-lg-left align-items-start">
+                            <div className="col-4 text-left">
+                                <a href ><img height="25px" className="mx-2" src="./assets/Icon-thumb-white.png" alt='new'/>Like</a>
+                            </div>
+                            <div className="col-4 text-left">
+                                <a href><img height="25px" className="mx-2" src="./assets/Icon-share-white.png" alt='new'/>Share</a>
+                            </div>
+                            <div className="col-4 text-left">
+                                <a href><img height="25px" className="mx-2" src="./assets/Icon-comment-white.png" alt='new'/>Comment</a>
+                            </div>
                         </div>
-                    }
-                    </span>
-                    <hr></hr>
+                    </p>
+
                 </div>
             ))} 
-            <div className="create text-left">        
-                <form id='form' >
-                    <h3 className="mx-3">Post</h3>
+            <div className="create text-left my-5">        
+                <form id='form'>
+                    <h3 className="mx-1">Post</h3>
                     <input 
                         value={formData.message} 
                         onChange={ function(event){ 

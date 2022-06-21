@@ -36,11 +36,11 @@ export default function Profile(){
         >
             <div className="header row justify-content-lg-left align-items-start">
                 <div className="col-lg-6 text-left">
-                    <h1>Profile</h1>
+                    {/* <h1>Profile</h1> */}
                     <div className="row justify-content-lg-left align-items-center">
                         <div className="col-lg-10 text-left m-1">
                             <div style={{fontSize:'15px',lineHeight:'1.2'}}>
-                                {currentUser.first} {currentUser.last}<br></br>
+                                <h2>{currentUser.first} {currentUser.last}</h2>
                                 {currentUser.name}<br></br>
                             </div>
                         </div>
@@ -79,15 +79,6 @@ export default function Profile(){
         </div>  
     )
 }
-
-
-
-
-
-
-
-
-
 
 
 
