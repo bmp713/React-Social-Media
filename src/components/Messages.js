@@ -99,7 +99,7 @@ export default function Messages(){
 
     return(
         <div 
-            className="messages col-lg-12 text-left p-lg-5 p-4 my-2" 
+            className="messages row text-left align-items- center p-lg-5 p-4 my-2" 
             style={{
                 // 302501,895539,277630,1041983,546927
                 background:'linear-gradient(#0066ccaa,#000a), url("https://source.unsplash.com/random/?shadows") no-repeat', 
@@ -109,25 +109,28 @@ export default function Messages(){
         >
             <h2 className="mx-2">Messages</h2>  
             {messages.map( (user) => (
-                <div className="p-lg-3" id={user.id} key={user.id}>
+                <div className="p-lg-3 my-2" id={user.id} key={user.id}>
       
-                    <p 
-                        className="px-lg-5 py-lg-3 p-3 my-lg-3" 
-                        style={{color:'#222f', background:'#ffff', borderRadius:'5px', boxShadow:'20px 20px 20px #0007'}}
+                    <div
+                        className="px-lg-5 py-lg-3 p-3" 
+                        style={{color:'#222f', fontSize:'15px', background:'#ffff', borderRadius:'5px', boxShadow:'20px 20px 20px #0007'}}
                         // style={{background:'#0079c299', borderRadius:'5px', boxShadow:'20px 20px 20px #0007'}}
                     >              
                         <img 
                             width="50" height="50" className="m-2" 
                             style={{borderRadius:'50%'}}
-                            src={user.userImg} 
-                            alt="new"
+                            src={user.userImg} alt="new"
                         />
+
                         {user.first} {user.last}
-                        <a 
-                            className="float-end" href><img height="20" className="mx-2 float-end" 
-                            src="./assets/Icon-dots-black.png" alt='new'/>
+                        <a className="float-end" href>
+                            <img 
+                                height="20" 
+                                className="mx-2 float-end" 
+                                src="./assets/Icon-dots-black.png" alt='new'
+                            />
                         </a>
-                            <hr></hr>
+                        <hr></hr>
                         {user.message}<br></br><br></br>
                         <strong>{user.email}</strong><br></br>
                         <span>
@@ -142,8 +145,6 @@ export default function Messages(){
                                     onClick={ () => { deleteMessage(user.id) } } 
                                     className="btn-black">Delete
                                 </button>
-                                {/* <p style={{fontSize:'12px'}}>Enter new message in form and click Edit</p> */}
-
                             </div>
                         }
                         </span>
@@ -159,7 +160,7 @@ export default function Messages(){
                                 <a href><img height="20px" className="mx-1" src="./assets/Icon-comment-black.png" alt='new'/>Comment</a>
                             </div>
                         </div>
-                    </p>
+                    </div>
 
                 </div>
             ))} 
