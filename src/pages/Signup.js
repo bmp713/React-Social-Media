@@ -62,7 +62,7 @@ export default function Signup(){
         <div className="signup">
             <div className="row signup justify-content-lg-center align-items-center">
                 <div className="col-lg-5 text-start">
-                    <div className="col-lg-10 text-left">
+                    <div className="col-lg-10 text-left p-3">
                         <h1>Sign Up</h1>
                         <h2>Connect Today and Change The World</h2>
                     </div>

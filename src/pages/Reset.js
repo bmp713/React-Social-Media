@@ -50,7 +50,7 @@ export default function Reset(){
                     <img className="w-100" src="./assets/Devices7.png" alt="new"/>
                 </div>
                 <div className="col-lg-5 text-start ">
-                    <div className="col-lg-10 text-left">
+                    <div className="col-lg-10 text-left text-lg-white p-4">
                         <h1>Password Reset</h1>
                     </div>
                     <div className="App-modal">

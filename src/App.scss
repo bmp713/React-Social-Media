@@ -247,8 +247,8 @@ a, p, span{
         .create{
             width: 100%;
         }
-        .signin{
-            padding: 0% 0 0 0;
+        .signin, .signup{
+            padding: 0% 0;
             h1{
                 color: white;
             }
@@ -267,6 +267,12 @@ a, p, span{
             }
             p{
                 font-size: 13px;
+            }
+        }
+
+        .reset{
+            h1{
+                color: #ffff;
             }
         }
 
