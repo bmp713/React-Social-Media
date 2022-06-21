@@ -112,7 +112,7 @@ export default function Messages(){
                 <div className="p-lg-3" id={user.id} key={user.id}>
       
                     <p 
-                        className="p-lg-5 p-3 my-lg-3" 
+                        className="px-lg-5 py-lg-3 p-3 my-lg-3" 
                         style={{color:'#222f', background:'#ffff', borderRadius:'5px', boxShadow:'20px 20px 20px #0007'}}
                         // style={{background:'#0079c299', borderRadius:'5px', boxShadow:'20px 20px 20px #0007'}}
                     >              

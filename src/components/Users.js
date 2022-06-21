@@ -56,14 +56,14 @@ export default function Users(){
         <div className='friends my-2'>
             <div className="row justify-content-lg-center align-items-center p-lg-5">
             <div className="col-lg-6 text-lg-start">
-                    <h2>Users</h2> 
+                    <h2>Users (8)</h2> 
                 </div>
                 <div className="col-lg-6 text-lg-end">
                     <button className="text-decoration-underline text-white">See more users</button> 
                 </div>
                 {profiles.map( (user) => (
-                    <div className="col-lg-3 col-12" id={user.id} key={user.id}>
-                        <img className="my-2" width="75%" src={user.imgURL} alt="new"/>
+                    <div className="col-lg-3 col-6" id={user.id} key={user.id}>
+                        <img className="my-2" width="100%" src={user.imgURL} alt="new"/>
                         <p style={{fontSize:'15px'}}>
                             {user.first} {user.last} 
                             {/* {user.email} */}<br></br>

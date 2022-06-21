@@ -134,22 +134,22 @@ export default function Gallery(){
                             />
                             <div className="icons row justify-content-lg-left align-items-start">
                                 <div className="col-3 text-left">    
-                                    <a href><img height="20" className="mx-2" 
+                                    <a href><img height="15" className="mx-1" 
                                         src="./assets/Icon-star-white.png" alt='new'/></a>
                                 </div>
                                 <div className="col-3 text-left">
-                                    <a href><img height="20" className="mx-2" 
+                                    <a href><img height="15" className="mx-1" 
                                         src="./assets/Icon-share-white.png" alt='new'/></a>
                                 </div>
                                 <div className="col-3 text-left">
-                                    <a href><img height="20" className="mx-2" 
+                                    <a href><img height="15" className="mx-1" 
                                         src="./assets/Icon-download-white.png" alt='new'/></a>
                                 </div>
                                 <div className="col-3 text-left">
                                     <button 
                                         onClick={ () => { deleteImage(image.id) } } 
                                         className="">
-                                            <a href><img height="20" className="mx-2" src="./assets/Icon-trash-white.png" alt='new'/></a>
+                                            <a href><img height="15" className="mx-1" src="./assets/Icon-trash-white.png" alt='new'/></a>
                                     </button>
                                 </div>
                             </div> 

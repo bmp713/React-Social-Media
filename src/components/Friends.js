@@ -95,7 +95,7 @@ export default function Friends(){
 
     return(
         <div className='friends my-lg-2'>
-            <div className="row justify-content-lg-left justify-content-center align-items-center p-lg-5 p-0">
+            <div className="row justify-content-lg-left justify-content-center align-items-center p-lg-5">
                 <div className="col-lg-6 text-lg-start">
                     {/* <h2>Friends ({friendsCount})</h2>   */}
                     <h2>Friends (8)</h2>  
@@ -107,9 +107,9 @@ export default function Friends(){
                 {/* { console.log("Friends.js", currentUser.friends) } */}
                 {friends.map( (user) => 
                     //  currentUser.friends.includes( user.id ) ?  
-                        <div className="col-lg-3 col-12" id={user.id} key={user.id}>
+                        <div className="col-lg-3 col-6" id={user.id} key={user.id}>
                             <a href>
-                                <img className="my-2" width="75%" src={user.imgURL} alt="new"/>
+                                <img className="my-2" width="100%" src={user.imgURL} alt="new"/>
                                 <p style={{fontSize:'15px'}}>
                                     {user.first} {user.last}<br></br>
                                     {/* {user.email}<br></br> */}
