@@ -133,57 +133,44 @@ export default function Messages(){
                                     src="./assets/Icon-dots-black.png" alt='new'
                                     onClick={msgMenuClicked}
                                 />
-                                <div 
-                                    id={user.id}
-                                    className={ showMenu ? 'hide': 'show'}>
+                                {/* <div id={user.id} className={ showMenu ? 'hide': 'show'}>
                                     <button 
                                         style={{color:'#000f', background:'#ffff', padding:'4px 35px', border:'1px solid #000f'}}
-                                        onClick={ () => { 
-                                            setMsgEdit(true);
-                                            editMessage(user.id);
-                                        } }>Edit
+                                        onClick={ () => { setMsgEdit(true); editMessage(user.id);} }>Edit
                                     </button>
                                     <button 
                                         style={{color:'#ffff', background:'#000f', padding:'5px 30px'}}
-                                        onClick={ () => { 
-                                            deleteMessage(user.id) 
-                                        } }>Delete 
+                                        onClick={ () => { deleteMessage(user.id) } }>Delete 
                                     </button>
-                                </div>
+                                </div> */}
                             </a>
                         }
                         <br></br>
-                        {user.message}<br></br>
+                        {user.message}<br></br><br></br>
                         { (currentUser.name !== user.email) ? '' :
                          !showMenu ? 
-                            <input 
-                                style={{margin:'15px 0px 20px 0px'}}
-                                value={formData.message} 
-                                onChange={ function(event){ 
-                                    setFormData({...formData, message: event.target.value}) 
-                                } }    
-                                type="textarea" placeholder="Edit your message"
-                            />
-                            : ''
-                        }
-                        <br></br>
-                        <strong>{user.email}</strong><br></br>
-                        {/* <span>
-                        { (currentUser.name !== user.email) ? '' :
                             <div>
-                                <button 
-                                    onClick={ () => { editMessage(user.id) } } 
-                                    style={{color:'#222f !important'}}
-                                    className="app-btn">Edit
-                                </button>
-                                <button 
-                                    style={{color:'#ffff', background:'#f00f'}}
-                                    onClick={ () => { deleteMessage(user.id) } } 
-                                    className="btn-black">Delete
-                                </button>
-                            </div>
+                                <input 
+                                    style={{margin:'0px 0px 10px 0px'}}
+                                    value={formData.message} 
+                                    onChange={ function(event){ 
+                                        setFormData({...formData, message: event.target.value}) 
+                                    } }    
+                                    type="textarea" placeholder="Update your message"
+                                />
+                                    <button 
+                                        onClick={ () => { editMessage(user.id) } } 
+                                        style={{color:'#222f '}}
+                                        className="app-btn">Update
+                                    </button>
+                                    <button 
+                                        style={{color:'#ffff', background:'#f00f'}}
+                                        onClick={ () => { deleteMessage(user.id) } } 
+                                        className="btn-black">Delete
+                                    </button>
+                            </div> : ''
                         }
-                        </span> */}
+                        <strong>{user.email}</strong><br></br>
                         <hr></hr>
                         <div className="icons row justify-content-lg-left align-items-start">
                             <div className="col-4 text-left">
