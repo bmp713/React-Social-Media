@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import '../App.scss';
 import React, { useState, useEffect, useContext } from 'react';
-import { doc, addDoc, setDoc, getDocs, deleteDoc, collection } from 'firebase/firestore';
+import { doc, addDoc, setDoc, getDocs, deleteDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from '../Firebase';
 
 import {UserContext} from '../contexts/UserContext';
@@ -104,7 +104,6 @@ export default function Messages(){
         setShowMenu( !showMenu );
     }
 
-
     return(
         <div 
             className="messages row text-left align-items-center p-lg-5 p-4 my-2" 
@@ -124,7 +123,7 @@ export default function Messages(){
                             style={{borderRadius:'50%'}}
                             src={user.userImg} alt="new"
                         />
-                        {user.first} {user.last}
+                        {user.first} {user.last} 
 
                         { (currentUser.name !== user.email) ? '' :
                             <a className="msgMenu float-end" href>
@@ -148,7 +147,7 @@ export default function Messages(){
                                         style={{color:'#ffff', background:'#000f', padding:'5px 30px'}}
                                         onClick={ () => { 
                                             deleteMessage(user.id) 
-                                        } }>Delete
+                                        } }>Delete 
                                     </button>
                                 </div>
                             </a>

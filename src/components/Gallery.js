@@ -107,7 +107,10 @@ export default function Gallery(){
         <div className='gallery my-5 p-5'>
             <div className="row justify-content-lg-between align-items-start">
                 <div className="col-lg-12 text-left">
-                    <h2>Gallery</h2>  
+                    <h2>Gallery
+                        <span><button className="float-end text-decoration-underline text-dark">See all photos</button></span> 
+                    </h2>  
+                    
                 </div>
                 {images.map( (image) => (
                     (currentUser.id !== image.userId) ? '' : (

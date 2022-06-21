@@ -39,6 +39,10 @@ export default function Profile(){
                     <div className="row justify-content-lg-left align-items-center">
                         <div className="col-lg-10 text-left my-3">
                             <div style={{fontSize:'15px',lineHeight:'1.2'}}>
+                                <Link 
+                                    to='/profile'
+                                    style={{color:'#ffff'}}    
+                                >
                                 <h2>                            
                                     {/* <img 
                                         width="40"
@@ -50,6 +54,7 @@ export default function Profile(){
                                     /> */}
                                     {currentUser.first} {currentUser.last}
                                 </h2>
+                                </Link><br></br>
                                 {currentUser.name}<br></br>
                             </div>
                         </div>
