@@ -69,7 +69,7 @@ export default function Reset(){
                             <p style={{marginLeft:"10px", color:msgSubmit.color, fontSize:"14px"}}>{msgSubmit.message}</p>
                             <div className="row justify-content-lg-center align-items-stretch">
                                 <div className="col-lg-6 text-center">
-                                    <p>Don't have an account?<Link to='/signup'><strong> Sign Up</strong></Link></p>
+                                    <p>Don't have an account? <Link to='/signup'><strong> Sign Up</strong></Link></p>
                                 </div>
                                 <div className="col-lg-6 text-center">
                                     <Link to='/' className="float-lg-end">

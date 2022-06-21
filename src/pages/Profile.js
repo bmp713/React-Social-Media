@@ -34,13 +34,26 @@ export default function Profile(){
                 // backgroundSize:'cover'
             }}
         >
-            <div className="header row justify-content-lg-left align-items-start">
+            <div 
+            
+                className="header row justify-content-lg-left align-items-start"
+            >
                 <div className="col-lg-6 text-left">
                     {/* <h1>Profile</h1> */}
                     <div className="row justify-content-lg-left align-items-center">
-                        <div className="col-lg-10 text-left m-1">
+                        <div className="col-lg-10 text-left my-3">
                             <div style={{fontSize:'15px',lineHeight:'1.2'}}>
-                                <h2>{currentUser.first} {currentUser.last}</h2>
+                                <h2>                            
+                                    {/* <img 
+                                        width="40"
+                                        height="40" 
+                                        className="mx-3" 
+                                        src={currentUser.imgURL} 
+                                        style={{borderRadius:'50%'}}
+                                        alt="new"
+                                    /> */}
+                                    {currentUser.first} {currentUser.last}
+                                </h2>
                                 {currentUser.name}<br></br>
                             </div>
                         </div>
@@ -63,17 +76,17 @@ export default function Profile(){
                 </div>
             </div>
             <div className="row justify-content-lg-center align-items-start">
-                <div className="col-lg-5 text-left m-1">
+                <div className="col-lg-5 text-left m-lg-1">
                     <Friends/>
                     <Gallery/>
                 </div>
-                <div className="col-lg-5 text-left m-1">
+                <div className="col-lg-5 text-left m-lg-1-">
                     <Messages/>
                 </div>
-                <div className="col-lg-10 text-left m-1">
+                <div className="col-lg-10 text-left m-lg-1">
                     <Users/>
                 </div>
-                <div className="col-lg-10 text-left m-1">
+                <div className="col-lg-10 text-left m-lg-1">
                 </div>
             </div>
         </div>  

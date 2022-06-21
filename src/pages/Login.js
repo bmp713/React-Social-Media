@@ -97,7 +97,7 @@ export default function Login(){
 
                             <div className="row justify-content-lg-center align-items-stretch">
                                 <div className="col-lg-6 text-center">
-                                    <p>Don't have an account?<Link to='/signup'><strong> Sign Up</strong></Link></p>
+                                    <p>Don't have an account? <Link to='/signup'><strong> Sign Up</strong></Link></p>
                                 </div>
                                 <div className="col-lg-6 text-center">
                                     <Link to='/reset' className="float-lg-end">
