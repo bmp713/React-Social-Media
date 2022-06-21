@@ -91,6 +91,7 @@ export default function Signup(){
                                         type={ passwordShow ? "text" : "password" } 
                                         name="password" 
                                         placeholder="Password"
+                                        pattern="(?=([^a-z]*[a-z]){1,})(?=([^A-Z]*[A-Z]){1,})(?=([^0-9]*[0-9]){1,})(?=(.*[$@$!%*?&]){0,})[A-Za-z\d$@$!%*?&.]{8,}"
                                     />
                                     <a
                                         className="btn-invisible"

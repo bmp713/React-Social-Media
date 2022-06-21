@@ -15,7 +15,10 @@ export default function Messages(){
     const [messagesCount, setMessagesCount] = useState(0);
     const [messages, setMessages] = useState([]);
     const [error, setError] = useState(false);
-    
+
+    const [showMenu, setShowMenu] = useState(false);
+    const [msgBox, setMsgBox] = useState(false);
+
     const [formData, setFormData] = useState({
         id:"",
         name: "",
@@ -97,9 +100,14 @@ export default function Messages(){
         }
     };
 
+    const msgMenuClicked = () => {
+        setShowMenu( !showMenu );
+        console.log("msgMenuClicked() => ", showMenu);
+    }
+
     return(
         <div 
-            className="messages row text-left align-items- center p-lg-5 p-4 my-2" 
+            className="messages row text-left align-items-center p-lg-5 p-4 my-2" 
             style={{
                 // 302501,895539,277630,1041983,546927
                 background:'linear-gradient(#0066ccaa,#000a), url("https://source.unsplash.com/random/?shadows") no-repeat', 
@@ -109,30 +117,34 @@ export default function Messages(){
         >
             <h2 className="mx-2">Messages</h2>  
             {messages.map( (user) => (
-                <div className="p-lg-3 my-2" id={user.id} key={user.id}>
-      
-                    <div
-                        className="px-lg-5 py-lg-3 p-3" 
-                        style={{color:'#222f', fontSize:'15px', background:'#ffff', borderRadius:'5px', boxShadow:'20px 20px 20px #0007'}}
-                        // style={{background:'#0079c299', borderRadius:'5px', boxShadow:'20px 20px 20px #0007'}}
-                    >              
+                <div className="message p-lg-0 my-4" id={user.id} key={user.id}>
+                    <div className="col-lg-12 px-lg-5 py-lg-3 p-3" >              
                         <img 
                             width="50" height="50" className="m-2" 
                             style={{borderRadius:'50%'}}
                             src={user.userImg} alt="new"
                         />
-
                         {user.first} {user.last}
-                        <a className="float-end" href>
-                            <img 
-                                height="20" 
-                                className="mx-2 float-end" 
-                                src="./assets/Icon-dots-black.png" alt='new'
-                            />
-                        </a>
-                        <hr></hr>
+
+                        { (currentUser.name !== user.email) ? '' :
+                            (
+                            <a className="msgMenu float-end" href>
+                                <img 
+                                    height="20" 
+                                    className="mx-2 float-end" 
+                                    src="./assets/Icon-dots-black.png" alt='new'
+                                    onClick={msgMenuClicked}
+                                />
+                                <div className={ showMenu ? 'hide': 'show'}>
+                                    <button onClick={ () => { editMessage(user.id) } }>Edit</button>
+                                    <button onClick={ () => { deleteMessage(user.id) } }>Delete</button>
+                                </div>
+                            </a>
+                            )
+                        }
+                        <br></br>
                         {user.message}<br></br><br></br>
-                        <strong>{user.email}</strong><br></br>
+                        <strong>{user.email}</strong><br></br><br></br>
                         <span>
                         { (currentUser.name !== user.email) ? '' :
                             <div>
@@ -151,13 +163,28 @@ export default function Messages(){
                         <hr></hr>
                         <div className="icons row justify-content-lg-left align-items-start">
                             <div className="col-4 text-left">
-                                <a href ><img height="20px" className="mx-1" src="./assets/Icon-thumb-black.png" alt='new'/>Like</a>
+                                <a href><img 
+                                    height="20px" 
+                                    className="mx-1" 
+                                    src="./assets/Icon-thumb-black.png" alt='new'/>
+                                    Like
+                                </a>
                             </div>
                             <div className="col-4 text-left">
-                                <a href><img height="20px" className="mx-1" src="./assets/Icon-share-black.png" alt='new'/>Share</a>
+                                <a href><img 
+                                    height="20px" 
+                                    className="mx-1" 
+                                    src="./assets/Icon-share-black.png" alt='new'/>
+                                    Share
+                                </a>
                             </div>
                             <div className="col-4 text-left">
-                                <a href><img height="20px" className="mx-1" src="./assets/Icon-comment-black.png" alt='new'/>Comment</a>
+                                <a href><img 
+                                    height="20px" 
+                                    className="mx-1" 
+                                    src="./assets/Icon-comment-black.png" alt='new'/>
+                                    Comment
+                                </a>
                             </div>
                         </div>
                     </div>

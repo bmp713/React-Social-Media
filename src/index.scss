@@ -18,6 +18,13 @@ body, html{
 .page{
     min-height: 100vh;
 }
+
+.hide{
+    display: none;
+}
+.show{
+    display: inline-block;
+}
 a{ 
     display: inline-block;
     cursor: pointer; 
@@ -111,11 +118,11 @@ button{
 }
 
 // .row{
-//     border: 2px solid #fff0;
+//     border: 2px solid #fff7;
 // }
 // .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, 
 // .col-lg-6, .col-lg-8, .col-lg-10, .col-lg-12{
-//     border: 1px solid #f000;
+//     border: 1px solid #f007;
 // }
 
 
