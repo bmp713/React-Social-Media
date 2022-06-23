@@ -4,7 +4,6 @@ import '../App.scss';
 import React, { useRef, useState, useEffect, useContext } from 'react';
 import { doc, addDoc, setDoc, getDoc, getDocs, deleteDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from '../Firebase';
-
 import { storage } from '../Firebase';
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
@@ -17,19 +16,15 @@ export default function Messages(){
     const [messagesCount, setMessagesCount] = useState(0);
     const [messages, setMessages] = useState([]);
     const [error, setError] = useState(false);
-    
+
+    const [showMenuID, setShowMenuID] = useState(null);
     const [showMenu, setShowMenu] = useState(true);
     const [msgEdit, setMsgEdit] = useState(false);
-
-
     const [formData, setFormData] = useState({});
-
 
     //const fileRef = useRef(null);
     const [file, setFile] = useState("");
     const [imageURL, setImageUrl] = useState(null);
-
-
 
     useEffect(() => {
         readMessages();
@@ -59,6 +54,7 @@ export default function Messages(){
     const createMessage = async (e) => {
 
         e.preventDefault();
+        //document.querySelector('form').reset();
         console.log("createMessage");
 
         if( !formData.message ) {
@@ -88,6 +84,8 @@ export default function Messages(){
 
     const deleteMessage = async (id) => {
         console.log('deleteDoc(id) => ' + id);
+        setShowMenu( false );
+
         try{
             await deleteDoc( doc(db, 'messages', id) );
             readMessages();
@@ -131,7 +129,9 @@ export default function Messages(){
         }
     };
 
-    const msgMenuClicked = (id) => {
+    const msgMenuClicked = (e) => {
+        console.log("e.currentTarget.id => ", e.currentTarget.id);
+        setShowMenuID(e.currentTarget.id);
         setShowMenu( !showMenu );
     }
 
@@ -143,69 +143,68 @@ export default function Messages(){
                 backgroundSize:'cover'
             }}
         >
-            <h2 className="mx-2">Messages</h2>
-            {messages.map( (user) => (
-                <div className="message p-lg-0 my-4" id={user.id} key={user.id}>
+            <h2 className="mx-2">News Feed</h2>
+            {messages.map( (message) => (
+                <div className="message p-lg-0 my-4" id={message.id} key={message.id}>
                     <div className="col-lg-12 px-lg-5 py-lg-3 p-3" >              
                         <img 
                             width="50" height="50" className="m-2" 
                             style={{borderRadius:'50%'}}
-                            src={user.userImg} alt="new"
+                            src={message.userImg} alt="new"
                         />
-                        {user.first} {user.last} 
+                        {message.first} {message.last} 
 
-                        { (currentUser.email !== user.email) ? '' :
-                            <a className="msgMenu float-end" href>
+                        { (currentUser.email !== message.email) ? '' :
+                            <a href
+                                className="msgMenu float-end"
+                                id={message.id} 
+                                onClick={ (e) => {
+                                    msgMenuClicked(e);
+                                }}
+                            >    
                                 <img 
-                                    height="20" 
-                                    className="mx-2 float-end" 
+                                    height="20" className="mx-2 float-end" 
                                     src="./assets/Icon-dots-black.png" alt='new'
-                                    onClick={msgMenuClicked}
                                 />
-                                <div id={user.id} className={ showMenu ? 'hide': 'show'}>
-                                    {/* <button 
-                                        style={{color:'#000f', background:'#ffff', padding:'4px 35px', border:'1px solid #000f'}}
-                                        onClick={ () => { setMsgEdit(true); editMessage(user.id);} }>Edit
-                                    </button>
-                                    <button 
-                                        style={{color:'#ffff', background:'#000f', padding:'5px 30px'}}
-                                        onClick={ () => { deleteMessage(user.id) } }>Delete 
-                                    </button> */}
+                                <div id={message.id} className={ showMenu ? 'hide': 'show'}>
                                 </div>
                             </a>
                         }
                         <br></br>
-                        {user.message}<br></br><br></br>
-                        { (currentUser.email !== user.email) ? '' :
-                         !showMenu ? 
-                            <div>
-                                <input 
-                                    style={{margin:'0px 0px 10px 0px'}}
-                                    value={formData.message} 
-                                    onChange={ function(event){ 
-                                        setFormData({...formData, message: event.target.value}) 
-                                    } }    
-                                    type="textarea" placeholder="Update your message"
-                                />
-                                    <button 
-                                        onClick={ () => { editMessage(user.id) } } 
-                                        style={{color:'#222f '}}
-                                        className="app-btn">Update
-                                    </button>
-                                    <button 
-                                        style={{color:'#ffff', background:'#f00f'}}
-                                        onClick={ () => { deleteMessage(user.id) } } 
-                                        className="btn-black">Delete
-                                    </button>
-                            </div> : ''
+                        {message.message}<br></br><br></br>
+
+                        { currentUser.email !== message.email ? '' :
+                            showMenu ? '' :
+                                showMenuID !== message.id ? '' :
+                                    <div>
+                                        <input 
+                                            style={{margin:'0px 0px 10px 0px'}}
+                                            value={formData.message} 
+                                            onChange={ function(event){ 
+                                                setFormData({...formData, message: event.target.value}) 
+                                            } }    
+                                            type="textarea" placeholder="Update your message"
+                                        />
+                                            <button 
+                                                onClick={ () => { editMessage(message.id) } } 
+                                                style={{color:'#222f '}}
+                                                className="app-btn">Update
+                                            </button>
+                                            <button 
+                                                style={{color:'#ffff', background:'#f00f'}}
+                                                onClick={ () => { deleteMessage(message.id) } } 
+                                                className="btn-black">Delete
+                                            </button>
+                                    </div>
                         }
-                        <strong>{user.email}</strong><br></br>
+                        <strong>{message.email}</strong><br></br>
                         <hr></hr>
                         <div className="icons row justify-content-lg-left align-items-start">
                             <div className="col-4 text-left">
-                                <a 
-                                    onClick={ () => updateMessage(user.id)}
-                                    href
+                                <a id={message.id} onClick={ (e) => {
+                                    updateMessage(message.id);
+                                    console.log("e.currentTarget.id => ", e.currentTarget.id);
+                                }} href
                                 >
                                     <img 
                                         height="20px" 

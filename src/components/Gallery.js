@@ -24,14 +24,18 @@ export default function Gallery(){
         search: "",
     });
 
+    const [showMenu, setShowMenu] = useState(false);
+    //const [showMenuID, setShowMenuID] = useState(false);
+
     const [showURL, setShowURL] = useState(false);
+    const [showURL_ID, setShowURL_ID] = useState(null);
+    
 
     //const fileRef = useRef(null);
     const [file, setFile] = useState("");
     const [imageURL, setImageUrl] = useState(null);
 
     const [random, setRandom] = useState(Math.floor(Math.random() * 100) );
-    console.log("random =>", random);
 
     useEffect(() => {
         readGallery();
@@ -171,37 +175,58 @@ export default function Gallery(){
                             />
                             {currentUser.first} {currentUser.last}
                             <a 
-                                className="float-end" href><img height="20" className="mx-2 float-end" 
-                                src="./assets/Icon-dots-white.png" alt='new'/></a>
+                                className="float-end" href
+                                onClick={ (e) => {
+                                    console.log("Menu clicked =>", image.id);
+                                    setShowMenu( !showMenu );
+                                }}
+                            >
+                                <img height="20" className="mx-2 float-end" src="./assets/Icon-dots-white.png" alt='new'/>
+                            </a>
                             <img 
                                 width="100%"
                                 className="my-2 img-responsive" 
                                 src={image.imageURL} alt="new"
                             />
-                            <div className="icons row justify-content-lg-left align-items-start">
-                                <div className="col-3 text-left">    
-                                    <a href><img height="15" className="mx-1" 
-                                        src="./assets/Icon-star-white.png" alt='new'/></a>
-                                </div>
-                                <div className="col-3 text-left">
-                                    <a  href onClick={ ()=>{ setShowURL( !showURL) }} >
-                                        <img height="15" className="mx-1" src="./assets/Icon-share-white.png" alt='new'/>
-                                    </a>
-                                </div>
-                                <div className="col-3 text-left">
-                                    <a href={image.imageURL} download target="_blank"><img height="15" className="mx-1" 
-                                        src="./assets/Icon-download-white.png" alt='new'/></a>
-                                </div>
-                                <div className="col-3 text-left">
-                                    <button 
-                                        onClick={ () => { deleteImage(image.id) } } 
-                                        className="">
-                                            <a href><img height="15" className="mx-1" src="./assets/Icon-trash-white.png" alt='new'/></a>
-                                    </button>
-                                </div>
-                            </div> 
+
+
+                            { showMenu ? '' :
+                                // image.id ===  ? '' :
+                                    <div className="icons row justify-content-lg-left align-items-start">
+                                        <div className="col-3 text-left">    
+                                            <a href><img height="15" className="mx-1" 
+                                                src="./assets/Icon-star-white.png" alt='new'/></a>
+                                        </div>
+                                        <div className="col-3 text-left">
+                                            <a id={image.id} href onClick={ (e)=>{ 
+                                                    if( image.id === e.currentTarget.id ){
+                                                        setShowURL( !showURL);
+                                                        setShowURL_ID( e.currentTarget.id );
+                                                    }
+                                                    console.log("image.id => ",image.id);
+                                                    console.log("e.currentTarget.id => ", e.currentTarget.id);
+                                                }} >
+                                                <img height="15" className="mx-1" src="./assets/Icon-share-white.png" alt='new'/>
+                                            </a>
+                                        </div>
+                                        <div className="col-3 text-left">
+                                            <a href={image.imageURL} download target="_blank"><img height="15" className="mx-1" 
+                                                src="./assets/Icon-download-white.png" alt='new'/></a>
+                                        </div>
+                                        <div className="col-3 text-left">
+                                            <button 
+                                                onClick={ () => { deleteImage(image.id) } } 
+                                                className="">
+                                                    <a href><img height="15" className="mx-1" src="./assets/Icon-trash-white.png" alt='new'/></a>
+                                            </button>
+                                        </div>
+                                    </div> 
+                            }
+
+
                             { !showURL ? '' :
-                                <p style={{ fontSize:'10px', wordWrap: 'break-word'}}>{image.imageURL}</p>
+                                image.id !== showURL_ID ? '' :
+                                    <p style={{ fontSize:'10px', wordWrap: 'break-word'}}>{image.imageURL}</p>
                             }
                             <hr></hr>
                         </div>
