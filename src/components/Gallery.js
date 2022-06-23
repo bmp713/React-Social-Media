@@ -181,7 +181,7 @@ export default function Gallery(){
                                     setShowMenu( !showMenu );
                                 }}
                             >
-                                <img height="20" className="mx-2 float-end" src="./assets/Icon-dots-white.png" alt='new'/>
+                            <img height="20" className="mx-2 float-end" src="./assets/Icon-dots-white.png" alt='new'/>
                             </a>
                             <img 
                                 width="100%"
@@ -191,7 +191,6 @@ export default function Gallery(){
 
 
                             { showMenu ? '' :
-                                // image.id ===  ? '' :
                                     <div className="icons row justify-content-lg-left align-items-start">
                                         <div className="col-3 text-left">    
                                             <a href><img height="15" className="mx-1" 

@@ -16,12 +16,15 @@ export const UserProvider = ( {children} ) => {
     
     //console.log("UserContext localStorage => ", window.localStorage.getItem('currentUserID' ) );
     // If Freezes
-    window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID))
+    // Fixes state on refresh
+    //window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID))
 
     useEffect( () => {
+        console.log("useEffect localStorage => ", JSON.parse( window.localStorage.getItem('currentUserID')) );
+        console.log("useEffect => currentUserID =>", currentUserID );
+
         readprofile( JSON.parse( window.localStorage.getItem('currentUserID')) );
         setCurrentUserID( JSON.parse( window.localStorage.getItem('currentUserID')) );
-        console.log("UserContext => currentUserID =>", currentUserID );
     },[]);
 
     // Login updates the user data with a name parameter    
@@ -33,7 +36,7 @@ export const UserProvider = ( {children} ) => {
                 readprofile( auth.currentUser.uid );
                 setCurrentUserID(auth.currentUser.uid);
 
-                window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID));
+                window.localStorage.setItem('currentUserID', JSON.stringify(auth.currentUser.uid));
                 console.log("login localStorage => ", window.localStorage.getItem('currentUserID' ) );
             })
     };
@@ -132,8 +135,8 @@ export const UserProvider = ( {children} ) => {
         //window.localStorage.setItem('currentUserID', '');
         window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID));
         console.log("UserContext localStorage => ", window.localStorage.getItem('currentUserID' ));
+        console.log( "logout currentUser => ", currentUser );
 
-        console.log( "logout currentUser => ",currentUser );
         signOut( auth )
             .then( () => {
                 console.log( currentUser.email, 'signed out' );

@@ -29,14 +29,15 @@ export default function Profile(){
         <div className='profile page'
             style={{
                 // 302501,895539,277630,1041983,546927
-                // background:'linear-gradient(#000a,#000a), url("https://source.unsplash.com/random/?abstract") no-repeat', 
-                // backgroundSize:'cover'
+                // background:'linear-gradient(#000d,#000d), url("https://source.unsplash.com/random/?abstract") no-repeat', 
+                backgroundSize:'cover'
             }}
         >
             <div className="header row justify-content-lg-left align-items-start">
                 <div className="col-lg-6 text-left">
                     {/* <h1>Profile</h1> */}
-                    <div className="row justify-content-lg-left align-items-center">
+                    <div 
+                        className="row justify-content-lg-left align-items-center">
                         <div className="col-lg-10 text-left my-3">
                             <div style={{fontSize:'15px',lineHeight:'1.2'}}>
                                 <Link 
@@ -44,24 +45,22 @@ export default function Profile(){
                                     style={{color:'#ffff'}}    
                                 >
                                 <h2>                            
-                                    {/* <img 
-                                        width="40"
-                                        height="40" 
-                                        className="mx-3" 
-                                        src={currentUser.imgURL} 
-                                        style={{borderRadius:'50%'}}
-                                        alt="new"
-                                    /> */}
                                     {currentUser.first} {currentUser.last}
                                 </h2>
                                 </Link><br></br>
+                                {/* <img 
+                                    width="40" height="40" className="mx-3" 
+                                    // style={{borderRadius:'50%'}}
+                                    src={currentUser.imgURL} 
+                                    alt="new"
+                                /> */}
                                 {currentUser.email}<br></br>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="col-lg-6 py-2 text-lg-end">
-                    <p className="profile-settings">
+                    <p className="profile-settings ">
                         <span style={{color:'#4267d9'}}>{currentUser.email}</span> is signed in
                         <img 
                                 width="40" height="40" className="mx-3" 

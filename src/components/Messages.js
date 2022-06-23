@@ -19,6 +19,7 @@ export default function Messages(){
 
     const [showMenuID, setShowMenuID] = useState(null);
     const [showMenu, setShowMenu] = useState(true);
+
     const [msgEdit, setMsgEdit] = useState(false);
     const [formData, setFormData] = useState({});
 
@@ -47,21 +48,19 @@ export default function Messages(){
     const readMessage = async (id) => {
 
         let data = await doc( collection(db, 'messages', id) );
- 
         console.log("readMessage() data =>", data);
     };
 
     const createMessage = async (e) => {
 
         e.preventDefault();
-        //document.querySelector('form').reset();
         console.log("createMessage");
+        //document.querySelector('form').reset();
 
         if( !formData.message ) {
             setError(true);
             return;
         }
-
         
         // Add new message to database
         let docRef;
@@ -123,7 +122,6 @@ export default function Messages(){
 
             // let newData = docSnap.data();
             // await setDoc( doc(db, 'messages', id ), ()=>{
-                
             // })
             readMessages();
         }catch(error){
@@ -156,7 +154,8 @@ export default function Messages(){
                         />
                         {message.first} {message.last} 
 
-                        { (currentUser.email !== message.email) ? '' :
+
+                        { currentUser.email !== message.email ? '' :
                             <a href
                                 className="msgMenu float-end"
                                 id={message.id} 
@@ -175,9 +174,10 @@ export default function Messages(){
                         <br></br>
                         {message.message}<br></br><br></br>
 
+
                         { currentUser.email !== message.email ? '' :
-                            showMenu ? '' :
-                                showMenuID !== message.id ? '' :
+                            showMenuID !== message.id ? '' :
+                                showMenu ? '' :
                                     <div>
                                         <input 
                                             style={{margin:'0px 0px 10px 0px'}}
@@ -199,37 +199,30 @@ export default function Messages(){
                                             </button>
                                     </div>
                         }
+
+                
                         <strong>{message.email}</strong><br></br>
                         <hr></hr>
                         <div className="icons row justify-content-lg-left align-items-start">
                             <div className="col-4 text-left">
-                                <a id={message.id} onClick={ (e) => {
-                                    updateMessage(message.id);
-                                    console.log("e.currentTarget.id => ", e.currentTarget.id);
-                                }} href
+                                <a href
+                                    id={message.id} 
+                                        onClick={ (e) => {
+                                            updateMessage(message.id);
+                                            console.log("e.currentTarget.id => ", e.currentTarget.id);
+                                        }} 
                                 >
-                                    <img 
-                                        height="20px" 
-                                        className="mx-1" 
-                                        src="./assets/Icon-thumb-black.png" alt='new'
-                                    />
-                                    Like
+                                    <img height="20px" className="mx-1" src="./assets/Icon-thumb-black.png" alt='new'/>Like
                                 </a>
                             </div>
                             <div className="col-4 text-left">
-                                <a href><img 
-                                    height="20px" 
-                                    className="mx-1" 
-                                    src="./assets/Icon-share-black.png" alt='new'/>
-                                    Share
+                                <a href>
+                                    <img height="20px" className="mx-1" src="./assets/Icon-share-black.png" alt='new'/>Share
                                 </a>
                             </div>
                             <div className="col-4 text-left">
-                                <a href><img 
-                                    height="20px" 
-                                    className="mx-1" 
-                                    src="./assets/Icon-comment-black.png" alt='new'/>
-                                    Comment
+                                <a href>
+                                    <img height="20px" className="mx-1" src="./assets/Icon-comment-black.png" alt='new'/>Comment
                                 </a>
                             </div>
                         </div>
@@ -254,22 +247,6 @@ export default function Messages(){
                         { error ? <p className="text-danger mx-2"> Please enter a message</p> : '' }
                 </form>
             </div>
-            {/* <div className="create text-left my-5">        
-                <h3 className="mx-1">Image</h3>
-                <input 
-                    onChange={ (e) => { 
-                        setFile( e.target.files[0] );
-                        console.log("file =>", file);
-                        uploadFile(e);
-                    }}    
-                    type="file"
-                /><br></br>
-                <input 
-                    onClick={createMessage}
-                    className="btn-blue" type="submit" value="Send"
-                /><br></br>
-                <img height="200" src={imageURL} alt=""></img>
-            </div> */}
         </div>
     )
 }
