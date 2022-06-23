@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import '../App.scss';
 import React, { useRef, useState, useEffect, useContext } from 'react';
-import { doc, addDoc, setDoc, getDocs, deleteDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { doc, addDoc, setDoc, getDoc, getDocs, deleteDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from '../Firebase';
 
 import { storage } from '../Firebase';
@@ -48,6 +48,14 @@ export default function Messages(){
         console.log("messages =>", messages);
     };
     
+    //Read message from Firebase
+    const readMessage = async (id) => {
+
+        let data = await doc( collection(db, 'messages', id) );
+ 
+        console.log("readMessage() data =>", data);
+    };
+
     const createMessage = async (e) => {
 
         e.preventDefault();
@@ -105,35 +113,27 @@ export default function Messages(){
         }
     };
 
+    const updateMessage = async (id) => {
+        console.log('updateMessage(id) likes =>', id);
+
+        try{
+            let data = await doc( db, 'messages', id );
+            const docSnap = await getDoc(data);
+            console.log("readMessage() docSnap.data() =>", docSnap.data());
+
+            // let newData = docSnap.data();
+            // await setDoc( doc(db, 'messages', id ), ()=>{
+                
+            // })
+            readMessages();
+        }catch(error){
+            console.log(error);
+        }
+    };
+
     const msgMenuClicked = (id) => {
         setShowMenu( !showMenu );
     }
-
-    // // Upload file to Firebase
-    // const uploadFile = (e) => {
-    //     e.preventDefault();
-
-    //     const file = e.target.files[0];
-
-    //     console.log("event =>", e);
-    //     console.log("file =>", file);
-
-    //     const storageRef = ref(storage, 'files/'+ file.name );
-
-    //     uploadBytes(storageRef, file )
-    //         .then( (snapshot) => {
-    //             console.log('Uploaded file'); 
-    //             console.log('snapshot =>', snapshot);
-
-    //             getDownloadURL(snapshot.ref).then( (url) => {
-    //                 console.log('File URL =>', url);
-    //                 setImageUrl(url);
-    //             });
-    //         })
-    //         .catch( (error) => {
-    //             console.log("File error =>", error);
-    //         })
-    // }
 
     return(
         <div 
@@ -203,10 +203,15 @@ export default function Messages(){
                         <hr></hr>
                         <div className="icons row justify-content-lg-left align-items-start">
                             <div className="col-4 text-left">
-                                <a href><img 
-                                    height="20px" 
-                                    className="mx-1" 
-                                    src="./assets/Icon-thumb-black.png" alt='new'/>
+                                <a 
+                                    onClick={ () => updateMessage(user.id)}
+                                    href
+                                >
+                                    <img 
+                                        height="20px" 
+                                        className="mx-1" 
+                                        src="./assets/Icon-thumb-black.png" alt='new'
+                                    />
                                     Like
                                 </a>
                             </div>

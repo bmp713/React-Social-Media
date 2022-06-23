@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import '../App.scss';
@@ -22,6 +23,8 @@ export default function Gallery(){
         name: "",
         search: "",
     });
+
+    const [showURL, setShowURL] = useState(false);
 
     //const fileRef = useRef(null);
     const [file, setFile] = useState("");
@@ -141,26 +144,25 @@ export default function Gallery(){
             })
         
     }
-    
 
     return(
         <div className='gallery my-5 p-5'>
             <div className="row justify-content-lg-between align-items-start">
                 <div className="col-lg-12 text-left">
                     <h2>Gallery
-                        <span><button className="float-end text-decoration-underline text-dark">See all photos</button></span> 
+                        <span><button className="float-end text-decoration-underline text-dark">
+                            See all photos
+                        </button></span> 
                     </h2>  
-                    
                 </div>
                 {images.map( (image) => (
-
                     (currentUser.id !== image.userId) ? '' : (
                         <div
                             style={{color:'#ffff', background:'#000d', borderRadius:'4px'}} 
                             className="col-lg-5 my-lg-2 py-2 my-3" id={image.id} key={image.id}
                         >
                             <img 
-                                width={30}
+                                width="30"
                                 height="30" 
                                 className="m-2" 
                                 src={currentUser.imgURL} 
@@ -182,11 +184,12 @@ export default function Gallery(){
                                         src="./assets/Icon-star-white.png" alt='new'/></a>
                                 </div>
                                 <div className="col-3 text-left">
-                                    <a href><img height="15" className="mx-1" 
-                                        src="./assets/Icon-share-white.png" alt='new'/></a>
+                                    <a  href onClick={ ()=>{ setShowURL( !showURL) }} >
+                                        <img height="15" className="mx-1" src="./assets/Icon-share-white.png" alt='new'/>
+                                    </a>
                                 </div>
                                 <div className="col-3 text-left">
-                                    <a href><img height="15" className="mx-1" 
+                                    <a href={image.imageURL} download target="_blank"><img height="15" className="mx-1" 
                                         src="./assets/Icon-download-white.png" alt='new'/></a>
                                 </div>
                                 <div className="col-3 text-left">
@@ -197,6 +200,9 @@ export default function Gallery(){
                                     </button>
                                 </div>
                             </div> 
+                            { !showURL ? '' :
+                                <p style={{ fontSize:'10px', wordWrap: 'break-word'}}>{image.imageURL}</p>
+                            }
                             <hr></hr>
                         </div>
                     )
@@ -228,7 +234,7 @@ export default function Gallery(){
                             /><br></br>
                             {(!file) ? '' : (
                                 <div className="col-lg-12 text-left p-2">
-                                    <img height="200" src={imageURL} alt=""></img>
+                                    <img width="50%" src={imageURL} alt=""></img>
                                     <br></br>
                                     {imageURL}                            
                                 </div>
