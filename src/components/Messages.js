@@ -84,7 +84,7 @@ export default function Messages(){
 
     const deleteMessage = async (id) => {
         console.log('deleteDoc(id) => ' + id);
-        setShowMenu( false );
+        setShowMenu( !showMenu );
 
         try{
             await deleteDoc( doc(db, 'messages', id) );
@@ -95,6 +95,8 @@ export default function Messages(){
     };
 
     const editMessage = async (id) => {
+        setShowMenu( !showMenu );
+
         console.log('editDoc(id) => ' + formData.message);
         try{
             await setDoc( doc(db, 'messages', id ), {
