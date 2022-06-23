@@ -19,13 +19,14 @@ export const UserProvider = ( {children} ) => {
     window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID))
 
     useEffect( () => {
-        readprofile( JSON.parse(window.localStorage.getItem('currentUserID')) );
-        setCurrentUserID( JSON.parse(window.localStorage.getItem('currentUserID')) );
+        readprofile( JSON.parse( window.localStorage.getItem('currentUserID')) );
+        setCurrentUserID( JSON.parse( window.localStorage.getItem('currentUserID')) );
         console.log("UserContext => currentUserID =>", currentUserID );
     },[]);
 
     // Login updates the user data with a name parameter    
     const login = (name, password) => {
+
         return signInWithEmailAndPassword(auth, name, password)
             .then((userCredential) => {
                 console.log( name, 'signed in' );
@@ -48,7 +49,7 @@ export const UserProvider = ( {children} ) => {
 
                 setCurrentUser((currentUser) => ({
                     id: doc.data().id,
-                    name: doc.data().email,
+                    email: doc.data().email,
                     first: doc.data().first,
                     last: doc.data().last,
                     imgURL: doc.data().imgURL,
@@ -77,14 +78,14 @@ export const UserProvider = ( {children} ) => {
         try{
             let random;
             while (!random) random = Math.floor(Math.random() * 14);
-            
+
             let imgURL ="./assets/Headshot-" + random + ".jpg";
             console.log("imgUrl", imgURL);
             let doc = await addDoc( collection(db, 'users'), {
                 id: id,
+                email: email,
                 first: first,
                 last: last,
-                email: email,
                 imgURL: imgURL,
                 // imgURL: 'https://source.unsplash.com/collection/895539/400x400',
                 friends: ''
@@ -100,7 +101,7 @@ export const UserProvider = ( {children} ) => {
         try{
             await setDoc( doc( db, "users", currentUser.id), {
                 id: currentUser.id,
-                name: currentUser.name,
+                email: currentUser.name,
                 first: currentUser.first,
                 last: currentUser.last,
                 imgURL: currentUser.imgURL,
@@ -121,7 +122,7 @@ export const UserProvider = ( {children} ) => {
     const logout = () => {
         setCurrentUser( (currentUser) => ({
             id: '',
-            name: '',
+            email: '',
             first: '',
             last: '',
             imgURL: '',
@@ -135,7 +136,7 @@ export const UserProvider = ( {children} ) => {
         console.log( "logout currentUser => ",currentUser );
         signOut( auth )
             .then( () => {
-                console.log( currentUser.name, 'signed out' );
+                console.log( currentUser.email, 'signed out' );
             }).catch((error) => {
                 console.log("logout()", error);
             });

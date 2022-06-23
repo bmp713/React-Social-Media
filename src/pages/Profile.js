@@ -55,14 +55,14 @@ export default function Profile(){
                                     {currentUser.first} {currentUser.last}
                                 </h2>
                                 </Link><br></br>
-                                {currentUser.name}<br></br>
+                                {currentUser.email}<br></br>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="col-lg-6 py-2 text-lg-end">
                     <p className="profile-settings">
-                        <span style={{color:'#4267d9'}}>{currentUser.name}</span> is signed in
+                        <span style={{color:'#4267d9'}}>{currentUser.email}</span> is signed in
                         <img 
                                 width="40" height="40" className="mx-3" 
                                 style={{borderRadius:'50%'}}

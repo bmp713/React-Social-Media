@@ -41,7 +41,7 @@ export default function Users(){
         console.log("addFriend =>", id);
         // setCurrentUser({
         //     id: currentUser.id,
-        //     name: currentUser.name,
+        //     email: currentUser.name,
         //     first: currentUser.first,
         //     last: currentUser.last,
         //     imgURL: currentUser.imgURL,

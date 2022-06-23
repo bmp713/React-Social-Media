@@ -12,7 +12,6 @@ export default function Signup(){
 
     const { currentUser, login, signup, logout } = useContext(UserContext);
 
-    const [ name, setName ] = useState('');
     const navigate = useNavigate();
 
     const [msgSubmit, setMsgSubmit] = useState( { message: '', color: 'red'} )

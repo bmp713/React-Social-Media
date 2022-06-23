@@ -10,7 +10,7 @@ import {UserContext} from '../contexts/UserContext';
 export default function Footer(){
     
     const { currentUser, login, logout } = useContext(UserContext);
-    const [ name, setName ] = useState('');
+    const [ email, setNEmail ] = useState('');
     const navigate = useNavigate();
 
     const logoutProfile = () => {
@@ -23,9 +23,9 @@ export default function Footer(){
             <div className="row justify-content-center align-items-center">
                 <div className="col-lg-12 justify-content-center align-items-center text-center p-2">
                     { console.log("currentUser => ", currentUser ) }
-                    { currentUser.name ? ( 
+                    { currentUser.email ? ( 
                         <div>
-                            <span style={{margin:'10px', fontSize:'16px'}}>{currentUser.name} is signed in</span>
+                            <span style={{margin:'10px', fontSize:'16px'}}>{currentUser.email} is signed in</span>
                             <button className='app-btn' onClick={logoutProfile}>Sign Out</button>
                         </div>
                     ) : (

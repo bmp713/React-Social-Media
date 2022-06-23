@@ -4,6 +4,8 @@ import '../App.scss';
 import React, { useState, useEffect, useContext } from 'react';
 import { doc, addDoc, setDoc, getDocs, deleteDoc, collection } from 'firebase/firestore';
 import { db } from '../Firebase';
+import { storage } from '../Firebase';
+import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 import {UserContext} from '../contexts/UserContext';
 
@@ -20,6 +22,13 @@ export default function Gallery(){
         name: "",
         search: "",
     });
+
+    //const fileRef = useRef(null);
+    const [file, setFile] = useState("");
+    const [imageURL, setImageUrl] = useState(null);
+
+    const [random, setRandom] = useState(Math.floor(Math.random() * 100) );
+    console.log("random =>", random);
 
     useEffect(() => {
         readGallery();
@@ -57,7 +66,6 @@ export default function Gallery(){
         // }
         // else setError(false);
 
-        // Create new user
         let docRef;
         try{
             docRef = await addDoc( collection(db, 'gallery'), {});
@@ -101,7 +109,39 @@ export default function Gallery(){
             imageURL: formData.image? formData.image : urlImg
         })
         readGallery();
+        setImageUrl('');
+
+    
     };
+    // Upload file to Firebase
+    const uploadFile = (e) => {
+        e.preventDefault();
+
+        const file = e.target.files[0];
+
+        console.log("event =>", e);
+        console.log("file =>", file);
+
+        const storageRef = ref(storage, 'files/'+ file.name );
+
+        uploadBytes(storageRef, file )
+            .then( (snapshot) => {
+                console.log('Uploaded file'); 
+                console.log('snapshot =>', snapshot);
+
+                getDownloadURL(snapshot.ref).then( (url) => {
+                    console.log('File URL =>', url);
+                    setImageUrl(url);
+                    setFormData({...formData, image: url})
+                });
+
+            })
+            .catch( (error) => {
+                console.log("File error =>", error);
+            })
+        
+    }
+    
 
     return(
         <div className='gallery my-5 p-5'>
@@ -113,20 +153,21 @@ export default function Gallery(){
                     
                 </div>
                 {images.map( (image) => (
+
                     (currentUser.id !== image.userId) ? '' : (
                         <div
                             style={{color:'#ffff', background:'#000d', borderRadius:'4px'}} 
                             className="col-lg-5 my-lg-2 py-2 my-3" id={image.id} key={image.id}
                         >
                             <img 
-                                width="30"
+                                width={30}
                                 height="30" 
                                 className="m-2" 
                                 src={currentUser.imgURL} 
                                 style={{borderRadius:'50%'}}
                                 alt="new"
                             />
-                            {currentUser.first} 
+                            {currentUser.first} {currentUser.last}
                             <a 
                                 className="float-end" href><img height="20" className="mx-2 float-end" 
                                 src="./assets/Icon-dots-white.png" alt='new'/></a>
@@ -156,9 +197,6 @@ export default function Gallery(){
                                     </button>
                                 </div>
                             </div> 
-                            <p style={{wordWrap:'break-word', fontSize:'12px'}}>
-                                {/* {image.search}<br></br> */}
-                            </p>
                             <hr></hr>
                         </div>
                     )
@@ -179,16 +217,29 @@ export default function Gallery(){
                                 onChange={ function(e){ setFormData({...formData, image: e.target.value}) } }    
                                 type="text" placeholder="Image URL"
                             />
-                            <p className="mx-2" style={{fontSize:"12px"}}>
-                                (Random image will be generated if all fields left blank)
-                            </p>
                             <br></br>
+                            <input 
+                                onChange={ (e) => { 
+                                    setFile( e.target.files[0] );
+                                    console.log("file =>", file);
+                                    uploadFile(e);
+                                }}    
+                                type="file"
+                            /><br></br>
+                            {(!file) ? '' : (
+                                <div className="col-lg-12 text-left p-2">
+                                    <img height="200" src={imageURL} alt=""></img>
+                                    <br></br>
+                                    {imageURL}                            
+                                </div>
+                            )}
                             <input className="submit-btn" type="submit" value="Add"/><br></br>
                             { error ? <p className="text-danger mx-2"> Please fill in all fields</p> : '' }
                         </form>
                         <br></br>
                     </div>
                 </div>
+
             </div>
         </div>  
     )

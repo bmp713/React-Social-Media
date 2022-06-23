@@ -1,29 +1,35 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import '../App.scss';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 import { doc, addDoc, setDoc, getDocs, deleteDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from '../Firebase';
+
+import { storage } from '../Firebase';
+import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 import {UserContext} from '../contexts/UserContext';
 
 export default function Messages(){
 
     // User authentication
-    const { currentUser, login, logout } = useContext(UserContext);
-
+    const {currentUser, login, logout } = useContext(UserContext);
     const [messagesCount, setMessagesCount] = useState(0);
     const [messages, setMessages] = useState([]);
     const [error, setError] = useState(false);
-
+    
     const [showMenu, setShowMenu] = useState(true);
     const [msgEdit, setMsgEdit] = useState(false);
 
-    const [formData, setFormData] = useState({
-        id:"",
-        name: "",
-        email: "",
-    });
+
+    const [formData, setFormData] = useState({});
+
+
+    //const fileRef = useRef(null);
+    const [file, setFile] = useState("");
+    const [imageURL, setImageUrl] = useState(null);
+
+
 
     useEffect(() => {
         readMessages();
@@ -31,7 +37,7 @@ export default function Messages(){
 
     //Read messages from Firebase
     const readMessages = async () => {
-        // console.log("readMessages");
+
         let data = await getDocs( collection(db, 'messages') );
         setMessages( 
             data.docs.map( (doc) => 
@@ -43,19 +49,18 @@ export default function Messages(){
     };
     
     const createMessage = async (e) => {
+
         e.preventDefault();
         console.log("createMessage");
+
         if( !formData.message ) {
             setError(true);
             return;
         }
 
-        // Create new user
+        
+        // Add new message to database
         let docRef;
-
-        //setFile(e.target.files[0]);
-        //console.log("form inputs => ", e.target.files[0]);
-
         try{
             docRef = await addDoc( collection(db, 'messages'), {});
             console.log('id => '+ docRef.id);
@@ -65,7 +70,7 @@ export default function Messages(){
         }
         await setDoc( doc(db, 'messages', docRef.id.toString()), {
             id: docRef.id,
-            email: currentUser.name,
+            email: currentUser.email,
             first: currentUser.first,
             last: currentUser.last,
             message: formData.message,
@@ -88,7 +93,7 @@ export default function Messages(){
         try{
             await setDoc( doc(db, 'messages', id ), {
                 id: id,
-                email: currentUser.name,
+                email: currentUser.email,
                 first: currentUser.first,
                 last: currentUser.last,
                 message: formData.message,
@@ -104,17 +109,41 @@ export default function Messages(){
         setShowMenu( !showMenu );
     }
 
+    // // Upload file to Firebase
+    // const uploadFile = (e) => {
+    //     e.preventDefault();
+
+    //     const file = e.target.files[0];
+
+    //     console.log("event =>", e);
+    //     console.log("file =>", file);
+
+    //     const storageRef = ref(storage, 'files/'+ file.name );
+
+    //     uploadBytes(storageRef, file )
+    //         .then( (snapshot) => {
+    //             console.log('Uploaded file'); 
+    //             console.log('snapshot =>', snapshot);
+
+    //             getDownloadURL(snapshot.ref).then( (url) => {
+    //                 console.log('File URL =>', url);
+    //                 setImageUrl(url);
+    //             });
+    //         })
+    //         .catch( (error) => {
+    //             console.log("File error =>", error);
+    //         })
+    // }
+
     return(
         <div 
             className="messages row text-left align-items-center p-lg-5 p-4 my-2" 
             style={{
-                // 302501,895539,277630,1041983,546927
-                // background:'linear-gradient(#0077cc77,#000a), url("https://source.unsplash.com/random/167880") no-repeat', 
                 background:'linear-gradient(#0066ccaa,#000a), url("https://source.unsplash.com/random/?shadows") no-repeat', 
                 backgroundSize:'cover'
             }}
         >
-            <h2 className="mx-2">Messages</h2>  
+            <h2 className="mx-2">Messages</h2>
             {messages.map( (user) => (
                 <div className="message p-lg-0 my-4" id={user.id} key={user.id}>
                     <div className="col-lg-12 px-lg-5 py-lg-3 p-3" >              
@@ -125,7 +154,7 @@ export default function Messages(){
                         />
                         {user.first} {user.last} 
 
-                        { (currentUser.name !== user.email) ? '' :
+                        { (currentUser.email !== user.email) ? '' :
                             <a className="msgMenu float-end" href>
                                 <img 
                                     height="20" 
@@ -133,21 +162,21 @@ export default function Messages(){
                                     src="./assets/Icon-dots-black.png" alt='new'
                                     onClick={msgMenuClicked}
                                 />
-                                {/* <div id={user.id} className={ showMenu ? 'hide': 'show'}>
-                                    <button 
+                                <div id={user.id} className={ showMenu ? 'hide': 'show'}>
+                                    {/* <button 
                                         style={{color:'#000f', background:'#ffff', padding:'4px 35px', border:'1px solid #000f'}}
                                         onClick={ () => { setMsgEdit(true); editMessage(user.id);} }>Edit
                                     </button>
                                     <button 
                                         style={{color:'#ffff', background:'#000f', padding:'5px 30px'}}
                                         onClick={ () => { deleteMessage(user.id) } }>Delete 
-                                    </button>
-                                </div> */}
+                                    </button> */}
+                                </div>
                             </a>
                         }
                         <br></br>
                         {user.message}<br></br><br></br>
-                        { (currentUser.name !== user.email) ? '' :
+                        { (currentUser.email !== user.email) ? '' :
                          !showMenu ? 
                             <div>
                                 <input 
@@ -199,7 +228,6 @@ export default function Messages(){
                             </div>
                         </div>
                     </div>
-
                 </div>
             ))} 
             <div className="create text-left my-5">        
@@ -207,25 +235,35 @@ export default function Messages(){
                     <h3 className="mx-1">Message</h3>
                     <input 
                         value={formData.message} 
-                        onChange={ function(event){ 
+                        onChange={ (event) => { 
                             setFormData({...formData, message: event.target.value}) 
                             event.target.value ? setError(false) : setError(true)
                         } }    
                         type="textarea" placeholder="Type your message here"
                     /><br></br>
                     <input 
-                        value={formData.file} 
-                        onChange={ function(e){ setFormData({...formData, file: e.target.value}) } }    
-                        type="file" placeholder=""
-                    /><br></br>
-                    <input 
                         onClick={createMessage}
-                        // style={{border:'2px solid #ffff'}}
-                        className="btn-blue" type="submit" value="Send"/><br></br>
+                        className="btn-blue" type="submit" value="Send"
+                    /><br></br>
                         { error ? <p className="text-danger mx-2"> Please enter a message</p> : '' }
                 </form>
-                <br></br>
             </div>
+            {/* <div className="create text-left my-5">        
+                <h3 className="mx-1">Image</h3>
+                <input 
+                    onChange={ (e) => { 
+                        setFile( e.target.files[0] );
+                        console.log("file =>", file);
+                        uploadFile(e);
+                    }}    
+                    type="file"
+                /><br></br>
+                <input 
+                    onClick={createMessage}
+                    className="btn-blue" type="submit" value="Send"
+                /><br></br>
+                <img height="200" src={imageURL} alt=""></img>
+            </div> */}
         </div>
     )
 }

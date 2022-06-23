@@ -12,8 +12,6 @@ export default function Login(){
 
     const { currentUser, login, logout } = useContext(UserContext);
 
-    // const [ name, setName ] = useState('');
-
     const [msgSubmit, setMsgSubmit] = useState( { message: '', color: 'red'} )
     const [passwordShow, setPasswordShow] = useState(false);
     const navigate = useNavigate();
