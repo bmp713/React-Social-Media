@@ -14,7 +14,7 @@ export const UserProvider = ( {children} ) => {
     const [currentUser, setCurrentUser] = useState('');
     const [currentUserID, setCurrentUserID] = useState('id');
     
-    //console.log("UserContext localStorage => ", window.localStorage.getItem('currentUserID' ) );
+    // console.log("UserContext localStorage => ", window.localStorage.getItem('currentUserID' ) );
     // If Freezes
     // Fixes state on refresh
     //window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID))

@@ -20,12 +20,10 @@ export default function Messages(){
     const [showMenuID, setShowMenuID] = useState(null);
     const [showMenu, setShowMenu] = useState(true);
 
-    const [msgEdit, setMsgEdit] = useState(false);
     const [formData, setFormData] = useState({});
 
-    //const fileRef = useRef(null);
-    const [file, setFile] = useState("");
-    const [imageURL, setImageUrl] = useState(null);
+    const [likes, setLikes] = useState(0);
+    const [likeID, setLikeID] = useState();
 
     useEffect(() => {
         readMessages();
@@ -77,7 +75,8 @@ export default function Messages(){
             first: currentUser.first,
             last: currentUser.last,
             message: formData.message,
-            userImg: currentUser.imgURL
+            userImg: currentUser.imgURL,
+            likes: 0
         })
     };  
 
@@ -118,11 +117,31 @@ export default function Messages(){
         try{
             let data = await doc( db, 'messages', id );
             const docSnap = await getDoc(data);
-            console.log("readMessage() docSnap.data() =>", docSnap.data());
 
-            // let newData = docSnap.data();
-            // await setDoc( doc(db, 'messages', id ), ()=>{
-            // })
+            console.log("readMessage() docSnap.data() =>", docSnap.data());
+            console.log("readMessage() docSnap.data() =>", docSnap.data().id);
+            console.log("readMessage() docSnap.data() =>", docSnap.data().email);
+            console.log("readMessage() docSnap.data() =>", docSnap.data().first);
+            console.log("readMessage() docSnap.data() =>", docSnap.data().last);
+
+
+
+            let newLikes = docSnap.data().likes + 1; 
+            console.log("newLikes =>", newLikes);
+            try{
+                await setDoc( doc(db, 'messages', id ), {
+                    id: docSnap.data().id,
+                    email: docSnap.data().email,
+                    first: docSnap.data().first,
+                    last: docSnap.data().last,
+                    message: docSnap.data().message,
+                    userImg: docSnap.data().userImg,
+                    likes: newLikes
+                })
+                readMessages();
+            }catch(error){
+                console.log(error);
+            }
             readMessages();
         }catch(error){
             console.log(error);
@@ -133,6 +152,11 @@ export default function Messages(){
         console.log("e.currentTarget.id => ", e.currentTarget.id);
         setShowMenuID(e.currentTarget.id);
         setShowMenu( !showMenu );
+    }
+
+    const likeClicked = (e) => {
+        console.log("like clicked => e.currentTarget.id => ", e.currentTarget.id);
+        setLikeID(e.currentTarget.id);
     }
 
     return(
@@ -209,10 +233,16 @@ export default function Messages(){
                                     id={message.id} 
                                         onClick={ (e) => {
                                             updateMessage(message.id);
-                                            console.log("e.currentTarget.id => ", e.currentTarget.id);
+                                            // setLikes( !likes );
+                                            // setLikeID(e);
+                                            console.log("likeID =>", e.currentTarget.id);
                                         }} 
                                 >
-                                    <img height="20px" className="mx-1" src="./assets/Icon-thumb-black.png" alt='new'/>Like
+                                    { message.likes ? 
+                                        <img height="20px" className="mx-1" src="./assets/Icon-thumb-lightblue.png" alt='new'/> 
+                                        :
+                                        <img height="20px" className="mx-1" src="./assets/Icon-thumb-black.png" alt='new'/>
+                                    } {message.likes}
                                 </a>
                             </div>
                             <div className="col-4 text-left">
