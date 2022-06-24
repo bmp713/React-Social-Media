@@ -94,16 +94,19 @@ export default function Messages(){
 
     const editMessage = async (id) => {
         setShowMenu( !showMenu );
+        
+        let data = await doc( db, 'messages', id );
+        const docSnap = await getDoc(data);
 
-        console.log('editDoc(id) => ' + formData.message);
         try{
             await setDoc( doc(db, 'messages', id ), {
-                id: id,
-                email: currentUser.email,
-                first: currentUser.first,
-                last: currentUser.last,
+                id: docSnap.data().id,
+                email: docSnap.data().email,
+                first: docSnap.data().first,
+                last: docSnap.data().last,
                 message: formData.message,
-                userImg: currentUser.imgURL
+                userImg: docSnap.data().userImg,
+                likes: docSnap.data().likes
             })
             readMessages();
         }catch(error){
@@ -117,14 +120,6 @@ export default function Messages(){
         try{
             let data = await doc( db, 'messages', id );
             const docSnap = await getDoc(data);
-
-            console.log("readMessage() docSnap.data() =>", docSnap.data());
-            console.log("readMessage() docSnap.data() =>", docSnap.data().id);
-            console.log("readMessage() docSnap.data() =>", docSnap.data().email);
-            console.log("readMessage() docSnap.data() =>", docSnap.data().first);
-            console.log("readMessage() docSnap.data() =>", docSnap.data().last);
-
-
 
             let newLikes = docSnap.data().likes + 1; 
             console.log("newLikes =>", newLikes);
