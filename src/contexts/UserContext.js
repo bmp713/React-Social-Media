@@ -84,6 +84,7 @@ export const UserProvider = ( {children} ) => {
 
             let imgURL ="./assets/Headshot-" + random + ".jpg";
             console.log("imgUrl", imgURL);
+
             let doc = await addDoc( collection(db, 'users'), {
                 id: id,
                 email: email,
@@ -132,10 +133,11 @@ export const UserProvider = ( {children} ) => {
             friends: ''
         }));
 
-        //window.localStorage.setItem('currentUserID', '');
-        window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID));
-        console.log("UserContext localStorage => ", window.localStorage.getItem('currentUserID' ));
-        console.log( "logout currentUser => ", currentUser );
+        window.localStorage.setItem('currentUserID', '');
+        //window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID));
+        
+        console.log("UserContext localStorage =>", window.localStorage.getItem('currentUserID' ));
+        console.log("logout currentUser =>", currentUser );
 
         signOut( auth )
             .then( () => {
