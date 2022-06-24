@@ -90,8 +90,8 @@ export const UserProvider = ( {children} ) => {
                 email: email,
                 first: first,
                 last: last,
-                imgURL: imgURL,
-                // imgURL: 'https://source.unsplash.com/collection/895539/400x400',
+                // imgURL: imgURL,
+                imgURL: 'https://source.unsplash.com/collection/895539/400x400',
                 friends: ''
             });
             console.log('addDoc id => '+ id);
