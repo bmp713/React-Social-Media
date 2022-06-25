@@ -48,40 +48,10 @@ export default function Friends(){
         }
     };
 
-    // const createFriend = async (e) => {
-    //     e.preventDefault();
-    //     if( !formData.name || !formData.email ){
-    //         setError(true);
-    //         return;
-    //     }
-    //     else setError(false);
-    //     // Create new friend
-    //     let docRef;
-    //     try{
-    //         docRef = await addDoc( collection(db, 'friends'), {});
-    //         console.log('id => '+ docRef.id);
-    //     }catch(error){
-    //         console.log(error);
-    //     }
-    //     // Generate random headshot image with fetch API
-    //     await fetch('https://source.unsplash.com/collection/928423/480x480', {
-    //         headers: {'Content-Type':'application/json'},
-    //         crossDomain: true,
-    //         mode: 'no-cors',
-    //         method: 'GET'
-    //     })
-    //         .then( data => {
-    //             console.log("Fetch image =>", data );
-    //         } )
-    //         .catch( error => {
-    //             console.log("Fetch error => ", error);
-    //         });
-    //     // https://unsplash.com/collections/895539,302501,277630,1041983
-    //     // https://source.unsplash.com/collection/{collectionID}/{imageWidth}x{imageHeight}/?sig=randomNumber
-    //     // https://source.unsplash.com/collection/collectionID/400x600/?sig=imageID
-    //     // Generate random headshot image
-    //     let random = Math.floor(Math.random() * 100000);
-    //     let urlImg = `https://source.unsplash.com/collection/895539/400x400/?sig=`+ random;
+    const createFriend = async (e) => {
+        e.preventDefault();
+
+        console.log( "currentUser.friends =>", currentUser.friends);
     //     // Update friend document
     //     await setDoc( doc(db, 'friends', docRef.id.toString()), {
     //         id: docRef.id,
@@ -90,16 +60,16 @@ export default function Friends(){
     //         email: formData.email,
     //         imageURL: formData.image? formData.image : urlImg
     //     })
-    //     readFriends();
-    // };
+        readFriends();
+    };
 
     return(
         <div className='friends my-lg-2'>
             <div className="row justify-content-lg-left justify-content-center align-items-center p-lg-5">
                 <div className="col-lg-6 text-lg-start">
-                    {/* <h2>Friends ({friendsCount})</h2>   */}
-                    <h2>Friends (8)</h2>  
-                    {/* <h2>Friends</h2>  */}
+                    {/* <h2>Friends ({currentUser.friendsCount})</h2>   */}
+                    {/* <h2>Friends (8)</h2>   */}
+                    <h2>Friends</h2> 
                 </div>
                 <div className="col-lg-6 text-lg-end text-decoration-underline">
                     <button className="text-decoration-underline text-white">See all friends</button> 

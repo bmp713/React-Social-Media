@@ -23,6 +23,11 @@ export default function Users(){
         readprofiles();
     },[]);
 
+    useEffect(() => {
+        readprofiles();
+        console.log("useEffect() currentUser updated");
+    },[currentUser] );
+
     const readprofiles = async () => {
         let data = await getDocs( collection(db, 'users') );
 
@@ -39,16 +44,19 @@ export default function Users(){
 
     const addFriend = async (id) => {
         console.log("addFriend =>", id);
+        console.log("currentUser.friends =>", currentUser.friends);
+
         // setCurrentUser({
         //     id: currentUser.id,
-        //     email: currentUser.name,
+        //     email: currentUser.email,
         //     first: currentUser.first,
         //     last: currentUser.last,
         //     imgURL: currentUser.imgURL,
-        //     profiless: currentUser.profiless.concat(",", id)        
+        //     friends: currentUser.friends.concat(",", id),
+        //     // friendsCount: currentUser.friendsCount + 1    
         // })   
-        //updateUserFirebase(currentUser);  
-        //console.log("addFriend() =>", currentUser.friends);
+        // updateUserFirebase(currentUser);  
+        console.log("addFriend() =>", currentUser.friends);
 
     };
 

@@ -20,7 +20,10 @@ export default function Messages(){
     const [showMenuID, setShowMenuID] = useState(null);
     const [showMenu, setShowMenu] = useState(true);
 
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState({
+        message: '',
+        imageURL: ''
+    });
 
     const [likes, setLikes] = useState(0);
     const [likeID, setLikeID] = useState();
@@ -53,13 +56,7 @@ export default function Messages(){
 
         e.preventDefault();
         console.log("createMessage");
-        //document.querySelector('form').reset();
-
-        if( !formData.message ) {
-            setError(true);
-            return;
-        }
-        
+ 
         // Add new message to database
         let docRef;
         try{
@@ -69,17 +66,23 @@ export default function Messages(){
         }catch(error){
             console.log(error);
         }
-        await setDoc( doc(db, 'messages', docRef.id.toString()), {
-            id: docRef.id,
-            email: currentUser.email,
-            first: currentUser.first,
-            last: currentUser.last,
-            message: formData.message,
-            userImg: currentUser.imgURL,
-            likes: 0
-        })
+        try{
+            await setDoc( doc(db, 'messages', docRef.id.toString()), {
+                id: docRef.id,
+                email: currentUser.email,
+                first: currentUser.first,
+                last: currentUser.last,
+                message: formData.message,
+                userImg: currentUser.imgURL,
+                imageURL: formData.imageURL,
+                likes: 0
+            })
+        }catch(error){
+            console.log(error);
+        }
     };  
 
+    // Delete message by message ID
     const deleteMessage = async (id) => {
         console.log('deleteDoc(id) => ' + id);
         setShowMenu( !showMenu );
@@ -92,6 +95,7 @@ export default function Messages(){
         }
     };
 
+    // Edit message by message ID
     const editMessage = async (id) => {
         setShowMenu( !showMenu );
         
@@ -106,6 +110,7 @@ export default function Messages(){
                 last: docSnap.data().last,
                 message: formData.message,
                 userImg: docSnap.data().userImg,
+                imageURL: formData.imageURL, 
                 likes: docSnap.data().likes
             })
             readMessages();
@@ -114,7 +119,8 @@ export default function Messages(){
         }
     };
 
-    const updateMessage = async (id) => {
+    // Update likes by message id
+    const updateLikes = async (id) => {
         console.log('updateMessage(id) likes =>', id);
 
         try{
@@ -131,6 +137,7 @@ export default function Messages(){
                     last: docSnap.data().last,
                     message: docSnap.data().message,
                     userImg: docSnap.data().userImg,
+                    imageURL: docSnap.data().imageURL,
                     likes: newLikes
                 })
                 readMessages();
@@ -158,7 +165,7 @@ export default function Messages(){
         <div 
             className="messages row text-left align-items-center p-lg-5 p-4 my-2" 
             style={{
-                background:'linear-gradient(#0066ccaa,#000a), url("https://source.unsplash.com/random/?shadows") no-repeat', 
+                background:'linear-gradient(#2266ccaa,#000a), url("https://source.unsplash.com/random/?shadows") no-repeat', 
                 backgroundSize:'cover'
             }}
         >
@@ -186,13 +193,15 @@ export default function Messages(){
                                     height="20" className="mx-2 float-end" 
                                     src="./assets/Icon-dots-black.png" alt='new'
                                 />
-                                <div id={message.id} className={ showMenu ? 'hide': 'show'}>
-                                </div>
+                                { showMenu &&<div id={message.id}></div>
+                                }
                             </a>
                         }
                         <br></br>
+                        { message.imageURL &&
+                            <img width="100%" className='my-3' src={message.imageURL} alt=''/>
+                        }
                         {message.message}<br></br><br></br>
-
 
                         { currentUser.email !== message.email ? '' :
                             showMenuID !== message.id ? '' :
@@ -205,6 +214,14 @@ export default function Messages(){
                                                 setFormData({...formData, message: event.target.value}) 
                                             } }    
                                             type="textarea" placeholder="Update your message"
+                                        />
+                                        <input 
+                                            style={{margin:'0px 0px 10px 0px'}}
+                                            value={formData.imageULR} 
+                                            onChange={ function(event){ 
+                                                setFormData({...formData, imageURL: event.target.value}) 
+                                            } }    
+                                            type="textarea" placeholder="Image URL"
                                         />
                                             <button 
                                                 onClick={ () => { editMessage(message.id) } } 
@@ -219,7 +236,6 @@ export default function Messages(){
                                     </div>
                         }
 
-                
                         <strong>{message.email}</strong><br></br>
                         <hr></hr>
                         <div className="icons row justify-content-lg-left align-items-start">
@@ -227,7 +243,7 @@ export default function Messages(){
                                 <a href
                                     id={message.id} 
                                         onClick={ (e) => {
-                                            updateMessage(message.id);
+                                            updateLikes(message.id);
                                             // setLikes( !likes );
                                             // setLikeID(e);
                                             console.log("likeID =>", e.currentTarget.id);
@@ -264,6 +280,14 @@ export default function Messages(){
                             event.target.value ? setError(false) : setError(true)
                         } }    
                         type="textarea" placeholder="Type your message here"
+                    /><br></br>
+                    <input 
+                        value={formData.imageURL} 
+                        onChange={ (event) => { 
+                            setFormData({...formData, imageURL: event.target.value}) 
+                            event.target.value ? setError(false) : setError(true)
+                        } }    
+                        type="textarea" placeholder="Image URL"
                     /><br></br>
                     <input 
                         onClick={createMessage}

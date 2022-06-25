@@ -13,11 +13,13 @@ export const UserProvider = ( {children} ) => {
 
     const [currentUser, setCurrentUser] = useState('');
     const [currentUserID, setCurrentUserID] = useState('id');
+    const [currentUserIMG, setCurrentUserIMG] = useState('id');
+
     
     // console.log("UserContext localStorage => ", window.localStorage.getItem('currentUserID' ) );
     // If Freezes
     // Fixes state on refresh
-    window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID))
+    //window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID))
 
     useEffect( () => {
         console.log("useEffect localStorage => ", JSON.parse( window.localStorage.getItem('currentUserID')) );
@@ -79,33 +81,27 @@ export const UserProvider = ( {children} ) => {
 
         // Create new user in Firebase db
         try{
-            let random;
-            while (!random) random = Math.floor(Math.random() * 14);
-
-            let imgURL ="./assets/Headshot-" + random + ".jpg";
-            console.log("imgUrl", imgURL);
-
-            let doc = await addDoc( collection(db, 'users'), {
+            await setDoc( doc( db, "users", id), {
                 id: id,
                 email: email,
                 first: first,
                 last: last,
-                // imgURL: imgURL,
-                imgURL: 'https://source.unsplash.com/collection/895539/400x400',
+                imgURL: './assets/Icon-headshot.png',
                 friends: ''
             });
+
             console.log('addDoc id => '+ id);
         }catch(error){
             console.log('createUserFirebase() => ', error);
         }
     };  
 
-       // Create user additional profile data in users db
+    // Create user additional profile data in users db
     const updateUserFirebase = async ( currentUser ) => {
         try{
             await setDoc( doc( db, "users", currentUser.id), {
                 id: currentUser.id,
-                email: currentUser.name,
+                email: currentUser.email,
                 first: currentUser.first,
                 last: currentUser.last,
                 imgURL: currentUser.imgURL,
@@ -149,7 +145,7 @@ export const UserProvider = ( {children} ) => {
 
     // Wrapper for Context Provider
     return (
-        <UserContext.Provider value={ {currentUser, login, logout, signup, reset, setCurrentUser, updateUserFirebase} }>
+        <UserContext.Provider value={ {currentUser, setCurrentUserIMG, login, logout, signup, reset, setCurrentUser, updateUserFirebase} }>
             {children}
         </UserContext.Provider>
     );

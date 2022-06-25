@@ -35,8 +35,6 @@ export default function Gallery(){
     const [file, setFile] = useState("");
     const [imageURL, setImageUrl] = useState(null);
 
-    const [random, setRandom] = useState(Math.floor(Math.random() * 100) );
-
     useEffect(() => {
         readGallery();
     },[]);

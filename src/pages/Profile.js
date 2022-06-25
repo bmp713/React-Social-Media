@@ -11,20 +11,26 @@ import { db } from '../Firebase';
 import Friends from '../components/Friends';
 import Gallery from '../components/Gallery';
 import Messages from '../components/Messages';
+import Image from '../components/Image';
 import Users from '../components/Users';
 
 import {UserContext} from '../contexts/UserContext';
 
 export default function Profile(){
 
-    const { currentUser, login, logout } = useContext(UserContext);
+    const { currentUser, login, logout, updateUserFirebase } = useContext(UserContext);
+
     const navigate = useNavigate();
 
     const logoutProfile = () => {
+        updateUserFirebase(currentUser);
         logout();
         navigate('/');
     }
 
+    useEffect(() => {
+    },[] );
+    
     return(
         <div className='profile page'
             style={{
@@ -78,14 +84,10 @@ export default function Profile(){
                     <Friends/>
                     <Gallery/>
                     <Users/>
-
+                    <Image/>
                 </div>
-                <div className="col-lg-5 text-left m-lg-1">
+                <div className="col-lg-5 text-left my-lg-1">
                     <Messages/>
-                </div>
-                <div className="col-lg-10 text-left m-lg-1">
-                </div>
-                <div className="col-lg-10 text-left m-lg-1">
                 </div>
             </div>
         </div>  

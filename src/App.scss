@@ -86,6 +86,12 @@ header{
 }
 
 
+.image{
+    color: #222f;
+    background: #ffff;
+    border-radius: 2px;
+}
+
 .friends{
     position: relative;
     background: #066a;
@@ -103,7 +109,8 @@ header{
 .messages{
     position: relative;
     background: #04ca; 
-    background: linear-gradient(to right, #04cb,#04d6);
+    background: linear-gradient(to right, #04cb, #04d6);
+    background: linear-gradient(to right, #04cb, #04d6);
     border-radius: 2px; 
     box-shadow: 5px 5px 30px #0004;
     .message{
@@ -124,11 +131,8 @@ header{
             background: #fff0;
             .show{
                 color: #000f !important;
-                //border: 1px solid #000f;
             }
-
         }
-
     }
     h2{
         font-size: 36px;
@@ -226,7 +230,7 @@ input{
 }
 
 
-.text-danger{
+.text-danger, .text-success{
     font-weight: 400;
     font-size: 14px;
 }
