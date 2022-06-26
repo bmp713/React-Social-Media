@@ -228,7 +228,9 @@ export default function Gallery(){
                             <hr></hr>
                         </div>
                     )
-                ))}                
+                ))}      
+                <br></br>   
+                <hr></hr>      
                 <div className="col-lg-12 text-left">
                     <div className="create text-left">   
                         <form id='form' onSubmit={createImage}>
@@ -256,7 +258,9 @@ export default function Gallery(){
                             /><br></br>
                             {(!file) ? '' : (
                                 <div className="col-lg-12 text-left p-2">
-                                    <img width="50%" src={imageURL} alt=""></img>
+                                    <img 
+                                        onClick={ () => { setFile(null); setImageUrl(null); }}
+                                        width="50%" src={imageURL} alt=""></img>
                                     <br></br>
                                     {imageURL}                            
                                 </div>

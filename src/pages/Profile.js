@@ -11,6 +11,7 @@ import { db } from '../Firebase';
 import Friends from '../components/Friends';
 import Gallery from '../components/Gallery';
 import Messages from '../components/Messages';
+import ImageHeader from '../components/ImageHeader';
 import Image from '../components/Image';
 import Users from '../components/Users';
 
@@ -76,6 +77,7 @@ export default function Profile(){
                         />
                         <button onClick={logoutProfile} className="app-btn">Sign Out</button><br></br>
                         <span>Settings<img width="20px" className="m-3" src="./assets/Icon-gear-white.png" alt='new'/></span>
+                        {/* <ImageHeader/> */}
                     </p>
                 </div>
             </div>

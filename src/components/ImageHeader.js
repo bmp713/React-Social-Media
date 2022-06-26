@@ -10,7 +10,7 @@ import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 import {UserContext} from '../contexts/UserContext';
 
-export default function Image(){
+export default function ImageHeader(){
 
     // User authentication
     const { currentUser, login, logout } = useContext(UserContext);
@@ -93,28 +93,31 @@ export default function Image(){
     }
 
     return(
-        <div className='image my-5 mx-0 p-5'>
+        <div className=''>
             <div className="row justify-content-lg-between align-items-start">
-                <div className="col-lg-12 text-left">
-                    <h4>Profile Image
+                <div className="col-lg-6 text-left">
+                    <span>Profile Image
                         <span><button className="float-end text-decoration-underline text-dark">
                             {/* See all photos */}
                         </button></span> 
-                    </h4>  
+                    </span>  
                 </div>
-                          <div className="col-lg-12 text-left">
+                          <div className="col-lg-6 text-left">
                     <div className="create text-left">   
                         <form id='form' onSubmit={updateUserImage}>
                             <input 
+                                style={{color:'#ffff',background: '#0000'}}
                                 onChange={ (e) => { 
                                     setFile( e.target.files[0] );
                                     uploadFile(e);
                                 }}    
                                 type="file"
-                            /><br></br>
+                            />
                             {file &&
                                 <div className="col-lg-12 text-left p-2">
-                                    <img width="50%" src={imageURL} alt=""></img>
+                                    <img 
+                                        onClick={ () => { setFile(null); setImageUrl(null); }}
+                                        width="50%" src={imageURL} alt=""></img>
                                     <br></br>
                                     {imageURL}                            
                                 </div>

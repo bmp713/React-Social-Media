@@ -18,7 +18,8 @@ export const UserProvider = ( {children} ) => {
     
     // console.log("UserContext localStorage => ", window.localStorage.getItem('currentUserID' ) );
     // If Freezes
-    // Fixes state on refresh
+    // Fixes state on refresh if logout with deleted auth but not user additional info
+    
     //window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID))
 
     useEffect( () => {
@@ -38,13 +39,15 @@ export const UserProvider = ( {children} ) => {
                 readprofile( auth.currentUser.uid );
                 setCurrentUserID(auth.currentUser.uid);
 
-                window.localStorage.setItem('currentUserID', JSON.stringify(auth.currentUser.uid));
+                // window.localStorage.setItem('currentUserID', JSON.stringify(auth.currentUser.uid));
                 console.log("login localStorage => ", window.localStorage.getItem('currentUserID' ) );
             })
     };
 
     // Read additional profile data from users db by id
     const readprofile = async (id) => {
+        window.localStorage.setItem('currentUserID', JSON.stringify(id));
+
         let data;
         try{
             let docs = query( collection(db, "users"), where("id", "==", id) );

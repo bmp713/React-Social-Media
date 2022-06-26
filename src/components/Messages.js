@@ -25,6 +25,10 @@ export default function Messages(){
         imageURL: ''
     });
 
+    // const fileRef = useRef(null);
+    const [file, setFile] = useState("");
+    const [imageURL, setImageUrl] = useState(null);
+
     const [likes, setLikes] = useState(0);
     const [likeID, setLikeID] = useState();
 
@@ -74,9 +78,11 @@ export default function Messages(){
                 last: currentUser.last,
                 message: formData.message,
                 userImg: currentUser.imgURL,
-                imageURL: formData.imageURL,
+                imageURL: imageURL,
                 likes: 0
             })
+            readMessages();
+
         }catch(error){
             console.log(error);
         }
@@ -104,14 +110,15 @@ export default function Messages(){
 
         try{
             await setDoc( doc(db, 'messages', id ), {
-                id: docSnap.data().id,
-                email: docSnap.data().email,
-                first: docSnap.data().first,
-                last: docSnap.data().last,
-                message: formData.message,
-                userImg: docSnap.data().userImg,
-                imageURL: formData.imageURL, 
-                likes: docSnap.data().likes
+                ...docSnap.data(),
+                // id: docSnap.data().id,
+                // email: docSnap.data().email,
+                // first: docSnap.data().first,
+                // last: docSnap.data().last,
+                // message: formData.message,
+                // userImg: docSnap.data().userImg,
+                imageURL: imageURL, 
+                // likes: docSnap.data().likes
             })
             readMessages();
         }catch(error){
@@ -131,15 +138,20 @@ export default function Messages(){
             console.log("newLikes =>", newLikes);
             try{
                 await setDoc( doc(db, 'messages', id ), {
-                    id: docSnap.data().id,
-                    email: docSnap.data().email,
-                    first: docSnap.data().first,
-                    last: docSnap.data().last,
-                    message: docSnap.data().message,
-                    userImg: docSnap.data().userImg,
-                    imageURL: docSnap.data().imageURL,
+                    ...docSnap.data(),
                     likes: newLikes
                 })
+            // try{
+            //     await setDoc( doc(db, 'messages', id ), {
+            //         id: docSnap.data().id,
+            //         email: docSnap.data().email,
+            //         first: docSnap.data().first,
+            //         last: docSnap.data().last,
+            //         message: docSnap.data().message,
+            //         userImg: docSnap.data().userImg,
+            //         imageURL: docSnap.data().imageURL,
+            //         likes: newLikes
+            //     })
                 readMessages();
             }catch(error){
                 console.log(error);
@@ -149,6 +161,35 @@ export default function Messages(){
             console.log(error);
         }
     };
+
+
+    // Upload new image to message
+    const uploadFile = (e) => {
+        e.preventDefault();
+
+        const file = e.target.files[0];
+        console.log("file =>", file);
+        console.log("event =>", e);
+
+        const storageRef = ref(storage, 'files/'+ file.name );
+
+        uploadBytes(storageRef, file )
+            .then( (snapshot) => {
+                console.log('Uploaded file'); 
+                console.log('snapshot =>', snapshot);
+                setError(false);
+
+                getDownloadURL(snapshot.ref).then( (url) => {
+                    console.log('File URL =>', url);
+                    setImageUrl(url);
+                    setFormData({...formData, image: url})
+                });
+                setImageUrl('');
+            })
+            .catch( (error) => {
+                console.log("File error =>", error);
+            })
+    }
 
     const msgMenuClicked = (e) => {
         console.log("e.currentTarget.id => ", e.currentTarget.id);
@@ -160,18 +201,18 @@ export default function Messages(){
         console.log("like clicked => e.currentTarget.id => ", e.currentTarget.id);
         setLikeID(e.currentTarget.id);
     }
-
     return(
         <div 
             className="messages row text-left align-items-center p-lg-5 p-4 my-2" 
             style={{
-                background:'linear-gradient(#2266ccaa,#000a), url("https://source.unsplash.com/random/?shadows") no-repeat', 
+                background:'linear-gradient(#2266ccaa,#000b), url("https://source.unsplash.com/random/?shadows") no-repeat', 
+                // background:'linear-gradient(#2266ccaa,#000f), url("10-("./assets/10-(567.png") no-repeat', 
                 backgroundSize:'cover'
             }}
         >
             <h2 className="mx-2">News Feed</h2>
             {messages.map( (message) => (
-                <div className="message p-lg-0 my-4" id={message.id} key={message.id}>
+                <div className="message p-lg-0 my-2" id={message.id} key={message.id}>
                     <div className="col-lg-12 px-lg-5 py-lg-3 p-3" >              
                         <img 
                             width="50" height="50" className="m-2" 
@@ -181,31 +222,31 @@ export default function Messages(){
                         {message.first} {message.last} 
 
 
-                        { currentUser.email !== message.email ? '' :
+                        { currentUser.email === message.email && 
                             <a href
                                 className="msgMenu float-end"
                                 id={message.id} 
-                                onClick={ (e) => {
-                                    msgMenuClicked(e);
-                                }}
+                                onClick={ (e) => { msgMenuClicked(e); }}
                             >    
                                 <img 
                                     height="20" className="mx-2 float-end" 
                                     src="./assets/Icon-dots-black.png" alt='new'
                                 />
-                                { showMenu &&<div id={message.id}></div>
-                                }
+                                { showMenu && <div id={message.id}></div> }
                             </a>
                         }
                         <br></br>
+
+
                         { message.imageURL &&
                             <img width="100%" className='my-3' src={message.imageURL} alt=''/>
                         }
                         {message.message}<br></br><br></br>
 
-                        { currentUser.email !== message.email ? '' :
-                            showMenuID !== message.id ? '' :
-                                showMenu ? '' :
+
+                        { currentUser.email === message.email &&
+                            showMenuID === message.id &&
+                                showMenu &&
                                     <div>
                                         <input 
                                             style={{margin:'0px 0px 10px 0px'}}
@@ -216,27 +257,48 @@ export default function Messages(){
                                             type="textarea" placeholder="Update your message"
                                         />
                                         <input 
-                                            style={{margin:'0px 0px 10px 0px'}}
-                                            value={formData.imageULR} 
+                                            className="hide"
+                                            style={{margin:'0px'}}
+                                            value={formData.imageURR} 
                                             onChange={ function(event){ 
                                                 setFormData({...formData, imageURL: event.target.value}) 
                                             } }    
                                             type="textarea" placeholder="Image URL"
                                         />
-                                            <button 
-                                                onClick={ () => { editMessage(message.id) } } 
-                                                style={{color:'#222f '}}
-                                                className="app-btn">Update
-                                            </button>
-                                            <button 
-                                                style={{color:'#ffff', background:'#f00f'}}
-                                                onClick={ () => { deleteMessage(message.id) } } 
-                                                className="btn-black">Delete
-                                            </button>
+                                        <input 
+                                            style={{margin:'0px', border:'none'}}
+                                            onChange={ (e) => { 
+                                                setFile( e.target.files[0] );
+                                                uploadFile(e);
+                                            }}    
+                                            type="file"
+                                        /><br></br>
+                                        {file &&
+                                            <div 
+                                                className="col-lg-12 text-left p-2">
+                                                <img 
+                                                    onClick={ () => {
+                                                        setFile(null); setImageUrl('');
+                                                    }}
+                                                    width="25%" src={imageURL} alt=""></img>
+                                                <br></br>
+                                                {imageURL}                            
+                                            </div>
+                                        } 
+                                        <button 
+                                            onClick={ () => { editMessage(message.id) } } 
+                                            style={{color:'#222f '}}
+                                            className="app-btn">Update
+                                        </button>
+                                        <button 
+                                            style={{color:'#ffff', background:'#f00f'}}
+                                            onClick={ () => { deleteMessage(message.id) } } 
+                                            className="btn-black">Delete
+                                        </button>
                                     </div>
                         }
 
-                        <strong>{message.email}</strong><br></br>
+
                         <hr></hr>
                         <div className="icons row justify-content-lg-left align-items-start">
                             <div className="col-4 text-left">
@@ -244,8 +306,6 @@ export default function Messages(){
                                     id={message.id} 
                                         onClick={ (e) => {
                                             updateLikes(message.id);
-                                            // setLikes( !likes );
-                                            // setLikeID(e);
                                             console.log("likeID =>", e.currentTarget.id);
                                         }} 
                                 >
@@ -267,9 +327,13 @@ export default function Messages(){
                                 </a>
                             </div>
                         </div>
+                        
+
                     </div>
                 </div>
             ))} 
+
+
             <div className="create text-left my-5">        
                 <form id='form'>
                     <h3 className="mx-1">Message</h3>
@@ -280,15 +344,32 @@ export default function Messages(){
                             event.target.value ? setError(false) : setError(true)
                         } }    
                         type="textarea" placeholder="Type your message here"
-                    /><br></br>
+                    />
                     <input 
-                        value={formData.imageURL} 
+                        className="hide"
+                        value={imageURL} 
                         onChange={ (event) => { 
                             setFormData({...formData, imageURL: event.target.value}) 
                             event.target.value ? setError(false) : setError(true)
                         } }    
                         type="textarea" placeholder="Image URL"
                     /><br></br>
+                    <input 
+                        onChange={ (e) => { 
+                            setFile( e.target.files[0] );
+                            uploadFile(e);
+                        }}    
+                        type="file"
+                    /><br></br>
+                    {file &&
+                        <div className="col-lg-12 text-left p-2">
+                            <img 
+                                onClick={ () => { setFile(null); setImageUrl(null); }}
+                                width="50%" src={imageURL} alt=""></img>
+                            <br></br>
+                            {imageURL}                            
+                        </div>
+                    }
                     <input 
                         onClick={createMessage}
                         className="btn-blue" type="submit" value="Send"
