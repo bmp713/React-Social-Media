@@ -42,25 +42,13 @@ export default function Profile(){
         >
             <div className="header row justify-content-lg-left align-items-start">
                 <div className="col-lg-6 text-left">
-                    {/* <h1>Profile</h1> */}
                     <div 
                         className="row justify-content-lg-left align-items-center">
                         <div className="col-lg-10 text-left my-3">
                             <div style={{fontSize:'15px',lineHeight:'1.2'}}>
-                                <Link 
-                                    to='/profile'
-                                    style={{color:'#ffff'}}    
-                                >
                                 <h2>                            
                                     {currentUser.first} {currentUser.last}
                                 </h2>
-                                </Link><br></br>
-                                {/* <img 
-                                    width="40" height="40" className="mx-3" 
-                                    // style={{borderRadius:'50%'}}
-                                    src={currentUser.imgURL} 
-                                    alt="new"
-                                /> */}
                                 {currentUser.email}<br></br>
                             </div>
                         </div>
@@ -70,7 +58,7 @@ export default function Profile(){
                     <p className="profile-settings ">
                         <span style={{color:'#4267d9'}}>{currentUser.email}</span> is signed in
                         <img 
-                                width="40" height="40" className="mx-3" 
+                                width="40" height="40" className="m-2" 
                                 style={{borderRadius:'50%'}}
                                 src={currentUser.imgURL} 
                                 alt="new"

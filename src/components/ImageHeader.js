@@ -94,42 +94,34 @@ export default function ImageHeader(){
 
     return(
         <div className=''>
-            <div className="row justify-content-lg-between align-items-start">
-                <div className="col-lg-6 text-left">
-                    <span>Profile Image
-                        <span><button className="float-end text-decoration-underline text-dark">
-                            {/* See all photos */}
-                        </button></span> 
-                    </span>  
-                </div>
-                          <div className="col-lg-6 text-left">
-                    <div className="create text-left">   
-                        <form id='form' onSubmit={updateUserImage}>
-                            <input 
-                                style={{color:'#ffff',background: '#0000'}}
-                                onChange={ (e) => { 
-                                    setFile( e.target.files[0] );
-                                    uploadFile(e);
-                                }}    
-                                type="file"
-                            />
-                            {file &&
-                                <div className="col-lg-12 text-left p-2">
-                                    <img 
-                                        onClick={ () => { setFile(null); setImageUrl(null); }}
-                                        width="50%" src={imageURL} alt=""></img>
-                                    <br></br>
-                                    {imageURL}                            
-                                </div>
-                            }
-                            <input className="submit-btn" type="submit" value="Update"/><br></br>
-                            { formMsg ? <p className="text-success mx-2">Profile image has been updated</p> : '' }
-                            { error ? <p className="text-danger mx-2"> Please upload an image</p> : '' }
-                        </form>
-                        <br></br>
+            <div className="row justify-content-lg-center align-items-center">
+                
+                <form  id='form' onSubmit={updateUserImage}>
+                    <div className="col-lg-6 text-left">
+                        <input 
+                            style={{color:'#ffff',background: '#0000'}}
+                            onChange={ (e) => { 
+                                setFile( e.target.files[0] );
+                                uploadFile(e);
+                            }}    
+                            type="file"
+                        />
                     </div>
-                </div>
-
+                    <div className="col-lg-6 text-left">
+                        {file &&
+                            <div className="col-lg-12 text-left p-2">
+                                <img 
+                                    onClick={ () => { setFile(null); setImageUrl(null); }}
+                                    width="50%" src={imageURL} alt=""></img>
+                                <br></br>
+                                {imageURL}                            
+                            </div>
+                        }
+                        <input className="app-btn" type="submit" value="Profile Image"/><br></br>
+                        { formMsg ? <p className="text-success mx-2">Profile image has been updated</p> : '' }
+                        { error ? <p className="text-danger mx-2"> Please upload an image</p> : '' }
+                    </div>
+                </form>
             </div>
         </div>  
     )

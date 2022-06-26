@@ -10,7 +10,7 @@ import {UserContext} from '../contexts/UserContext';
 export default function Footer(){
     
     const { currentUser, login, logout } = useContext(UserContext);
-    const [ email, setNEmail ] = useState('');
+    const [ name, setName ] = useState('');
     const navigate = useNavigate();
 
     const logoutProfile = () => {

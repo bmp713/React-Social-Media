@@ -35,6 +35,8 @@ export default function Gallery(){
     const [file, setFile] = useState("");
     const [imageURL, setImageUrl] = useState(null);
 
+    const [random, setRandom] = useState(Math.floor(Math.random() * 100) );
+
     useEffect(() => {
         readGallery();
     },[]);
@@ -228,9 +230,7 @@ export default function Gallery(){
                             <hr></hr>
                         </div>
                     )
-                ))}      
-                <br></br>   
-                <hr></hr>      
+                ))}                
                 <div className="col-lg-12 text-left">
                     <div className="create text-left">   
                         <form id='form' onSubmit={createImage}>
@@ -258,9 +258,7 @@ export default function Gallery(){
                             /><br></br>
                             {(!file) ? '' : (
                                 <div className="col-lg-12 text-left p-2">
-                                    <img 
-                                        onClick={ () => { setFile(null); setImageUrl(null); }}
-                                        width="50%" src={imageURL} alt=""></img>
+                                    <img width="50%" src={imageURL} alt=""></img>
                                     <br></br>
                                     {imageURL}                            
                                 </div>

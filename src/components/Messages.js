@@ -110,15 +110,14 @@ export default function Messages(){
 
         try{
             await setDoc( doc(db, 'messages', id ), {
-                ...docSnap.data(),
-                // id: docSnap.data().id,
-                // email: docSnap.data().email,
-                // first: docSnap.data().first,
-                // last: docSnap.data().last,
-                // message: formData.message,
-                // userImg: docSnap.data().userImg,
+                id: docSnap.data().id,
+                email: docSnap.data().email,
+                first: docSnap.data().first,
+                last: docSnap.data().last,
+                message: formData.message,
+                userImg: docSnap.data().userImg,
                 imageURL: imageURL, 
-                // likes: docSnap.data().likes
+                likes: docSnap.data().likes
             })
             readMessages();
         }catch(error){
@@ -138,20 +137,15 @@ export default function Messages(){
             console.log("newLikes =>", newLikes);
             try{
                 await setDoc( doc(db, 'messages', id ), {
-                    ...docSnap.data(),
+                    id: docSnap.data().id,
+                    email: docSnap.data().email,
+                    first: docSnap.data().first,
+                    last: docSnap.data().last,
+                    message: docSnap.data().message,
+                    userImg: docSnap.data().userImg,
+                    imageURL: docSnap.data().imageURL,
                     likes: newLikes
                 })
-            // try{
-            //     await setDoc( doc(db, 'messages', id ), {
-            //         id: docSnap.data().id,
-            //         email: docSnap.data().email,
-            //         first: docSnap.data().first,
-            //         last: docSnap.data().last,
-            //         message: docSnap.data().message,
-            //         userImg: docSnap.data().userImg,
-            //         imageURL: docSnap.data().imageURL,
-            //         likes: newLikes
-            //     })
                 readMessages();
             }catch(error){
                 console.log(error);
@@ -205,8 +199,8 @@ export default function Messages(){
         <div 
             className="messages row text-left align-items-center p-lg-5 p-4 my-2" 
             style={{
-                background:'linear-gradient(#2266ccaa,#000b), url("https://source.unsplash.com/random/?shadows") no-repeat', 
-                // background:'linear-gradient(#2266ccaa,#000f), url("10-("./assets/10-(567.png") no-repeat', 
+                // background:'linear-gradient(#2266ccaa,#000a), url("https://source.unsplash.com/random/?shadows") no-repeat', 
+                background:'linear-gradient(#2266ccaa,#000a), url("10-("./assets/10-(567.png") no-repeat', 
                 backgroundSize:'cover'
             }}
         >
