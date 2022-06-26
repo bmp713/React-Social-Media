@@ -200,7 +200,8 @@ export default function Messages(){
             className="messages row text-left align-items-center p-lg-5 p-4 my-2" 
             style={{
                 // background:'linear-gradient(#2266ccaa,#000a), url("https://source.unsplash.com/random/?shadows") no-repeat', 
-                background:'linear-gradient(#2266ccaa,#000a), url("10-("./assets/10-(567.png") no-repeat', 
+                // background:'linear-gradient(#2266ccaa,#0000), url("./assets/10567.png")', 
+                background:'linear-gradient(#2266ccaa,#2266ccaa)', 
                 backgroundSize:'cover'
             }}
         >

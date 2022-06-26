@@ -37,7 +37,8 @@ export default function Profile(){
             style={{
                 // 302501,895539,277630,1041983,546927
                 // background:'linear-gradient(#000d,#000d), url("https://source.unsplash.com/random/?abstract") no-repeat', 
-                backgroundSize:'cover'
+                background:'linear-gradient(#000d,#0007), url("./assets/10-(56).png") repeat',
+                backgroundSize:'100%'
             }}
         >
             <div className="header row justify-content-lg-left align-items-start">
