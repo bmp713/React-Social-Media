@@ -2,7 +2,8 @@
 /* eslint-disable no-unused-vars */
 import { React, useEffect, useState, useContext, createContext} from 'react';
 import { query, where, doc, addDoc, setDoc, getDoc, getDocs, deleteDoc, collection } from 'firebase/firestore';
-import { signOut, onAuthStateChanged, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { signOut, onAuthStateChanged, deleteUser, sendEmailVerification, 
+    sendPasswordResetEmail, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 
 import { auth } from '../Firebase';
 import { db } from '../Firebase';
@@ -120,11 +121,6 @@ export const UserProvider = ( {children} ) => {
         }
     };  
 
-    // Send passwored reset email
-    const reset = (email) => {
-        return sendPasswordResetEmail(auth, email)
-    };
-
     // Logout resets currentUser to empty
     const logout = () => {
         setCurrentUser( (currentUser) => ({
@@ -150,9 +146,36 @@ export const UserProvider = ( {children} ) => {
             });
     };
 
+    // Delete user from auth DB and from users collection
+    const deleteUserFirebase = async ( currentUser ) => {
+
+        // Delete use auth from Firebase authentication
+        deleteUser(auth.currentUser).then(() => {
+            console.log(currentUser.email, "has been deleted from auth");    
+        }).catch((error) => {
+            console.log( "deleteUser() =>", error );
+        });
+        
+        // Delete user from users collection
+        try{
+            await deleteDoc( doc( db, "users", currentUser.id));
+            console.log(currentUser.email, "doc has been deleted from users");
+        }catch(error){
+            console.log("deleteDoc => " + error );
+        }
+    };
+
+    // Send passwored reset email
+    const reset = (email) => {
+        return sendPasswordResetEmail(auth, email)
+    };
+
     // Wrapper for Context Provider
     return (
-        <UserContext.Provider value={ {currentUser, setCurrentUserIMG, login, logout, signup, reset, setCurrentUser, updateUserFirebase} }>
+        <UserContext.Provider value={{
+                currentUser, setCurrentUserIMG, login, logout, signup, reset, 
+                setCurrentUser, updateUserFirebase, deleteUserFirebase
+            }}>
             {children}
         </UserContext.Provider>
     );

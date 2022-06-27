@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import '../App.scss';
 import React, { useRef, useState, useEffect, useContext } from 'react';
-import { doc, addDoc, setDoc, getDoc, getDocs, deleteDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { doc, where, query, addDoc, setDoc, getDoc, getDocs, deleteDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from '../Firebase';
 import { storage } from '../Firebase';
 import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
@@ -29,6 +29,8 @@ export default function Messages(){
     // const fileRef = useRef(null);
     const [file, setFile] = useState("");
     const [imageURL, setImageUrl] = useState(null);
+    const [imageURLEdit, setImageUrlEdit] = useState(null);
+    const [msgUser, setMsgUser] = useState(null);
 
     const [likes, setLikes] = useState(0);
     const [likeID, setLikeID] = useState();
@@ -46,6 +48,12 @@ export default function Messages(){
                 ({ ...doc.data() }) 
             ) 
         );
+        
+        data.forEach( (message) => {
+            console.log("readMessages() message.data().userID =>",  message.data().userID );
+            //console.log("IMAGE URL readUser =>", readUser( message.data().userID ) );
+        });
+
         console.log("data =>", data.docs);
         console.log("messages =>", messages);
     };
@@ -56,6 +64,25 @@ export default function Messages(){
         let data = await doc( collection(db, 'messages', id) );
         console.log("readMessage() data =>", data);
     };
+
+    // Read message author info
+    const readUser = async (id) => {
+
+            let data;
+            let userImgURL;
+            try{
+                let docs = query( collection(db, "users"), where("id", "==", id) );
+                data = await getDocs(docs);
+                data.forEach( (doc) => {
+                    console.log( "IMAGE readUser(id) =>", doc.data() );
+                    userImgURL = doc.data().imgURL;
+                });
+                
+                return userImgURL;
+            }catch(error){
+                console.log("readUser(error) => " + error );
+            }
+        };  
 
     const createMessage = async (e) => {
 
@@ -118,6 +145,7 @@ export default function Messages(){
                 last: docSnap.data().last,
                 message: formData.message,
                 userImg: docSnap.data().userImg,
+                userID: docSnap.data().userID,
                 imageURL: imageURL, 
                 likes: docSnap.data().likes
             })
@@ -145,6 +173,7 @@ export default function Messages(){
                     last: docSnap.data().last,
                     message: docSnap.data().message,
                     userImg: docSnap.data().userImg,
+                    userID: docSnap.data().userID,
                     imageURL: docSnap.data().imageURL,
                     likes: newLikes
                 })

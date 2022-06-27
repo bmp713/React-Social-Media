@@ -22,6 +22,9 @@ export default function Friends(){
     useEffect(() => {
         readFriends();
     },[] );
+    useEffect(() => {
+        readFriends();
+    },[currentUser] );
 
     const readFriends = async () => {
         let data = await getDocs( collection(db, 'users') );

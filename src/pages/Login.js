@@ -39,7 +39,16 @@ export default function Login(){
             .then( () => {
                 // console.log(formData.email, "signed in" );
 
+                // if( currentUser.email ){
+                //     navigate('/profile');
+                // }else{
+                //     setMsgSubmit({
+                //         message: `${formData.email} does not have an account`,
+                //         color: 'red'
+                //     });  
+                // }
                 navigate('/profile');
+
             })
             .catch( (error) => {
                 console.log("login =>", error);

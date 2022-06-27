@@ -19,7 +19,7 @@ import {UserContext} from '../contexts/UserContext';
 
 export default function Profile(){
 
-    const { currentUser, login, logout, updateUserFirebase } = useContext(UserContext);
+    const { currentUser, login, logout, setCurrentUser, updateUserFirebase, deleteUserFirebase } = useContext(UserContext);
 
     const navigate = useNavigate();
 
@@ -29,8 +29,10 @@ export default function Profile(){
         navigate('/');
     }
 
-    useEffect(() => {
-    },[] );
+    // useEffect(() => {
+    //     if( currentUser.email === null )
+    //         navigate('/');
+    // },[currentUser] );
     
     return(
         <div className='profile page'
@@ -65,8 +67,18 @@ export default function Profile(){
                                 alt="new"
                         />
                         <button onClick={logoutProfile} className="app-btn">Sign Out</button><br></br>
-                        <span>Settings<img width="20px" className="m-3" src="./assets/Icon-gear-white.png" alt='new'/></span>
-                        {/* <ImageHeader/> */}
+                        <a href
+                            className="mx-2 text-white"
+                            onClick={ () => {
+                                console.log("deleteUserFIrebase => ", currentUser.id);
+                                deleteUserFirebase(currentUser);
+                                setCurrentUser('');
+                                navigate('/');
+                            } }
+                        >
+                            Delete Account
+                        </a>
+                        <span><img width="20px" className="m-3" src="./assets/Icon-gear-white.png" alt='new'/></span>
                     </p>
                 </div>
             </div>
