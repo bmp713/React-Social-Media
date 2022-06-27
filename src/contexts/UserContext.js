@@ -19,14 +19,16 @@ export const UserProvider = ( {children} ) => {
     // console.log("UserContext localStorage => ", window.localStorage.getItem('currentUserID' ) );
     // If Freezes
     // Fixes state on refresh if logout with deleted auth but not user additional info
+    //window.localStorage.setItem('currentUserID', JSON.stringify(''))
+
     
-    // if( currentUser.id === null ){
-    //    window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID))
-    // }
+    if( currentUserID === null ){
+        window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID))
+    }
 
     useEffect( () => {
         console.log("useEffect localStorage => ", JSON.parse( window.localStorage.getItem('currentUserID')) );
-        console.log("useEffect => currentUserID =>", currentUserID );
+        // console.log("useEffect => currentUserID =>", currentUserID );
 
         readprofile( JSON.parse( window.localStorage.getItem('currentUserID')) );
         setCurrentUserID( JSON.parse( window.localStorage.getItem('currentUserID')) );
@@ -134,8 +136,8 @@ export const UserProvider = ( {children} ) => {
             friends: ''
         }));
 
-        window.localStorage.setItem('currentUserID', '');
-        //window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID));
+        //window.localStorage.setItem('currentUserID', '');
+        window.localStorage.setItem('currentUserID', JSON.stringify(currentUserID));
         
         console.log("UserContext localStorage =>", window.localStorage.getItem('currentUserID' ));
         console.log("logout currentUser =>", currentUser );

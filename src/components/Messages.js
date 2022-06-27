@@ -18,7 +18,7 @@ export default function Messages(){
     const [error, setError] = useState(false);
 
     const [showMenuID, setShowMenuID] = useState(null);
-    const [showMenu, setShowMenu] = useState(true);
+    const [showMenu, setShowMenu] = useState(false);
 
     const [formData, setFormData] = useState({
         message: '',
@@ -155,7 +155,6 @@ export default function Messages(){
             console.log(error);
         }
     };
-
 
     // Upload new image to message
     const uploadFile = (e) => {
@@ -367,7 +366,7 @@ export default function Messages(){
                     }
                     <input 
                         onClick={createMessage}
-                        className="btn-blue" type="submit" value="Send"
+                        className="btn-black" type="submit" value="Send"
                     /><br></br>
                         { error ? <p className="text-danger mx-2"> Please enter a message</p> : '' }
                 </form>

@@ -29,7 +29,7 @@ export default function Reset(){
         reset(formData.email)
             .then(() => {
                 setMsgSubmit({
-                      message: `An password reset email has been sent to ${formData.email}`,
+                      message: `A password reset email has been sent to ${formData.email}`,
                       color: 'green'
                 });
             })

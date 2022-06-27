@@ -21,7 +21,7 @@ export default function Friends(){
 
     useEffect(() => {
         readFriends();
-    },[]);
+    },[] );
 
     const readFriends = async () => {
         let data = await getDocs( collection(db, 'users') );

@@ -69,13 +69,14 @@ button{
     max-width: 700px;
     color: #fff !important;
     background: #000f !important;
+    border: 2px solid #000f;
 }
 
 
 .btn-black{
     margin: 10px auto;
     padding: 10px;
-    width: 200px;
+    width: 100%;
     max-width: 700px;
     font-size: 18px;
     color: #fff !important;
@@ -84,9 +85,13 @@ button{
     box-shadow: 5px 5px 10px #0007;
 }
 .btn-blue{
+    padding: 10px;
+    width: 200px;
+    max-width: 700px;
     color: #ffff;
     background: #0022cc !important;
     background: #0055ccff !important;
+    background: #0000ffff !important;
     border: none;
     box-shadow: 5px 5px 10px #0007;
 
