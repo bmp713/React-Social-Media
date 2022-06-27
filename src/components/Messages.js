@@ -13,6 +13,7 @@ export default function Messages(){
 
     // User authentication
     const {currentUser, login, logout } = useContext(UserContext);
+
     const [messagesCount, setMessagesCount] = useState(0);
     const [messages, setMessages] = useState([]);
     const [error, setError] = useState(false);
@@ -78,6 +79,7 @@ export default function Messages(){
                 last: currentUser.last,
                 message: formData.message,
                 userImg: currentUser.imgURL,
+                userID: currentUser.id,
                 imageURL: imageURL,
                 likes: 0
             })
@@ -276,7 +278,7 @@ export default function Messages(){
                                                     }}
                                                     width="25%" src={imageURL} alt=""></img>
                                                 <br></br>
-                                                {imageURL}                            
+                                                <p style={{ fontSize:'10px', wordWrap: 'break-word'}}>{imageURL}</p>                         
                                             </div>
                                         } 
                                         <button 
@@ -366,7 +368,7 @@ export default function Messages(){
                     }
                     <input 
                         onClick={createMessage}
-                        className="btn-black" type="submit" value="Send"
+                        className="submit-btn" type="submit" value="Send"
                     /><br></br>
                         { error ? <p className="text-danger mx-2"> Please enter a message</p> : '' }
                 </form>
