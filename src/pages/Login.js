@@ -17,8 +17,8 @@ export default function Login(){
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
-        email: "",
-        password: ""
+        email: "demo@yahoo.com",
+        password: "Welcome310"
     });
 
     useEffect( () => {
@@ -74,6 +74,7 @@ export default function Login(){
                     <div className="App-modal">
                         <form>
                             <h2>Sign In</h2>
+                            <p>Log in with existing account or click sign up below.</p>
                             <input
                                 value={formData.email}
                                 onChange={(e) => setFormData({...formData, email: e.target.value})}
