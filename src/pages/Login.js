@@ -18,7 +18,7 @@ export default function Login(){
 
     const [formData, setFormData] = useState({
         email: "demo@yahoo.com",
-        password: "Welcome310"
+        password: "Welcome123"
     });
 
     useEffect( () => {
