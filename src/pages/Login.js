@@ -151,13 +151,13 @@ export default function Login(){
             </div>
 
 
-            <div
+            {/* <div
                 style={{background: '#000a'}} 
                 className="row justify-content-center align-items-center text-black p-5">
                 <div className="col-lg-5 text-center m-5 p-5">
-                    {/* <Facebook/> */}
+                    <Facebook/>
                 </div>
-            </div>
+            </div> */}
         </div>
 
     )
