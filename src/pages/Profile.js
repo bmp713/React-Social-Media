@@ -14,6 +14,7 @@ import Messages from '../components/Messages';
 import ImageHeader from '../components/ImageHeader';
 import Image from '../components/Image';
 import Users from '../components/Users';
+import News from '../components/News';
 
 import {UserContext} from '../contexts/UserContext';
 
@@ -87,10 +88,15 @@ export default function Profile(){
                     <Friends/>
                     <Gallery/>
                     <Users/>
+                    <News/>
                     <Image/>
+
                 </div>
                 <div className="col-lg-5 text-left my-lg-1">
                     <Messages/>
+                </div>
+                <div className="col-lg-5 text-left my-lg-1">
+
                 </div>
             </div>
         </div>  

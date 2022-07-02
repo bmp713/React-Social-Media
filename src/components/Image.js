@@ -10,6 +10,8 @@ import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
 
 import {UserContext} from '../contexts/UserContext';
 
+//AIzaSyA5JEadZzVUBGMrn0dygRdx5t-5uqAuBKo 
+
 export default function Image(){
 
     // User authentication
@@ -102,7 +104,7 @@ export default function Image(){
                         </button></span> 
                     </h4>  
                 </div>
-                          <div className="col-lg-12 text-left">
+                    <div className="col-lg-12 text-left">
                     <div className="create text-left">   
                         <form id='form' onSubmit={updateUserImage}>
                             <input 

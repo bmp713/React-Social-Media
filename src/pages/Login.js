@@ -6,6 +6,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import {Link, Route, Routes, useNavigate, BrowserRouter as Router, Navigate} from 'react-router-dom';
 //import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithEmailAndPassword } from "firebase/auth";
 
+import Facebook from '../components/Facebook';
+
 import {UserContext} from '../contexts/UserContext';
 
 export default function Login(){
@@ -145,6 +147,15 @@ export default function Login(){
                 </div>
                 <div className="col-lg-5 text-center p-4">
                     <img className="w-100" src="./assets/App-screens.png" alt="new"/>
+                </div>
+            </div>
+
+
+            <div
+                style={{background: '#000a'}} 
+                className="row justify-content-center align-items-center text-black p-5">
+                <div className="col-lg-5 text-center m-5 p-5">
+                    {/* <Facebook/> */}
                 </div>
             </div>
         </div>
