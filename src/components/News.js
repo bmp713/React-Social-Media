@@ -99,7 +99,7 @@ export default function News(){
                 <button 
                     className="submit-btn"
                     style={{padding:'11px 0px', fontSize:'14px'}}
-                    onClick={ () =>{ setNumArticles( numArticles + 3) }}
+                    onClick={ () =>{ setNumArticles( numArticles + 2) }}
                 >
                     Load more...
                 </button>
