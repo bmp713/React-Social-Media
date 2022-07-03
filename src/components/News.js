@@ -30,9 +30,20 @@ export default function News(){
         //e.preventDefault();
 
         // NY Times API
-        let url = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=news&api-key=l0pE8ZYsNeEx6MAKnAyKmNnxJrOhAfCB";
-        url = "https://api.nytimes.com/svc/mostpopular/v2/viewed/30.json?api-key=l0pE8ZYsNeEx6MAKnAyKmNnxJrOhAfCB"
+        // https://api.nytimes.com/svc/search/v2/articlesearch.json?q=news&api-key=l0pE8ZYsNeEx6MAKnAyKmNnxJrOhAfCB
+        // https://api.nytimes.com/svc/mostpopular/v2/viewed/30.json?api-key=l0pE8ZYsNeEx6MAKnAyKmNnxJrOhAfCB
+
+        // Top Story Categories
+        // let url = "https://api.nytimes.com/svc/topstories/v2/sports.json?api-key=l0pE8ZYsNeEx6MAKnAyKmNnxJrOhAfCB"
+
+        // arts, automobiles, books, business, fashion, food, health, home, insider, magazine, movies, nyregion, 
+        // opinion, politics, realestate, science, sports, sundayreview, technology, theater, t-magazine, 
+        // travel, upshot, us, world
+
+        let url;
         url = "https://api.nytimes.com/svc/topstories/v2/us.json?api-key=l0pE8ZYsNeEx6MAKnAyKmNnxJrOhAfCB"
+        url = "https://api.nytimes.com/svc/topstories/v2/sports.json?api-key=l0pE8ZYsNeEx6MAKnAyKmNnxJrOhAfCB"
+        url = "https://api.nytimes.com/svc/topstories/v2/technology.json?api-key=l0pE8ZYsNeEx6MAKnAyKmNnxJrOhAfCB"
 
         try{
             await fetch(url)
@@ -57,7 +68,7 @@ export default function News(){
 
     return(
             <div 
-                className="row justify-content-lg-between align-items-start p-5 text-white"
+                className="row justify-content-lg-between align-items-start p-lg-5 p-4 text-white"
                 style={{
                     margin:'25px 0px', 
                     color:'#ffff', 
@@ -82,20 +93,26 @@ export default function News(){
                 <div className="row text-left">
                         { articles.slice(0, numArticles).map( (article ) =>  
                             <div className="col-xl-5">
-                                <a className="text-white" href={article.url} target="_blank">
+                                <a 
+                                    className="text-white" 
+                                    href={article.url} 
+                                    target="_blank"
+                                    style={{fontSize:'14px'}}
+                                >
                                     <img 
                                         height="125" 
                                         className="my-2" 
                                         src={article.multimedia !== null ? article.multimedia[0].url :''} alt=""
                                     ></img><br></br>
 
-                                    <strong>{article.title}</strong>
+                                    <strong >{article.title}</strong>
                                 </a><br></br><br></br>
 
-                                <p>{article.abstract}</p>
+                                <p style={{fontSize:'12px'}}>{article.abstract}</p>
                             </div>
                         )}
                 </div>
+
                 <button 
                     className="submit-btn"
                     style={{padding:'11px 0px', fontSize:'14px'}}
