@@ -32,18 +32,16 @@ export default function News(){
         // NY Times API
         // https://api.nytimes.com/svc/search/v2/articlesearch.json?q=news&api-key=l0pE8ZYsNeEx6MAKnAyKmNnxJrOhAfCB
         // https://api.nytimes.com/svc/mostpopular/v2/viewed/30.json?api-key=l0pE8ZYsNeEx6MAKnAyKmNnxJrOhAfCB
-
-        // Top Story Categories
-        // let url = "https://api.nytimes.com/svc/topstories/v2/sports.json?api-key=l0pE8ZYsNeEx6MAKnAyKmNnxJrOhAfCB"
-
-        // arts, automobiles, books, business, fashion, food, health, home, insider, magazine, movies, nyregion, 
+        // https://api.nytimes.com/svc/topstories/v2/sports.json?api-key=l0pE8ZYsNeEx6MAKnAyKmNnxJrOhAfCB
+        //
+        // all, arts, automobiles, books, business, fashion, food, health, home, insider, magazine, movies, nyregion,
         // opinion, politics, realestate, science, sports, sundayreview, technology, theater, t-magazine, 
         // travel, upshot, us, world
 
         let url;
         url = "https://api.nytimes.com/svc/topstories/v2/us.json?api-key=l0pE8ZYsNeEx6MAKnAyKmNnxJrOhAfCB"
-        url = "https://api.nytimes.com/svc/topstories/v2/sports.json?api-key=l0pE8ZYsNeEx6MAKnAyKmNnxJrOhAfCB"
         url = "https://api.nytimes.com/svc/topstories/v2/technology.json?api-key=l0pE8ZYsNeEx6MAKnAyKmNnxJrOhAfCB"
+        url = "https://api.nytimes.com/svc/news/v3/content/nyt/all.json?api-key=l0pE8ZYsNeEx6MAKnAyKmNnxJrOhAfCB";
 
         try{
             await fetch(url)
@@ -53,13 +51,6 @@ export default function News(){
 
                     setArticles(data.results);
                     setMaxArticles(data.num_results);
-
-                    // articles.forEach( article => {
-                    //     console.log( "\nimage =>", article.multimedia[0].url );                
-                    //     console.log( "title =>", article.title );
-                    //     console.log( "abstract =>", article.abstract );
-                    //     console.log( "article =>", article.url );
-                    // });
                 });
         }catch(error){
             console.log(error);
@@ -92,26 +83,27 @@ export default function News(){
                 </div>
                 <div className="row text-left">
                         { articles.slice(0, numArticles).map( (article ) =>  
-                            <div className="col-xl-5">
-                                <a 
-                                    className="text-white" 
-                                    href={article.url} 
-                                    target="_blank"
-                                    style={{fontSize:'14px'}}
-                                >
-                                    <img 
-                                        height="125" 
-                                        className="my-2" 
-                                        src={article.multimedia !== null ? article.multimedia[0].url :''} alt=""
-                                    ></img><br></br>
+                                <div className="col-xl-5">
+                                    <a 
+                                        className="text-white" 
+                                        href={article.url} 
+                                        target="_blank"
+                                        style={{fontSize:'15px'}}
+                                    >
+                                        <img 
+                                            height="125" 
+                                            className="my-2" 
+                                            src={article.multimedia !== null ? article.multimedia[2].url :''} alt=""
+                                        ></img><br></br>
 
-                                    <strong >{article.title}</strong>
-                                </a><br></br><br></br>
+                                        <strong >{article.title}</strong>
+                                    </a><br></br><br></br>
 
-                                <p style={{fontSize:'12px'}}>{article.abstract}</p>
-                            </div>
-                        )}
+                                    <p style={{fontSize:'12px'}}>{article.abstract}</p>
+                                </div>
+                            )}
                 </div>
+
 
                 <button 
                     className="submit-btn"
